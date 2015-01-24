@@ -77,15 +77,18 @@ public class BrowseActivity extends ActionBarActivity
     ScrollView mScrollView;
     LinearLayout.LayoutParams prms;
     int tileCount = 0;
-    LinearLayout progressViewGroup;
+    ViewGroup progressViewGroup;
     View progressView;
 
     LinearLayout tileViewGroup;
     View tileView;
 
     PullToRefreshListView mListView;
+    ListView actualListView;
     List<String> values;
     ContentListAdapter adapter;
+    Boolean isRefreshing = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,15 +113,13 @@ public class BrowseActivity extends ActionBarActivity
 
         //mPullRefreshScrollView = (PullToRefreshScrollView) findViewById(R.id.contentScrollView);
         mListView = (PullToRefreshListView) findViewById(R.id.contentListView);
-        ListView actualListView = mListView.getRefreshableView();
+        actualListView = mListView.getRefreshableView();
         // Need to use the Actual ListView when registering for Context Menu
         registerForContextMenu(actualListView);
 
         //mPullRefreshScrollView.setRefreshing();
         //new GetLocalDataTask().execute();
         values = new ArrayList<String>();
-        values.add(TILE_EDUCATION+";EDU;In 1879, Maxwell published a paper on the viscous stresses arising in rarefied gases. At the time, a reviewer commented that it also might be useful if Maxwell could use his theoretical findings to derive a velocity boundary condition for rarefied gas flows at solid surfaces. Consequently, in an appendix to the paper, Maxwell proposed his now-famous velocity slip boundary condition.");
-        values.add(TILE_WEATHER+";24;05:00 PM;PS");
 
         adapter = new ContentListAdapter(BrowseActivity.this, values);
         actualListView.setAdapter(adapter);
@@ -140,6 +141,14 @@ public class BrowseActivity extends ActionBarActivity
                 new GetNetworkDataTask().execute();
             }
         });
+
+        addProgressBar();
+        //LayoutInflater inflater = getLayoutInflater();
+        //ViewGroup header = (ViewGroup)inflater.inflate(R.layout.content_progress_bar, mListView.getRefreshableView(), false);
+        //mListView.getRefreshableView().addHeaderView(header, null, false);
+
+        new GetLocalDataTask().execute();
+
         /*mPullRefreshScrollView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ScrollView>() {
 
             @Override
@@ -150,6 +159,23 @@ public class BrowseActivity extends ActionBarActivity
 
         //mScrollView = mPullRefreshScrollView.getRefreshableView();
     }
+
+    public void addProgressBar()
+    {
+        LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        progressViewGroup = (ViewGroup)layoutInflater.inflate(R.layout.content_progress_bar, mListView.getRefreshableView(), false);
+        mListView.getRefreshableView().addHeaderView(progressViewGroup, null, false);
+        //progressView = layoutInflater.inflate(R.layout.content_progress_bar, actualListView, false);
+        //progressViewGroup.setLayoutParams(prms);
+        //actualListView.addHeaderView(progressView);
+        isRefreshing = true;
+    }
+
+    public void removeProgressBar()
+    {
+        mListView.getRefreshableView().removeHeaderView(progressViewGroup);
+    }
+
 
 
     /*public void addProgressBar()
@@ -187,6 +213,41 @@ public class BrowseActivity extends ActionBarActivity
             // Do some UI related stuff here
             for(int i=0;i<result.length;i++) {
                 addTile(BrowseActivity.this, result[i]);
+            }
+
+            mListView.onRefreshComplete();
+            super.onPostExecute(result);
+        }
+    }
+
+    private class GetLocalDataTask extends AsyncTask<Void, Void, String[]> {
+
+        @Override
+        protected String[] doInBackground(Void... params) {
+            // Perform data fetching here
+            try
+            {
+                Thread.sleep(4000);
+            }
+            catch (InterruptedException e) {
+            }
+            return new String[]
+                    {
+                        TILE_WEATHER+";24;05:00 PM;PS",
+                        TILE_EDUCATION+";EDU;In 1879, Maxwell published a paper on the viscous stresses arising in rarefied gases. At the time, a reviewer commented that it also might be useful if Maxwell could use his theoretical findings to derive a velocity boundary condition for rarefied gas flows at solid surfaces. Consequently, in an appendix to the paper, Maxwell proposed his now-famous velocity slip boundary condition."
+                    };
+        }
+
+        @Override
+        protected void onPostExecute(String[] result) {
+            // Do some UI related stuff here
+            for(int i=0;i<result.length;i++) {
+                addTile(BrowseActivity.this, result[i]);
+            }
+
+            if(isRefreshing) {
+                removeProgressBar();
+                isRefreshing = false;
             }
 
             mListView.onRefreshComplete();
