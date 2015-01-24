@@ -1,9 +1,11 @@
 package org.iith.scitech.infero.infox.ui;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,8 +21,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.MediaController;
 import android.widget.PopupWindow;
 import android.widget.ScrollView;
 import android.widget.Toast;
@@ -43,6 +49,7 @@ import org.iith.scitech.infero.infox.widget.VideoWidget;
 import org.iith.scitech.infero.infox.widget.WeatherWidget;
 
 import android.net.Uri;
+import android.widget.VideoView;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -74,12 +81,8 @@ public class BrowseActivity extends ActionBarActivity
      */
     private CharSequence mTitle;
 
-    PullToRefreshScrollView mPullRefreshScrollView;
-    ScrollView mScrollView;
     LinearLayout.LayoutParams prms;
-    int tileCount = 0;
     ViewGroup progressViewGroup;
-    View progressView;
 
     LinearLayout tileViewGroup;
     View tileView;
@@ -108,18 +111,10 @@ public class BrowseActivity extends ActionBarActivity
         prms.weight = 1;
         prms.gravity = Gravity.CENTER_VERTICAL;
 
-
-        //addProgressBar();
-
-
-        //mPullRefreshScrollView = (PullToRefreshScrollView) findViewById(R.id.contentScrollView);
         mListView = (PullToRefreshListView) findViewById(R.id.contentListView);
         actualListView = mListView.getRefreshableView();
-        // Need to use the Actual ListView when registering for Context Menu
         registerForContextMenu(actualListView);
 
-        //mPullRefreshScrollView.setRefreshing();
-        //new GetLocalDataTask().execute();
         values = new ArrayList<String>();
 
         adapter = new ContentListAdapter(BrowseActivity.this, values);
@@ -155,7 +150,7 @@ public class BrowseActivity extends ActionBarActivity
                             @Override
                             public void onDismiss(ListView listView, int[] reverseSortedPositions) {
                                 for (int position : reverseSortedPositions) {
-                                    adapter.remove(adapter.getItem(position));
+                                    adapter.remove(adapter.getItem(position-1));
                                 }
                                 adapter.notifyDataSetChanged();
                             }
@@ -165,22 +160,55 @@ public class BrowseActivity extends ActionBarActivity
         // we don't look for swipes.
         mListView.getRefreshableView().setOnScrollListener(touchListener.makeScrollListener());
 
-        addProgressBar();
-        //LayoutInflater inflater = getLayoutInflater();
-        //ViewGroup header = (ViewGroup)inflater.inflate(R.layout.content_progress_bar, mListView.getRefreshableView(), false);
-        //mListView.getRefreshableView().addHeaderView(header, null, false);
+        //mListView.getRefreshableView().setDividerHeight(0);
 
-        new GetLocalDataTask().execute();
-
-        /*mPullRefreshScrollView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ScrollView>() {
-
+        /*mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
-                new GetNetworkDataTask().execute();
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(BrowseActivity.this, values.get(position).split(";")[0], Toast.LENGTH_SHORT).show();
+                switch (values.get(position).split(";")[0])
+                {
+                    case BrowseActivity.TILE_EDUCATION:
+                        break;
+
+                    case BrowseActivity.TILE_WEATHER:
+                        break;
+
+                    case BrowseActivity.TILE_MUSIC:
+                        break;
+
+                    case BrowseActivity.TILE_VIDEO:
+                    {
+                        final Dialog dialog = new Dialog(BrowseActivity.this);
+                        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                        dialog.setContentView(R.layout.content_dialog_video);
+                        dialog.setCanceledOnTouchOutside(true);
+                        final VideoView videoView = (VideoView) dialog.findViewById(R.id.content_tile_video_videoView);
+                        videoView.setVideoPath(values.get(position).split(";")[1]);
+                        MediaController mediaController = new MediaController(dialog.getContext());
+                        mediaController.setAnchorView(videoView);
+                        videoView.setMediaController(mediaController);
+                        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener()  {
+                            @Override
+                            public void onPrepared(MediaPlayer mp) {
+                            //Log.i("Video", "Duration = " + videoView.getDuration());
+                                Toast.makeText(dialog.getContext(), "Video prepared: Click again to play", Toast.LENGTH_SHORT).show();
+                                //videoView.start();
+                            }
+                        });
+
+                        videoView.start();
+                        dialog.show();
+                    }
+                        break;
+                }
             }
         });*/
 
-        //mScrollView = mPullRefreshScrollView.getRefreshableView();
+        addProgressBar();
+
+        new GetLocalDataTask().execute();
+
     }
 
     public void addProgressBar()
@@ -188,9 +216,6 @@ public class BrowseActivity extends ActionBarActivity
         LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         progressViewGroup = (ViewGroup)layoutInflater.inflate(R.layout.content_progress_bar, mListView.getRefreshableView(), false);
         mListView.getRefreshableView().addHeaderView(progressViewGroup, null, false);
-        //progressView = layoutInflater.inflate(R.layout.content_progress_bar, actualListView, false);
-        //progressViewGroup.setLayoutParams(prms);
-        //actualListView.addHeaderView(progressView);
         isRefreshing = true;
     }
 
@@ -256,8 +281,10 @@ public class BrowseActivity extends ActionBarActivity
             }
             return new String[]
                     {
-                        TILE_WEATHER+";24;05:00 PM;PS",
-                        TILE_EDUCATION+";EDU;In 1879, Maxwell published a paper on the viscous stresses arising in rarefied gases. At the time, a reviewer commented that it also might be useful if Maxwell could use his theoretical findings to derive a velocity boundary condition for rarefied gas flows at solid surfaces. Consequently, in an appendix to the paper, Maxwell proposed his now-famous velocity slip boundary condition."
+                        TILE_WEATHER + ";24;05:00 PM;PS",
+                        TILE_EDUCATION + ";EDU;In 1879, Maxwell published a paper on the viscous stresses arising in rarefied gases. At the time, a reviewer commented that it also might be useful if Maxwell could use his theoretical findings to derive a velocity boundary condition for rarefied gas flows at solid surfaces. Consequently, in an appendix to the paper, Maxwell proposed his now-famous velocity slip boundary condition.",
+                        TILE_MUSIC + ";http://media.djmazadownload.com/music/320/indian_movies/Khamoshiyan%20(2015)/03%20-%20Khamoshiyan%20-%20Baatein%20Ye%20Kabhi%20Na%20(Male)%20%5BDJMaza.Info%5D.mp3",
+                        TILE_VIDEO + ";http://www.ebookfrenzy.com/android_book/movie.mp4"
                     };
         }
 

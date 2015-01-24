@@ -1,21 +1,28 @@
 package org.iith.scitech.infero.infox.ui;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.MediaController;
 import android.widget.PopupWindow;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import org.iith.scitech.infero.infox.R;
 import org.iith.scitech.infero.infox.widget.EducationWidget;
@@ -33,6 +40,16 @@ import java.util.List;
 public class ContentListAdapter extends ArrayAdapter<String> {
     private final Context context;
     private final List<String> values;
+
+    private Boolean isPreparedAudio = false;
+    private Boolean isStartedAudio = false;
+    private Boolean isFinishedAudio = false;
+    private int currentPercentageAudio = 0;
+    private Boolean isPreparingAudio = false;
+    private Boolean audioPlaybackThreadRunning = false;
+
+    private SeekBar seekBar;
+    private MediaPlayer mediaPlayer;
 
     public ContentListAdapter(Context context, List<String> values) {
         super(context, R.layout.content_tile_education, values);
@@ -119,11 +136,156 @@ public class ContentListAdapter extends ArrayAdapter<String> {
         else if (theType==2)
         {
             rowView = layoutInflater.inflate(R.layout.content_tile_music, parent, false);
+
+            seekBar = (SeekBar) rowView.findViewById(R.id.content_tile_music_seekBar);
+            mediaPlayer = new MediaPlayer();
+            try
+            {
+                //mediaPlayer.setDataSource("/sdcard/Music/maine.mp3");//Write your location here
+                Uri uri = Uri.parse(s.split(";")[1]);
+                mediaPlayer.setDataSource(context, uri);
+            }
+            catch(Exception e){e.printStackTrace();}
+
+            seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener()
+            {
+                @Override
+                public void onProgressChanged(SeekBar arg0, int arg1, boolean arg2)
+                {
+                    if (arg2 && mediaPlayer.isPlaying()) {
+                        mediaPlayer.seekTo(arg1);
+                    }
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+                }
+
+            });
+
+            mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mp) {
+                    seekBar.setMax(mediaPlayer.getDuration());
+                    new Thread() {
+                        public void run() {
+                            audioPlaybackThreadRunning = true;
+                            try {
+                                while (mediaPlayer.getDuration() != mediaPlayer.getCurrentPosition() && audioPlaybackThreadRunning) {
+                                    seekBar.setProgress(mediaPlayer.getCurrentPosition());
+                                }
+                            } catch (Exception e) {
+                                Log.e("log", e.toString());
+                            }
+                        }
+                    }.start();
+                    isPreparedAudio = true;
+                    mediaPlayer.start();
+                }
+            });
+
+            mediaPlayer.setOnBufferingUpdateListener(new MediaPlayer.OnBufferingUpdateListener() {
+                @Override
+                public void onBufferingUpdate(MediaPlayer mp, int percent) {
+                    if (!(percent == currentPercentageAudio) && percent != 100) {
+                        Toast.makeText(context, "Audio Buffering: " + percent + "%", Toast.LENGTH_SHORT).show();
+                        currentPercentageAudio = percent;
+                    }
+                }
+            });
+
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    Toast.makeText(context, "Audio Playback Complete", Toast.LENGTH_SHORT).show();
+                    audioPlaybackThreadRunning = false;
+                    isStartedAudio = false;
+                    isFinishedAudio = true;
+                }
+            });
+
+            rowView.findViewById(R.id.content_tile_music_pauseBtn).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(mediaPlayer.isPlaying())
+                        mediaPlayer.pause();
+                }
+            });
+
+            rowView.findViewById(R.id.content_tile_music_playBtn).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if (isPreparedAudio && !isStartedAudio) {
+                        if (isFinishedAudio) {
+                            new Thread() {
+                                public void run() {
+                                    audioPlaybackThreadRunning = true;
+                                    try {
+                                        while (mediaPlayer.getDuration() != mediaPlayer.getCurrentPosition() && audioPlaybackThreadRunning) {
+                                            seekBar.setProgress(mediaPlayer.getCurrentPosition());
+                                        }
+                                    } catch (Exception e) {
+                                        Log.e("log", e.toString());
+                                    }
+                                }
+                            }.start();
+                            isFinishedAudio = false;
+                        }
+                        mediaPlayer.start();
+
+                        isStartedAudio = true;
+                    } else if (isPreparedAudio && isStartedAudio) {
+                        if(!mediaPlayer.isPlaying())
+                            mediaPlayer.start();
+                        else
+                            Toast.makeText(context, "Audio still Buffering", Toast.LENGTH_SHORT).show();
+                    } else {
+                        if (!isPreparingAudio) {
+                            Toast.makeText(context, "Preparing Audio Now", Toast.LENGTH_SHORT).show();
+                            mediaPlayer.prepareAsync();
+                            isPreparingAudio = true;
+                        } else
+                            Toast.makeText(context, "Audio not yet prepared", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
         }
 
         else if (theType==3)
         {
             rowView = layoutInflater.inflate(R.layout.content_tile_video, parent, false);
+            rowView.findViewById(R.id.content_tile_video_videoView).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final Dialog dialog = new Dialog(context);
+                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    dialog.setContentView(R.layout.content_dialog_video);
+                    dialog.setCanceledOnTouchOutside(true);
+                    final VideoView videoView = (VideoView) dialog.findViewById(R.id.content_tile_video_videoView);
+                    videoView.setVideoPath(values.get(position).split(";")[1]);
+                    MediaController mediaController = new MediaController(dialog.getContext());
+                    mediaController.setAnchorView(videoView);
+                    videoView.setMediaController(mediaController);
+                    videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener()  {
+                        @Override
+                        public void onPrepared(MediaPlayer mp) {
+                            //Log.i("Video", "Duration = " + videoView.getDuration());
+                            Toast.makeText(dialog.getContext(), "Video prepared: Click again to play", Toast.LENGTH_SHORT).show();
+                            //videoView.start();
+                        }
+                    });
+
+                    videoView.start();
+                    dialog.show();
+                }
+            });
+
         }//}
 
         rowView.findViewById(R.id.tile_popup_button).setOnClickListener(new View.OnClickListener() {

@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 /**
- * Various utility methods used by {@link org.iith.scitech.infero.infox.io.JSONHandler}.
+ * Various utility methods used by {@link org.iith.scitech.infero.infox}.
  */
 public class ParserUtils {
     /** Used to sanitize a string to be {@link android.net.Uri} safe. */
