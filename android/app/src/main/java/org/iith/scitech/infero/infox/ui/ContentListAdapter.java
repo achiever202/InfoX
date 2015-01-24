@@ -1,14 +1,21 @@
 package org.iith.scitech.infero.infox.ui;
 
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.Point;
+import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.iith.scitech.infero.infox.R;
 import org.iith.scitech.infero.infox.widget.EducationWidget;
@@ -63,7 +70,7 @@ public class ContentListAdapter extends ArrayAdapter<String> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         String s = values.get(position);
         //Log.v("DEB","value: "+s);
@@ -119,6 +126,56 @@ public class ContentListAdapter extends ArrayAdapter<String> {
             rowView = layoutInflater.inflate(R.layout.content_tile_video, parent, false);
         }//}
 
+        rowView.findViewById(R.id.tile_popup_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int[] location = new int[2];
+                v.getLocationOnScreen(location);
+                Point point = new Point();
+                point.x = location[0];
+                point.y = location[1];
+                showStatusPopup(context, point, position);
+            }
+        });
+
         return rowView;
+    }
+
+
+    private void showStatusPopup(final Context context, Point p, final int tilePos) {
+
+        // Inflate the popup_layout.xml
+        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View layout = layoutInflater.inflate(R.layout.popup_layout, null);
+
+        // Creating the PopupWindow
+        final PopupWindow changeStatusPopUp = new PopupWindow(context);
+        changeStatusPopUp.setContentView(layout);
+        changeStatusPopUp.setWidth(LinearLayout.LayoutParams.WRAP_CONTENT);
+        changeStatusPopUp.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
+        changeStatusPopUp.setFocusable(true);
+
+        // Some offset to align the popup a bit to the left, and a bit down, relative to button's position.
+        int OFFSET_X = -20;
+        int OFFSET_Y = 50;
+
+        //Clear the default translucent background
+        changeStatusPopUp.setBackgroundDrawable(new BitmapDrawable());
+
+        // Displaying the popup at the specified location, + offsets.
+        changeStatusPopUp.showAtLocation(layout, Gravity.NO_GRAVITY, p.x + OFFSET_X, p.y + OFFSET_Y);
+
+        layout.findViewById(R.id.popup_delete).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //removeTile(context,v.getId());
+                changeStatusPopUp.dismiss();
+                //changeStatusPopUp.getContentView().getParent().getParent().getParent().getParent().getParent()
+                //Log.d("Delete Post Id: ", Integer.toString(v.getRootView().getRootView().getId()));
+                Toast.makeText(context, "Delete Post: " + tilePos, Toast.LENGTH_SHORT).show();
+                values.remove(tilePos);
+                notifyDataSetChanged();
+            }
+        });
     }
 }

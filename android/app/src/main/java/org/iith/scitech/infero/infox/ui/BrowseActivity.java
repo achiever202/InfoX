@@ -36,6 +36,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 
 import org.iith.scitech.infero.infox.R;
+import org.iith.scitech.infero.infox.swipetodismiss.SwipeDismissListViewTouchListener;
 import org.iith.scitech.infero.infox.widget.EducationWidget;
 import org.iith.scitech.infero.infox.widget.MusicWidget;
 import org.iith.scitech.infero.infox.widget.VideoWidget;
@@ -141,6 +142,28 @@ public class BrowseActivity extends ActionBarActivity
                 new GetNetworkDataTask().execute();
             }
         });
+
+        SwipeDismissListViewTouchListener touchListener =
+                new SwipeDismissListViewTouchListener(
+                        mListView.getRefreshableView(),
+                        new SwipeDismissListViewTouchListener.DismissCallbacks() {
+                            @Override
+                            public boolean canDismiss(int position) {
+                                return true;
+                            }
+
+                            @Override
+                            public void onDismiss(ListView listView, int[] reverseSortedPositions) {
+                                for (int position : reverseSortedPositions) {
+                                    adapter.remove(adapter.getItem(position));
+                                }
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
+        mListView.getRefreshableView().setOnTouchListener(touchListener);
+        // Setting this scroll listener is required to ensure that during ListView scrolling,
+        // we don't look for swipes.
+        mListView.getRefreshableView().setOnScrollListener(touchListener.makeScrollListener());
 
         addProgressBar();
         //LayoutInflater inflater = getLayoutInflater();
