@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -31,6 +32,7 @@ import android.support.v4.widget.CursorAdapter;
 import android.support.v4.widget.SimpleCursorAdapter;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 
 import org.iith.scitech.infero.infox.R;
@@ -40,6 +42,10 @@ import org.iith.scitech.infero.infox.widget.VideoWidget;
 import org.iith.scitech.infero.infox.widget.WeatherWidget;
 
 import android.net.Uri;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by shashank on 17/1/15.
@@ -52,13 +58,13 @@ public class BrowseActivity extends ActionBarActivity
      */
     private BrowseFragment mBrowseFragment;
 
-    private static final String TILE_EDUCATION = "tile_education";
+    public static final String TILE_EDUCATION = "tile_education";
 
-    private static final String TILE_WEATHER = "tile_weather";
+    public static final String TILE_WEATHER = "tile_weather";
 
-    private static final String TILE_MUSIC = "tile_music";
+    public static final String TILE_MUSIC = "tile_music";
 
-    private static final String TILE_VIDEO = "tile_video";
+    public static final String TILE_VIDEO = "tile_video";
 
 
 
@@ -77,7 +83,9 @@ public class BrowseActivity extends ActionBarActivity
     LinearLayout tileViewGroup;
     View tileView;
 
-    ListView mListView;
+    PullToRefreshListView mListView;
+    List<String> values;
+    ContentListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,26 +105,54 @@ public class BrowseActivity extends ActionBarActivity
         prms.gravity = Gravity.CENTER_VERTICAL;
 
 
-        addProgressBar();
+        //addProgressBar();
 
 
-        mPullRefreshScrollView = (PullToRefreshScrollView) findViewById(R.id.contentScrollView);
-        mListView = (ListView) findViewById(R.id.contentListView);
-        mPullRefreshScrollView.setRefreshing();
-        new GetLocalDataTask().execute();
-        mPullRefreshScrollView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ScrollView>() {
+        //mPullRefreshScrollView = (PullToRefreshScrollView) findViewById(R.id.contentScrollView);
+        mListView = (PullToRefreshListView) findViewById(R.id.contentListView);
+        ListView actualListView = mListView.getRefreshableView();
+        // Need to use the Actual ListView when registering for Context Menu
+        registerForContextMenu(actualListView);
+
+        //mPullRefreshScrollView.setRefreshing();
+        //new GetLocalDataTask().execute();
+        values = new ArrayList<String>();
+        values.add(TILE_EDUCATION+";EDU;In 1879, Maxwell published a paper on the viscous stresses arising in rarefied gases. At the time, a reviewer commented that it also might be useful if Maxwell could use his theoretical findings to derive a velocity boundary condition for rarefied gas flows at solid surfaces. Consequently, in an appendix to the paper, Maxwell proposed his now-famous velocity slip boundary condition.");
+        values.add(TILE_WEATHER+";24;05:00 PM;PS");
+
+        adapter = new ContentListAdapter(BrowseActivity.this, values);
+        actualListView.setAdapter(adapter);
+        mListView.setOnLastItemVisibleListener(new PullToRefreshBase.OnLastItemVisibleListener() {
+
+            @Override
+            public void onLastItemVisible() {
+                Toast.makeText(BrowseActivity.this, "End of List!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        mListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
+            @Override
+            public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+                //String label = DateUtils.formatDateTime(getApplicationContext(), System.currentTimeMillis(),DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
+
+                // Update the LastUpdatedLabel
+                //refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
+                // Do work to refresh the list here.
+                new GetNetworkDataTask().execute();
+            }
+        });
+        /*mPullRefreshScrollView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ScrollView>() {
 
             @Override
             public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
                 new GetNetworkDataTask().execute();
             }
-        });
+        });*/
 
-        mScrollView = mPullRefreshScrollView.getRefreshableView();
+        //mScrollView = mPullRefreshScrollView.getRefreshableView();
     }
 
 
-    public void addProgressBar()
+    /*public void addProgressBar()
     {
         progressViewGroup = (LinearLayout) findViewById(R.id.contentLinearLayout);
         LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -127,9 +163,45 @@ public class BrowseActivity extends ActionBarActivity
     public void removeProgressBar()
     {
         progressViewGroup.removeView(progressView);
-    }
+    }*/
 
     private class GetNetworkDataTask extends AsyncTask<Void, Void, String[]> {
+
+        @Override
+        protected String[] doInBackground(Void... params) {
+            // Perform data fetching here
+            try
+            {
+                Thread.sleep(4000);
+            }
+            catch (InterruptedException e) {
+            }
+            return new String[]
+                    {
+                            TILE_EDUCATION+";EDU;In 1879, Maxwell published a paper on the viscous stresses arising in rarefied gases. At the time, a reviewer commented that it also might be useful if Maxwell could use his theoretical findings to derive a velocity boundary condition for rarefied gas flows at solid surfaces. Consequently, in an appendix to the paper, Maxwell proposed his now-famous velocity slip boundary condition.",
+                    };
+        }
+
+        @Override
+        protected void onPostExecute(String[] result) {
+            // Do some UI related stuff here
+            for(int i=0;i<result.length;i++) {
+                addTile(BrowseActivity.this, result[i]);
+            }
+
+            mListView.onRefreshComplete();
+            super.onPostExecute(result);
+        }
+    }
+
+    private void addTile(Context context, String result)
+    {
+        values.add(result);
+        adapter.notifyDataSetChanged();
+    }
+
+
+    /*private class GetNetworkDataTask extends AsyncTask<Void, Void, String[]> {
 
         @Override
         protected String[] doInBackground(Void... params) {
@@ -155,8 +227,8 @@ public class BrowseActivity extends ActionBarActivity
                 manager.enqueue(request);
 
                 * */
-            }
-            catch (InterruptedException e) {
+            //}
+       /*     catch (InterruptedException e) {
             }
             return null;
         }
@@ -203,7 +275,7 @@ public class BrowseActivity extends ActionBarActivity
             // Call onRefreshComplete when the list has been refreshed.
             mPullRefreshScrollView.onRefreshComplete();
 
-            removeProgressBar();
+            //removeProgressBar();
 
             super.onPostExecute(result);
         }
@@ -298,7 +370,7 @@ public class BrowseActivity extends ActionBarActivity
                 Toast.makeText(getApplicationContext(),"Delete Post: "+v.getId(), Toast.LENGTH_SHORT).show();
             }
         });
-    }
+    }*/
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {

@@ -23,12 +23,17 @@ tools:context=".ui.WelcomeActivity">
             android:id="@+id/container"
             >
 
-            <com.handmark.pulltorefresh.library.PullToRefreshScrollView
+            <com.handmark.pulltorefresh.library.PullToRefreshListView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/contentListView">
+            </com.handmark.pulltorefresh.library.PullToRefreshListView>
+
+
+            <!--<com.handmark.pulltorefresh.library.PullToRefreshScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/contentScrollView">
-
-                <!-- Needs to be converted to ListView....Provides faster, smoother and big data update -->
 
                 <ListView
                     android:layout_width="match_parent"
@@ -44,10 +49,11 @@ tools:context=".ui.WelcomeActivity">
                     android:id="@+id/contentLinearLayout"
                     android:orientation="vertical">
 
+
                 </LinearLayout>
 
 
-            </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
+            </com.handmark.pulltorefresh.library.PullToRefreshScrollView>-->
 
         </FrameLayout>
 
