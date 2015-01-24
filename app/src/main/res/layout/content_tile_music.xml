@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="0dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
+    android:clipToPadding="false"
+    android:id="@+id/contentScrollTile"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:iosched="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        iosched:cardBackgroundColor="#fff"
+        iosched:cardCornerRadius="@dimen/card_corner_radius"
+        iosched:cardElevation="@dimen/card_elevation"
+        iosched:cardPreventCornerOverlap="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="14dp"
+            android:paddingRight="14dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="16dp"
+            android:background="@color/tile_bg"
+            android:gravity="center_vertical">
+
+            <LinearLayout
+                android:layout_height="50dp"
+                android:background="@color/tile_bg"
+                android:layout_width="match_parent">
+
+                <ImageView
+                    android:id="@+id/button_accept"
+                    android:layout_width="50dp"
+                    android:layout_weight="0"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/ic_music" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:text="MUSIC"
+                    android:textSize="@dimen/text_size_large"
+                    android:fontFamily="@string/font_fontFamily_medium"
+                    android:textColor="@color/theme_primary_light"
+                    android:id="@+id/content_tile_title"
+                    android:paddingTop="12dp"
+                    android:paddingLeft="10dp"/>
+
+                <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="35dp"
+                    android:layout_height="40dp"
+                    android:text=""
+                    android:background="@drawable/ic_video_play_light"
+                    android:id="@+id/content_tile_music_playBtn"
+                    android:layout_weight="0"
+                    android:shadowColor="@color/transparent"
+                    android:shadowRadius="0"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:padding="0dp"
+                    android:layout_gravity="top"
+                    android:layout_marginTop="0dp" />
+
+                <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="35dp"
+                    android:layout_height="40dp"
+                    android:text=""
+                    android:background="@drawable/tile_popup"
+                    android:id="@+id/tile_popup_button"
+                    android:layout_weight="0"
+                    android:shadowColor="@color/transparent"
+                    android:shadowRadius="0"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:padding="0dp"
+                    android:layout_gravity="top"
+                    android:layout_marginTop="0dp" />
+
+
+
+            </LinearLayout>
+
+            <SeekBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:gravity="center_vertical"
+                android:id="@+id/content_tile_music_seekBar"/>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+
+</LinearLayout>

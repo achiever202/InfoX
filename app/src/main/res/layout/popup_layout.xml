@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:iosched="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:id="@+id/popup"
+    android:layout_height="wrap_content"
+    android:background="@color/transparent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        iosched:cardBackgroundColor="@color/transparent"
+        iosched:cardCornerRadius="@dimen/card_corner_radius"
+        iosched:cardElevation="@dimen/card_elevation"
+        iosched:cardPreventCornerOverlap="false">
+
+        <TextView
+            android:id="@+id/popup_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delete"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/popup_fg"
+            android:paddingLeft="15dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingRight="15dp"
+            android:background="@color/popup_bg"
+            />
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

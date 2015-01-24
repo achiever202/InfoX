@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="font_fontFamily_medium">sans-serif</string>
+
+    <string name="font_textStyle_medium">10dp</string>
+
+    <string name="welcome_text">Before we begin, here is some important legal information regarding your use of this app. This will only take a minute!</string>
+
+    <string name="welcome_to_google_i_o_app">Welcome to InfoX</string>
+
+    <string name="sign_up">Sign Up</string>
+
+    <string name="login">login</string>
+
+    <string name="app_name">InfoX</string>
+
+    <string name="title_section1">Content</string>
+    <string name="title_section2">Groups</string>
+    <string name="title_section3">Settings</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_example">Example action</string>
+    <string name="action_settings">Settings</string>
+
+</resources>

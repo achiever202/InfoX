@@ -1,0 +1,382 @@
+package org.iith.scitech.infero.infox.ui;
+
+import android.app.Activity;
+import android.content.Context;
+import android.graphics.Point;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.ScrollView;
+import android.widget.Toast;
+import android.support.v4.app.ListFragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
+import android.support.v4.widget.CursorAdapter;
+import android.support.v4.widget.SimpleCursorAdapter;
+
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
+
+import org.iith.scitech.infero.infox.R;
+import org.iith.scitech.infero.infox.widget.EducationWidget;
+import org.iith.scitech.infero.infox.widget.MusicWidget;
+import org.iith.scitech.infero.infox.widget.VideoWidget;
+import org.iith.scitech.infero.infox.widget.WeatherWidget;
+
+import android.net.Uri;
+
+/**
+ * Created by shashank on 17/1/15.
+ */
+public class BrowseActivity extends ActionBarActivity
+        implements BrowseFragment.NavigationDrawerCallbacks
+{
+    /**
+     * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
+     */
+    private BrowseFragment mBrowseFragment;
+
+    private static final String TILE_EDUCATION = "tile_education";
+
+    private static final String TILE_WEATHER = "tile_weather";
+
+    private static final String TILE_MUSIC = "tile_music";
+
+    private static final String TILE_VIDEO = "tile_video";
+
+
+
+    /**
+     * Used to store the last screen title. For use in {@link #restoreActionBar()}.
+     */
+    private CharSequence mTitle;
+
+    PullToRefreshScrollView mPullRefreshScrollView;
+    ScrollView mScrollView;
+    LinearLayout.LayoutParams prms;
+    int tileCount = 0;
+    LinearLayout progressViewGroup;
+    View progressView;
+
+    LinearLayout tileViewGroup;
+    View tileView;
+
+    ListView mListView;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_browse);
+
+
+        mBrowseFragment = (BrowseFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+        mTitle = getTitle();
+
+        // Set up the drawer.
+        mBrowseFragment.setUp(R.id.navigation_drawer,(DrawerLayout) findViewById(R.id.drawer_layout));
+
+
+        prms = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        prms.weight = 1;
+        prms.gravity = Gravity.CENTER_VERTICAL;
+
+
+        addProgressBar();
+
+
+        mPullRefreshScrollView = (PullToRefreshScrollView) findViewById(R.id.contentScrollView);
+        mListView = (ListView) findViewById(R.id.contentListView);
+        mPullRefreshScrollView.setRefreshing();
+        new GetLocalDataTask().execute();
+        mPullRefreshScrollView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ScrollView>() {
+
+            @Override
+            public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
+                new GetNetworkDataTask().execute();
+            }
+        });
+
+        mScrollView = mPullRefreshScrollView.getRefreshableView();
+    }
+
+
+    public void addProgressBar()
+    {
+        progressViewGroup = (LinearLayout) findViewById(R.id.contentLinearLayout);
+        LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        progressView = layoutInflater.inflate(R.layout.content_progress_bar, null);
+        progressViewGroup.addView(progressView,0, prms);
+    }
+
+    public void removeProgressBar()
+    {
+        progressViewGroup.removeView(progressView);
+    }
+
+    private class GetNetworkDataTask extends AsyncTask<Void, Void, String[]> {
+
+        @Override
+        protected String[] doInBackground(Void... params) {
+            // Perform data fetching here
+            try
+            {
+                Thread.sleep(4000);
+            }
+            catch (InterruptedException e) {
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String[] result) {
+            // Do some UI related stuff here
+            addTile(BrowseActivity.this, prms, tileCount, TILE_EDUCATION, "EDU;In 1879, Maxwell published a paper on the viscous stresses arising in rarefied gases. At the time, a reviewer commented that it also might be useful if Maxwell could use his theoretical findings to derive a velocity boundary condition for rarefied gas flows at solid surfaces. Consequently, in an appendix to the paper, Maxwell proposed his now-famous velocity slip boundary condition.");
+            tileCount++;
+
+            // Call onRefreshComplete when the list has been refreshed.
+            mPullRefreshScrollView.onRefreshComplete();
+
+            super.onPostExecute(result);
+        }
+    }
+
+
+
+    private class GetLocalDataTask extends AsyncTask<Void, Void, String[]> {
+
+        @Override
+        protected String[] doInBackground(Void... params) {
+            // Perform data fetching here
+            try
+            {
+                Thread.sleep(3000);
+            }
+            catch (InterruptedException e) {
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String[] result) {
+            // Do some UI related stuff here
+
+            addTile(BrowseActivity.this, prms, tileCount, TILE_EDUCATION, "EDU;In 1879, Maxwell published a paper on the viscous stresses arising in rarefied gases. At the time, a reviewer commented that it also might be useful if Maxwell could use his theoretical findings to derive a velocity boundary condition for rarefied gas flows at solid surfaces. Consequently, in an appendix to the paper, Maxwell proposed his now-famous velocity slip boundary condition.");
+            addTile(BrowseActivity.this, prms, ++tileCount, TILE_WEATHER, "24;05:00 PM;PS");
+            addTile(BrowseActivity.this, prms, ++tileCount, TILE_MUSIC, "http://media.djmazadownload.com/music/320/indian_movies/Khamoshiyan%20(2015)/03%20-%20Khamoshiyan%20-%20Baatein%20Ye%20Kabhi%20Na%20(Male)%20%5BDJMaza.Info%5D.mp3");
+            addTile(BrowseActivity.this, prms, ++tileCount, TILE_VIDEO, "http://www.ebookfrenzy.com/android_book/movie.mp4");
+            tileCount++;
+
+            // Call onRefreshComplete when the list has been refreshed.
+            mPullRefreshScrollView.onRefreshComplete();
+
+            removeProgressBar();
+
+            super.onPostExecute(result);
+        }
+    }
+
+
+
+    private void addTile(final Activity context, LinearLayout.LayoutParams params, int i, final String tileType, final String data)
+    {
+        tileViewGroup = (LinearLayout) context.findViewById(R.id.contentLinearLayout);
+        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        switch (tileType)
+        {
+            case TILE_EDUCATION:
+                tileView = layoutInflater.inflate(R.layout.content_tile_education, null);
+                EducationWidget ew = new EducationWidget(tileView, BrowseActivity.this, data);
+                break;
+
+            case TILE_WEATHER:
+                tileView = layoutInflater.inflate(R.layout.content_tile_weather, null);
+                WeatherWidget ww = new WeatherWidget(tileView,BrowseActivity.this,data);
+                break;
+
+            case TILE_MUSIC:
+                tileView = layoutInflater.inflate(R.layout.content_tile_music, null);
+                MusicWidget mw = new MusicWidget(tileView, BrowseActivity.this, data);
+                break;
+
+            case TILE_VIDEO:
+                tileView = layoutInflater.inflate(R.layout.content_tile_video, null);
+                VideoWidget vw = new VideoWidget(tileView,BrowseActivity.this, data);
+                break;
+
+            default:
+                tileView = layoutInflater.inflate(R.layout.content_tile_education, null);
+                break;
+        }
+        tileView.findViewById(R.id.tile_popup_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int[] location = new int[2];
+                v.getLocationOnScreen(location);
+                Point point = new Point();
+                point.x = location[0];
+                point.y = location[1];
+                showStatusPopup(BrowseActivity.this, point, tileType);
+            }
+        });
+
+        tileViewGroup.addView(tileView, i, params);
+    }
+
+
+    private void removeTile(final Activity context, int i)
+    {
+        tileViewGroup.removeViewAt(i);
+    }
+
+
+
+    private void showStatusPopup(final Activity context, Point p, String tileType) {
+
+        // Inflate the popup_layout.xml
+        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View layout = layoutInflater.inflate(R.layout.popup_layout, null);
+
+        // Creating the PopupWindow
+        final PopupWindow changeStatusPopUp = new PopupWindow(context);
+        changeStatusPopUp.setContentView(layout);
+        changeStatusPopUp.setWidth(LinearLayout.LayoutParams.WRAP_CONTENT);
+        changeStatusPopUp.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
+        changeStatusPopUp.setFocusable(true);
+
+        // Some offset to align the popup a bit to the left, and a bit down, relative to button's position.
+        int OFFSET_X = -20;
+        int OFFSET_Y = 50;
+
+        //Clear the default translucent background
+        changeStatusPopUp.setBackgroundDrawable(new BitmapDrawable());
+
+        // Displaying the popup at the specified location, + offsets.
+        changeStatusPopUp.showAtLocation(layout, Gravity.NO_GRAVITY, p.x + OFFSET_X, p.y + OFFSET_Y);
+
+        layout.findViewById(R.id.popup_delete).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //removeTile(context,v.getId());
+                changeStatusPopUp.dismiss();
+                //changeStatusPopUp.getContentView().getParent().getParent().getParent().getParent().getParent()
+                Log.d("Delete Post Id: ", Integer.toString(v.getRootView().getRootView().getId()));
+                Toast.makeText(getApplicationContext(),"Delete Post: "+v.getId(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void onNavigationDrawerItemSelected(int position) {
+        // update the main content by replacing fragments
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+                .commit();
+    }
+
+    public void onSectionAttached(int number) {
+        switch (number) {
+            case 1:
+                mTitle = getString(R.string.title_section1);
+                break;
+            case 2:
+                mTitle = getString(R.string.title_section2);
+                break;
+            case 3:
+                mTitle = getString(R.string.title_section3);
+                break;
+        }
+    }
+
+    public void restoreActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setTitle(mTitle);
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (!mBrowseFragment.isDrawerOpen()) {
+            // Only show items in the action bar relevant to this screen
+            // if the drawer is not showing. Otherwise, let the drawer
+            // decide what to show in the action bar.
+            getMenuInflater().inflate(R.menu.main, menu);
+            restoreActionBar();
+            return true;
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * A placeholder fragment containing a simple view.
+     */
+    public static class PlaceholderFragment extends Fragment {
+        /**
+         * The fragment argument representing the section number for this
+         * fragment.
+         */
+        private static final String ARG_SECTION_NUMBER = "section_number";
+
+        /**
+         * Returns a new instance of this fragment for the given section
+         * number.
+         */
+        public static PlaceholderFragment newInstance(int sectionNumber) {
+            PlaceholderFragment fragment = new PlaceholderFragment();
+            Bundle args = new Bundle();
+            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            fragment.setArguments(args);
+            return fragment;
+        }
+
+        public PlaceholderFragment() {
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState)
+        {
+            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+            return rootView;
+        }
+
+        @Override
+        public void onAttach(Activity activity) {
+            super.onAttach(activity);
+            ((BrowseActivity) activity).onSectionAttached(
+                    getArguments().getInt(ARG_SECTION_NUMBER));
+        }
+    }
+}

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="0dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
+    android:clipToPadding="false"
+    android:id="@+id/contentScrollTile"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:iosched="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        iosched:cardBackgroundColor="#fff"
+        iosched:cardCornerRadius="@dimen/card_corner_radius"
+        iosched:cardElevation="@dimen/card_elevation"
+        iosched:cardPreventCornerOverlap="false">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="16dp"
+                android:background="@color/tile_bg"
+                android:gravity="center_vertical">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="60dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/img_content_type"
+                            android:layout_width="54dp"
+                            android:layout_height="45dp"
+                            android:background="@drawable/ic_weather_06" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="05:00 PM"
+                            android:textSize="@dimen/text_size_small"
+                            android:fontFamily="@string/font_fontFamily_medium"
+                            android:textColor="#7000"
+                            android:paddingLeft="5dp"
+                            android:id="@+id/content_tile_weather_time"
+                            android:gravity="center" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:paddingTop="0dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="24 ºC"
+                            android:textSize="@dimen/text_size_xxlarge"
+                            android:fontFamily="@string/font_fontFamily_medium"
+                            android:textColor="@color/theme_primary_light"
+                            android:id="@+id/content_tile_weather_temp"
+                            android:paddingTop="5dp"
+                            android:paddingLeft="10dp"
+                            android:layout_gravity="right" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_height="match_parent"
+                                android:text="Partly Sunny"
+                                android:textSize="@dimen/text_size_medium"
+                                android:fontFamily="@string/font_fontFamily_medium"
+                                android:textColor="#7000"
+                                android:id="@+id/content_tile_weather_type"
+                                android:paddingLeft="10dp"
+                                android:paddingTop="0dp"
+                                android:layout_gravity="right"/>
+
+                    </LinearLayout>
+
+                    <Button
+                        style="?android:attr/buttonStyleSmall"
+                        android:layout_width="35dp"
+                        android:layout_height="40dp"
+                        android:text=""
+                        android:background="@drawable/tile_popup"
+                        android:id="@+id/tile_popup_button"
+                        android:layout_weight="0"
+                        android:shadowColor="@color/transparent"
+                        android:shadowRadius="0"
+                        android:shadowDx="0"
+                        android:shadowDy="0"
+                        android:padding="0dp"
+                        android:gravity="top"
+                        android:layout_marginTop="0dp"
+                        android:layout_gravity="top" />
+
+
+                </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+
+</LinearLayout>
