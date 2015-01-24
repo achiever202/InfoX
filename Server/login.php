@@ -10,8 +10,8 @@
    	/* for post requests. */
    	if($_POST)
    	{
-   		$phone = $_POST['Phone'];
-   		$password = $_POST['Password'];
+   		$phone = mysqli_real_escape_string($connection, $_POST['Phone']);
+   		$password = mysqli_real_escape_string($connection, $_POST['Password']);
 
    		/* getting the record from the databse. */
       	$sql_query = "SELECT * FROM `users` WHERE `phone`='$phone' LIMIT 1";

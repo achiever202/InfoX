@@ -9,13 +9,13 @@
 
    /* TO-D0 change it to post request. */
    /* if post request. */
-   if($_GET)
+   if($_POST)
    {
       /* getting the details of the user from the POST request. */
-      $phone = $_GET['Phone'];
-      $name = $_GET['Name'];
-      $GCM_ID = $_GET['GCM_ID'];
-      $password = $_GET['Password'];
+      $phone = mysqli_real_escape_string($connection, $_POST['Phone']);
+      $name = mysqli_real_escape_string($connection, $_POST['Name']);
+      $GCM_ID = mysqli_real_escape_string($connection, $_POST['GCM_ID']);
+      $password = mysqli_real_escape_string($connection, $_POST['Password']);
 
       /* check if the phone is already registered. */
       $sql_query = "SELECT * FROM `users` WHERE `phone`='$phone' LIMIT 1";
