@@ -8,19 +8,45 @@ import android.util.Log;
 public class ContentListDatabase extends SQLiteOpenHelper {
     private static final String DEBUG_TAG = "ContentListDatabase";
     private static final int DB_VERSION = 1;
-    private static final String DB_NAME = "content_data";
+    private static final String DB_NAME = "infoX";
 
     public static final String TABLE_CONTENTS = "contents";
+    public static final String TABLE_LANGUAGES = "languages";
+    private static final String TABLE_CATEGORIES = "categories";
+    private static final String TABLE_CONTENT_TYPES = "content_types";
+
     public static final String ID = "_id";
-    public static final String COL_TITLE = "title";
-    public static final String COL_URL = "url";
 
-    private static final String CREATE_TABLE_CONTENTS = "create table "
-            + TABLE_CONTENTS + " (" + ID
-            + " integer primary key autoincrement, " + COL_TITLE
-            + " text not null, " + COL_URL + " text not null);";
+    private static final String CREATE_TABLE_LANGUAGES = "CREATE TABLE IF NOT EXISTS languages (" +
+            "lang_id CHAR(2) PRIMARY KEY," +
+            "name VARCHAR(255)" +
+            ");";
 
-    private static final String DB_SCHEMA = CREATE_TABLE_CONTENTS;
+    private static final String CREATE_TABLE_CATEGORIES = "CREATE TABLE IF NOT EXISTS categories (" +
+            "category_id CHAR(3) PRIMARY KEY," +
+            "name VARCHAR(255) NOT NULL UNIQUE," +
+            "description VARCHAR(1024)" +
+            ");";
+
+    private static final String CREATE_TABLE_CONTENT_TYPES = "CREATE TABLE IF NOT EXISTS content_types (" +
+            "content_type_id CHAR(3) PRIMARY KEY," +
+            "name VARCHAR(255) NOT NULL UNIQUE" +
+            ");";
+
+    private static final String CREATE_TABLE_CONTENTS = "CREATE TABLE IF NOT EXISTS contents ("
+            + "content_id INT(10) PRIMARY KEY AUTO_INCREMENT,"
+            + "file_name VARCHAR(255) NOT NULL,"
+            + "file_path VARCHAR(1024) NOT NULL,"
+            + "time_added TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,"
+            + "time_expiry TIMESTAMP,"
+            + "lang_id CHAR(2),"
+            + "category_id CHAR(3),"
+            + "content_type_id CHAR(3),"
+            + "FOREIGN KEY (lang_id) REFERENCES languages(lang_id) ON UPDATE CASCADE ON DELETE RESTRICT,"
+            + "FOREIGN KEY (category_id) REFERENCES categories(category_id) ON UPDATE CASCADE ON DELETE RESTRICT,"
+            + "FOREIGN KEY (content_type_id) REFERENCES content_types(content_type_id) ON UPDATE CASCADE ON DELETE RESTRICT" +
+            ");";
+
 
     public ContentListDatabase(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -28,7 +54,10 @@ public class ContentListDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(DB_SCHEMA);
+        db.execSQL(CREATE_TABLE_LANGUAGES);
+        db.execSQL(CREATE_TABLE_CATEGORIES);
+        db.execSQL(CREATE_TABLE_CONTENT_TYPES);
+        db.execSQL(CREATE_TABLE_CONTENTS);
         seedData(db);
     }
 
@@ -36,6 +65,9 @@ public class ContentListDatabase extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.w(DEBUG_TAG, "Upgrading database. Existing contents will be lost. ["
                 + oldVersion + "]->[" + newVersion + "]");
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_LANGUAGES);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CATEGORIES);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CONTENT_TYPES);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CONTENTS);
         onCreate(db);
     }
@@ -47,15 +79,17 @@ public class ContentListDatabase extends SQLiteOpenHelper {
      *            The open database
      */
     private void seedData(SQLiteDatabase db) {
-        db.execSQL("insert into tutorials (title, url) values ('Best of Tuts+ in February 2011', 'http://mobile.tutsplus.com/articles/news/best-of-tuts-in-february-2011/');");
-        db.execSQL("insert into tutorials (title, url) values ('Design & Build a 1980s iOS Phone App: Design Comp Slicing', 'http://mobile.tutsplus.com/tutorials/mobile-design-tutorials/80s-phone-app-slicing/');");
-        db.execSQL("insert into tutorials (title, url) values ('Create a Brick Breaker Game with the Corona SDK: Game Controls', 'http://mobile.tutsplus.com/tutorials/corona/create-a-brick-breaker-game-with-the-corona-sdk-game-controls/');");
-        db.execSQL("insert into tutorials (title, url) values ('Exporting Graphics for Mobile Apps: PNG or JPEG?', 'http://mobile.tutsplus.com/tutorials/mobile-design-tutorials/mobile-design_png-or-jpg/');");
-        db.execSQL("insert into tutorials (title, url) values ('Android Tablet Design', 'http://mobile.tutsplus.com/tutorials/android/android-tablet-design/');");
-        db.execSQL("insert into tutorials (title, url) values ('Build a Titanium Mobile Pizza Ordering App: Order Form Setup', 'http://mobile.tutsplus.com/tutorials/appcelerator/build-a-titanium-mobile-pizza-ordering-app-order-form-setup/');");
-        db.execSQL("insert into tutorials (title, url) values ('Create a Brick Breaker Game with the Corona SDK: Application Setup', 'http://mobile.tutsplus.com/tutorials/corona/corona-sdk_brick-breaker/');");
-        db.execSQL("insert into tutorials (title, url) values ('Android Tablet Virtual Device Configurations', 'http://mobile.tutsplus.com/tutorials/android/android-sdk_tablet_virtual-device-configuration/');");
-        db.execSQL("insert into tutorials (title, url) values ('Build a Titanium Mobile Pizza Ordering App: Topping Selection', 'http://mobile.tutsplus.com/tutorials/appcelerator/pizza-ordering-app-part-2/');");
-        db.execSQL("insert into tutorials (title, url) values ('Design & Build a 1980s iOS Phone App: Interface Builder Setup', 'http://mobile.tutsplus.com/tutorials/iphone/1980s-phone-app_interface-builder-setup/');");
+        db.execSQL("insert into languages (lang_id, name) values ('EN', 'English')");
+        db.execSQL("insert into languages (lang_id, name) values ('HI', 'Hindi')");
+
+        db.execSQL("insert into categories (category_id, name, description) values ('EDU', 'Education', 'Educational Content')");
+
+        db.execSQL("insert into content_types (content_type_id, name) values ('TXT', 'Text Content')");
+        db.execSQL("insert into content_types (content_type_id, name) values ('HTM', 'HTML Content')");
+        db.execSQL("insert into content_types (content_type_id, name) values ('AUD', 'Audio Content')");
+        db.execSQL("insert into content_types (content_type_id, name) values ('VID', 'Video Content')");
+
+        db.execSQL("insert into contents (file_name, file_path, time_expiry, lang_id, category_id, content_type_id) values ('ABC', 'Text Content', '2010-04-28 22:41:43', 'EN', 'EDU', 'TXT')");
+
     }
 }
