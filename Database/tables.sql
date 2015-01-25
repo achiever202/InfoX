@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS languages (
 
 -- Categories
 CREATE TABLE IF NOT EXISTS categories (
-	category_id INT(10) PRIMARY KEY AUTO_INCREMENT,
+	category_id CHAR(3) PRIMARY KEY,
 	name VARCHAR(255) NOT NULL UNIQUE,
 	description VARCHAR(1024)
 );
@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS categories (
 
 -- Content type - text, html, video, audio, etc
 CREATE TABLE IF NOT EXISTS content_types (
-	content_type_id INT(10) PRIMARY KEY AUTO_INCREMENT,
+	content_type_id CHAR(3) PRIMARY KEY,
 	name VARCHAR(255) NOT NULL UNIQUE
 );
 
@@ -28,8 +28,8 @@ CREATE TABLE IF NOT EXISTS contents (
 	time_added TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	time_expiry TIMESTAMP,
 	lang_id CHAR(2),
-	category_id INT(10),
-	content_type_id INT(10),
+	category_id CHAR(3),
+	content_type_id CHAR(3),
 	FOREIGN KEY (lang_id) REFERENCES languages(lang_id) ON UPDATE CASCADE ON DELETE RESTRICT,
 	FOREIGN KEY (category_id) REFERENCES categories(category_id) ON UPDATE CASCADE ON DELETE RESTRICT,
 	FOREIGN KEY (content_type_id) REFERENCES content_types(content_type_id) ON UPDATE CASCADE ON DELETE RESTRICT
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS users (
 -- User - category preferences
 CREATE TABLE IF NOT EXISTS preferences (
 	user_id INT(10) NOT NULL,
-	category_id INT(10) NOT NULL,
+	category_id CHAR(3) NOT NULL,
 	FOREIGN KEY (user_id) REFERENCES users(user_id) ON UPDATE CASCADE ON DELETE CASCADE,
 	FOREIGN KEY (category_id) REFERENCES categories(category_id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
