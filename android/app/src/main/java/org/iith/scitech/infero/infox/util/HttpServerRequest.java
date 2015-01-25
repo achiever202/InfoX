@@ -1,6 +1,7 @@
 package org.iith.scitech.infero.infox.util;
 
 import android.content.Context;
+import android.util.Log;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -33,26 +34,32 @@ public class HttpServerRequest {
 
     public String getReply(String... arguments)
     {
+        Log.v("NET", PrefUtils.getServerIP(context)+arguments[0]);
         /* create a httpClient and a new post request. */
         DefaultHttpClient httpClient = new DefaultHttpClient();
         HttpPost httpPostRequest = new HttpPost(PrefUtils.getServerIP(context)+arguments[0]);
 
-		/* extracting the number of arguments in the post requests. */
-        int numberOfArguments = Integer.parseInt(arguments[1]);
+        if((arguments.length & 1)==0)
+            return "";
+
+        Log.v("NET", "Sending...2");
 
 		/* creating the name-value pairs for the post request. */
-        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(numberOfArguments);
-        for(int i=2; i<(numberOfArguments*2)+2; i=i+2)
+        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+        for(int i=1; i<arguments.length; i=i+2)
             nameValuePairs.add(new BasicNameValuePair(arguments[i], arguments[i+1]));
 
         try
         {
 			/* sending the post request. */
             httpPostRequest.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            Log.v("NET","executiing");
             HttpResponse httpResponse = httpClient.execute(httpPostRequest);
+            Log.v("NET" ,"executed");
 
             HttpEntity httpEntity = httpResponse.getEntity();
             reply = EntityUtils.toString(httpEntity);
+            Log.v("NET", "Got reply: "+reply);
 
         }
         catch (UnsupportedEncodingException e)

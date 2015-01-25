@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -26,6 +27,9 @@ import org.iith.scitech.infero.infox.R;
 import org.iith.scitech.infero.infox.swipetodismiss.SwipeDismissListViewTouchListener;
 import org.iith.scitech.infero.infox.util.HttpServerRequest;
 import org.iith.scitech.infero.infox.util.ServerRequest;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONStringer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -146,13 +150,25 @@ public class BrowseActivity extends ActionBarActivity implements NavigationFragm
     }
 
 
-    private class GetNetworkDataTask extends AsyncTask<Void, Void, String[]> {
+    private class GetNetworkDataTask extends AsyncTask<Void, Void, JSONObject> {
 
         @Override
-        protected String[] doInBackground(Void... params) {
+        protected JSONObject doInBackground(Void... params) {
             // Perform data fetching here
+            Log.v("NET", "Sending...");
 
-            return new String[] {new HttpServerRequest(BrowseActivity.this).getReply(new String[]{"echo.php"})};
+
+            JSONObject jsonObject = null;
+            try
+            {
+                jsonObject = new JSONObject(new HttpServerRequest(BrowseActivity.this).getReply(new String[]{"download.php"}));
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return jsonObject;
+
             /*new String[]
                     {
                             TILE_EDUCATION+";EDU;In 1879, Maxwell published a paper on the viscous stresses arising in rarefied gases. At the time, a reviewer commented that it also might be useful if Maxwell could use his theoretical findings to derive a velocity boundary condition for rarefied gas flows at solid surfaces. Consequently, in an appendix to the paper, Maxwell proposed his now-famous velocity slip boundary condition."
@@ -160,21 +176,100 @@ public class BrowseActivity extends ActionBarActivity implements NavigationFragm
         }
 
         @Override
-        protected void onPostExecute(String[] result) {
+        protected void onPostExecute(JSONObject jsonObject) {
             // Do some UI related stuff here
-            for(int i=0;i<result.length;i++) {
-                addTile(BrowseActivity.this, result[i]);
+            JSONArray jsonArray = null;
+            try {
+                jsonArray = (JSONArray) jsonObject.get("data");
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+
+            for(int i=0;i<jsonArray.length();i++) {
+                JSONObject indObject = null;
+                try
+                {
+                    indObject = (JSONObject) jsonArray.get(i);
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+                addTile(BrowseActivity.this, indObject);
+                Toast.makeText(BrowseActivity.this, indObject.toString(), Toast.LENGTH_SHORT).show();
             }
 
             mListView.onRefreshComplete();
-            super.onPostExecute(result);
+            super.onPostExecute(jsonObject);
         }
     }
 
-    private class GetLocalDataTask extends AsyncTask<Void, Void, String[]> {
+    private class GetLocalDataTask extends AsyncTask<Void, Void, JSONObject> {
 
         @Override
-        protected String[] doInBackground(Void... params) {
+        protected JSONObject doInBackground(Void... params) {
+            // Perform data fetching here
+            Log.v("NET", "Sending...");
+
+            JSONObject jsonObject = null;
+            try
+            {
+                jsonObject = new JSONObject("{\"status\":200,\"data\":[{\"tileType\":\"tile_education\",\"category\":\"EDU\",\"content\":\"Ye duniya, ye duniya peetal di. Ye duniya peetal di. Baby doll mai sone di.\",\"downloadRequired\":0},{\"tileType\":\"tile_weather\",\"category\":\"PS\",\"content\":\"24;05:00 PM;23rd Jan\",\"downloadRequired\":0}]}");
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return jsonObject;
+
+            /*new String[]
+                    {
+                            TILE_EDUCATION+";EDU;In 1879, Maxwell published a paper on the viscous stresses arising in rarefied gases. At the time, a reviewer commented that it also might be useful if Maxwell could use his theoretical findings to derive a velocity boundary condition for rarefied gas flows at solid surfaces. Consequently, in an appendix to the paper, Maxwell proposed his now-famous velocity slip boundary condition."
+                    };*/
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject jsonObject) {
+            // Do some UI related stuff here
+            JSONArray jsonArray = null;
+            try {
+                jsonArray = (JSONArray) jsonObject.get("data");
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+
+            for(int i=0;i<jsonArray.length();i++) {
+                JSONObject indObject = null;
+                try
+                {
+                    indObject = (JSONObject) jsonArray.get(i);
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+                addTile(BrowseActivity.this, indObject);
+                //Toast.makeText(BrowseActivity.this, indObject.toString(), Toast.LENGTH_SHORT).show();
+            }
+
+            if(isRefreshing) {
+                removeProgressBar();
+                isRefreshing = false;
+            }
+
+            mListView.onRefreshComplete();
+            super.onPostExecute(jsonObject);
+        }
+    }
+
+    /*private class GetLocalDataTask extends AsyncTask<Void, Void, JSONObject> {
+
+        @Override
+        protected JSONObject doInBackground(Void... params) {
             // Perform data fetching here
             try
             {
@@ -192,10 +287,10 @@ public class BrowseActivity extends ActionBarActivity implements NavigationFragm
         }
 
         @Override
-        protected void onPostExecute(String[] result) {
+        protected void onPostExecute(JSONObject result) {
             // Do some UI related stuff here
-            for(int i=0;i<result.length;i++) {
-                addTile(BrowseActivity.this, result[i]);
+            for(int i=0;i<result.length();i++) {
+                addTile(BrowseActivity.this, result.get());
             }
 
             if(isRefreshing) {
@@ -206,11 +301,11 @@ public class BrowseActivity extends ActionBarActivity implements NavigationFragm
             mListView.onRefreshComplete();
             super.onPostExecute(result);
         }
-    }
+    }*/
 
-    private void addTile(Context context, String result)
+    private void addTile(Context context, JSONObject result)
     {
-        values.add(result);
+        values.add(result.toString());
         adapter.notifyDataSetChanged();
     }
 

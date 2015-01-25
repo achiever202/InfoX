@@ -204,7 +204,7 @@ public class PrefUtils  {
 
     public static String getServerIP(final Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        return sp.getString(PREF_SERVER_IP, "http://127.0.0.1:80/infox/");
+        return sp.getString(PREF_SERVER_IP, "http://172.16.13.63:80/infox/");
     }
 
     public static void setServerIP(final Context context, String name) {

@@ -33,6 +33,7 @@ import org.iith.scitech.infero.infox.widget.EducationWidget;
 import org.iith.scitech.infero.infox.widget.MusicWidget;
 import org.iith.scitech.infero.infox.widget.VideoWidget;
 import org.iith.scitech.infero.infox.widget.WeatherWidget;
+import org.json.JSONObject;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -69,7 +70,9 @@ public class ContentListAdapter extends ArrayAdapter<String> {
     @Override
     public int getItemViewType(int position) {
         int retVal = -1;
-        switch (values.get(position).split(";")[0])
+        JSONObject jsonObject = null;
+        String tileType = getData(values.get(position), "tileType");
+        switch (tileType)
         {
             case BrowseActivity.TILE_EDUCATION:
                 retVal = 0;
@@ -107,9 +110,9 @@ public class ContentListAdapter extends ArrayAdapter<String> {
             TextView educationTypeT = (TextView) rowView.findViewById(R.id.content_tile_education_type);
             TextView educationText = (TextView) rowView.findViewById(R.id.content_tile_education_text);
 
-            educationText.setText(s.split(";")[2]);
+            educationText.setText(getData(s,"content"));
 
-            switch (s.split(";")[1])
+            switch (getData(s,"category"))
             {
                 case "EDU":
                     educationTypeI.setImageResource(R.drawable.ic_education);
@@ -125,11 +128,13 @@ public class ContentListAdapter extends ArrayAdapter<String> {
             TextView weatherTemp = (TextView) rowView.findViewById(R.id.content_tile_weather_temp);
             TextView weatherTypeT = (TextView) rowView.findViewById(R.id.content_tile_weather_type);
             TextView weatherTime = (TextView) rowView.findViewById(R.id.content_tile_weather_time);
+            TextView weatherDay = (TextView) rowView.findViewById(R.id.content_tile_weather_day);
 
-            weatherTemp.setText(s.split(";")[1]+" ºC");
-            weatherTime.setText(s.split(";")[2]);
+            weatherTemp.setText(getData(s,"content").split(";")[0]+" ºC");
+            weatherTime.setText(getData(s,"content").split(";")[1]);
+            weatherDay.setText(getData(s,"content").split(";")[2]);
 
-            switch (s.split(";")[3])
+            switch (getData(s,"category"))
             {
                 case "PS":
                     weatherTypeI.setImageResource(R.drawable.ic_weather_02);
@@ -146,7 +151,7 @@ public class ContentListAdapter extends ArrayAdapter<String> {
             try
             {
                 //mediaPlayer.setDataSource("/sdcard/Music/maine.mp3");//Write your location here
-                Uri uri = Uri.parse(s.split(";")[1]);
+                Uri uri = Uri.parse(getData(s,"content"));
                 mediaPlayer.setDataSource(context, uri);
             }
             catch(Exception e){e.printStackTrace();}
@@ -297,7 +302,7 @@ public class ContentListAdapter extends ArrayAdapter<String> {
                     });
 
                     videoView.start();*/
-                    PrefUtils.setCurrentVideoPath(context, values.get(position).split(";")[1]);
+                    PrefUtils.setCurrentVideoPath(context, getData(values.get(position),"content"));
                     Intent intent = new Intent(context, VideoDialog.class);
                     context.startActivity(intent);
                 }
@@ -356,5 +361,20 @@ public class ContentListAdapter extends ArrayAdapter<String> {
                 notifyDataSetChanged();
             }
         });
+    }
+
+    public String getData(String data, String key)
+    {
+        JSONObject jsonObject = null;
+        String ret = "";
+        try
+        {
+            jsonObject = new JSONObject(data);
+            ret = jsonObject.getString(key);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ret;
     }
 }
