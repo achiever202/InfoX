@@ -3,22 +3,23 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingBottom="8dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
     android:paddingTop="8dp"
     android:clipToPadding="false"
     android:id="@+id/contentScrollTile"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:iosched="http://schemas.android.com/apk/res-auto">
+    xmlns:iosched="http://schemas.android.com/apk/res-auto"
+    android:background="@color/gray_background">
 
     <VideoView
         android:layout_width="match_parent"
         android:layout_height="144dp"
         android:id="@+id/content_tile_video_videoView"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="8dp"
-        android:background="#7000"/>
+        android:layout_marginTop="0dp"
+        android:background="#000"/>
 
 
 </LinearLayout>

@@ -1,0 +1,25 @@
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+    <PreferenceCategory
+        android:title="Preferences"
+        android:key="pref_key_storage_settings">
+        <CheckBoxPreference
+            android:key="pref_key_sync"
+            android:summary="Download content automatically on internet connection"
+            android:title="Auto Sync"
+            android:defaultValue="false" />
+
+        <ListPreference
+            android:dependency="pref_contentType"
+            android:key="pref_contentType"
+            android:title="Content Preferences"
+            android:dialogTitle="Content Preferences"
+            android:entries="@array/pref_contentTypes_entries"
+            android:entryValues="@array/pref_contentTypes_values"
+            android:defaultValue="0" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

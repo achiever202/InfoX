@@ -56,6 +56,8 @@ public class PrefUtils  {
 
     public static final String PREF_PHONE_NUMBER = "pref_phone_number";
 
+    public static final String PREF_NAME = "pref_name";
+
     public static final String PREF_LOGIN_PASSWORD = "pref_login_password";
 
     public static final String PREF_LOGIN_STATUS = "pref_login_status";
@@ -185,6 +187,16 @@ public class PrefUtils  {
         return sp.getString(PREF_PHONE_NUMBER, "7382547459");
     }
 
+    public static String getName(final Context context) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.getString(PREF_NAME, "SHASHANK JAISWAL");
+    }
+
+    public static void setName(final Context context, String name) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        sp.edit().putString(PREF_NAME, name).commit();
+    }
+
     public static boolean getLoginStatus(final Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         return sp.getBoolean(PREF_LOGIN_STATUS, false);
@@ -192,7 +204,7 @@ public class PrefUtils  {
 
     public static void setLoginStatus(final Context context, final Boolean value) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        sp.edit().putBoolean(PREF_LOGIN_STATUS, value);
+        sp.edit().putBoolean(PREF_LOGIN_STATUS, value).commit();
     }
 
     public static String getLoginPassword(final Context context) {

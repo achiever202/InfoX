@@ -1,6 +1,7 @@
 package org.iith.scitech.infero.infox.ui;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -20,9 +21,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.iith.scitech.infero.infox.R;
+import org.iith.scitech.infero.infox.util.PrefUtils;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -104,6 +107,12 @@ public class BrowseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState)
     {
         mDrawerListView = (ListView) inflater.inflate(R.layout.fragment_browse_drawer, container, false);
+        View mDrawerHeaderView = (View)inflater.inflate(R.layout.fragment_navigation_header, mDrawerListView, false);
+        ((TextView) mDrawerHeaderView.findViewById(R.id.header_name)).setText(PrefUtils.getName(getActionBar().getThemedContext()));
+        ((TextView) mDrawerHeaderView.findViewById(R.id.header_phNo)).setText(PrefUtils.getPhoneNumber(getActionBar().getThemedContext()));
+        mDrawerListView.addHeaderView(mDrawerHeaderView, null, false);
+
+
         mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

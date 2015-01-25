@@ -1,0 +1,128 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:iosched="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.WelcomeActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#e5e5e5">
+
+        <ImageView
+            android:src="@drawable/io2014_logo"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:scaleType="fitCenter"
+            android:tint="#7000"
+            android:layout_gravity="center|top" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="16dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="100dp"
+                android:clipToPadding="false">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:paddingLeft="24dp"
+                        android:paddingRight="24dp">
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@string/font_fontFamily_medium"
+                            android:hint="Phone Number:"
+                            android:textColor="@color/text_bg"
+                            android:textColorHint="@color/text_hint_bg"
+                            android:textSize="@dimen/abc_text_size_medium_material"
+                            android:background="@drawable/edit_text"
+                            android:layout_margin="6dp"
+                            android:paddingBottom="4dp"
+                            android:id="@+id/loginName"
+                            android:inputType="textPersonName" />
+
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@string/font_fontFamily_medium"
+                            android:hint="Phone Number:"
+                            android:textColor="@color/text_bg"
+                            android:textColorHint="@color/text_hint_bg"
+                            android:textSize="@dimen/abc_text_size_medium_material"
+                            android:background="@drawable/edit_text"
+                            android:layout_margin="6dp"
+                            android:paddingBottom="4dp"
+                            android:id="@+id/loginPhone"
+                            android:inputType="phone" />
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@string/font_fontFamily_medium"
+                            android:hint="Password:"
+                            android:textColor="@color/text_bg"
+                            android:textColorHint="@color/text_hint_bg"
+                            android:textSize="@dimen/abc_text_size_medium_material"
+                            android:background="@drawable/edit_text"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginRight="6dp"
+                            android:id="@+id/loginPass"
+                            android:inputType="textPassword"
+                            android:paddingBottom="4dp"/>
+
+                    </LinearLayout>
+            </FrameLayout>
+        </ScrollView>
+
+    </FrameLayout>
+
+    <!-- Button bar -->
+    <LinearLayout
+        android:layout_height="48dp"
+        android:background="@color/theme_primary"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent">
+
+        <Button
+            android:id="@+id/button_login"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="@string/login"
+            android:textSize="@dimen/text_size_medium"
+            android:fontFamily="@string/font_fontFamily_medium"
+            android:textAllCaps="true"
+            android:textColor="#8fff"
+            android:background="@color/theme_primary"
+            />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="@string/sign_up"
+            android:textColor="#fff"
+            android:textSize="@dimen/text_size_medium"
+            android:fontFamily="@string/font_fontFamily_medium"
+            android:textAllCaps="true"
+            android:id="@+id/button_signUp"
+            android:background="@color/theme_primary"/>
+
+
+    </LinearLayout>
+</LinearLayout>

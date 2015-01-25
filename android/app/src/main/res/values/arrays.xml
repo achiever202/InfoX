@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="pref_contentTypes_entries">
+        <item>Education</item>
+        <item>Weather</item>
+        <item>Recorded Audio</item>
+        <item>Video</item>
+    </array>
+
+    <array name="pref_contentTypes_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </array>
+
+</resources>

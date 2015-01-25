@@ -1,0 +1,42 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relativelayout"
+    android:layout_width="fill_parent"
+    android:layout_height="150dp" >
+
+    <ImageView
+        android:id="@+id/header_imView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/io2014_logo" />
+
+    <TextView
+        android:id="@+id/header_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/header_imView"
+        android:layout_alignTop="@+id/header_imView"
+        android:layout_alignRight="@+id/header_imView"
+        android:layout_alignBottom="@+id/header_imView"
+        android:paddingBottom="15dp"
+        android:paddingRight="10dp"
+        android:textSize="@dimen/text_size_medium"
+        android:gravity="right|bottom"
+        android:text="Hello"
+        android:textColor="@color/theme_primary" />
+
+    <TextView
+        android:id="@+id/header_phNo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/header_imView"
+        android:layout_alignTop="@+id/header_imView"
+        android:layout_alignRight="@+id/header_imView"
+        android:layout_alignBottom="@+id/header_imView"
+        android:paddingBottom="0dp"
+        android:paddingRight="10dp"
+        android:gravity="right|bottom"
+        android:text="Hello"
+        android:textColor="@color/theme_primary_light" />
+
+</RelativeLayout>

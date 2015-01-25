@@ -160,7 +160,7 @@ public class BrowseActivity extends ActionBarActivity
         // we don't look for swipes.
         mListView.getRefreshableView().setOnScrollListener(touchListener.makeScrollListener());
 
-        //mListView.getRefreshableView().setDividerHeight(0);
+        mListView.getRefreshableView().setDividerHeight(0);
 
         /*mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -488,7 +488,7 @@ public class BrowseActivity extends ActionBarActivity
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+                .replace(R.id.container, PlaceholderFragment.newInstance(position))
                 .commit();
     }
 
@@ -556,10 +556,12 @@ public class BrowseActivity extends ActionBarActivity
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
+        static int  sectionNumber = -1;
+        public static PlaceholderFragment newInstance(int secNum) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            sectionNumber = secNum;
+            args.putInt(ARG_SECTION_NUMBER, secNum);
             fragment.setArguments(args);
             return fragment;
         }
@@ -571,6 +573,14 @@ public class BrowseActivity extends ActionBarActivity
         public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState)
         {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+            if(sectionNumber==1)
+                rootView = inflater.inflate(R.layout.fragment_main, container, false);
+            else
+            if(sectionNumber==2)
+                rootView = inflater.inflate(R.layout.fragment_main, container, false);
+            else
+            if(sectionNumber==3)
+                rootView = inflater.inflate(R.layout.fragment_settings, container, false);
             return rootView;
         }
 

@@ -49,6 +49,8 @@ public class WelcomeActivity extends ActionBarActivity {
         findViewById(R.id.button_signUp).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(WelcomeActivity.this, SignupActivity.class);
+                startActivity(intent);
                 finish();
             }
         });

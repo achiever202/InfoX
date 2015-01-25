@@ -17,8 +17,6 @@
 package org.iith.scitech.infero.infox.ui;
 
 import android.app.ListFragment;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,7 +43,7 @@ public class SettingsFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.activity_settings, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
         return rootView;
     }
 
