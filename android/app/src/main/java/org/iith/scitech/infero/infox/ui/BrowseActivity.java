@@ -24,9 +24,12 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import org.iith.scitech.infero.infox.R;
 import org.iith.scitech.infero.infox.swipetodismiss.SwipeDismissListViewTouchListener;
+import org.iith.scitech.infero.infox.util.HttpServerRequest;
+import org.iith.scitech.infero.infox.util.ServerRequest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by shashank on 17/1/15.
@@ -148,16 +151,12 @@ public class BrowseActivity extends ActionBarActivity implements NavigationFragm
         @Override
         protected String[] doInBackground(Void... params) {
             // Perform data fetching here
-            try
-            {
-                Thread.sleep(4000);
-            }
-            catch (InterruptedException e) {
-            }
-            return new String[]
+
+            return new String[] {new HttpServerRequest(BrowseActivity.this).getReply(new String[]{"echo.php"})};
+            /*new String[]
                     {
-                            TILE_EDUCATION+";EDU;In 1879, Maxwell published a paper on the viscous stresses arising in rarefied gases. At the time, a reviewer commented that it also might be useful if Maxwell could use his theoretical findings to derive a velocity boundary condition for rarefied gas flows at solid surfaces. Consequently, in an appendix to the paper, Maxwell proposed his now-famous velocity slip boundary condition.",
-                    };
+                            TILE_EDUCATION+";EDU;In 1879, Maxwell published a paper on the viscous stresses arising in rarefied gases. At the time, a reviewer commented that it also might be useful if Maxwell could use his theoretical findings to derive a velocity boundary condition for rarefied gas flows at solid surfaces. Consequently, in an appendix to the paper, Maxwell proposed his now-famous velocity slip boundary condition."
+                    };*/
         }
 
         @Override

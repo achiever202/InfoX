@@ -3,6 +3,7 @@ package org.iith.scitech.infero.infox.ui;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
@@ -27,6 +28,7 @@ import android.widget.Toast;
 import android.widget.VideoView;
 
 import org.iith.scitech.infero.infox.R;
+import org.iith.scitech.infero.infox.util.PrefUtils;
 import org.iith.scitech.infero.infox.widget.EducationWidget;
 import org.iith.scitech.infero.infox.widget.MusicWidget;
 import org.iith.scitech.infero.infox.widget.VideoWidget;
@@ -265,7 +267,7 @@ public class ContentListAdapter extends ArrayAdapter<String> {
             rowView.findViewById(R.id.content_tile_video_videoView).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    final Dialog dialog = new Dialog(context);
+                    /*final Dialog dialog = new Dialog(context);
                     WindowManager.LayoutParams lp = new WindowManager.LayoutParams(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
                     lp.dimAmount = 0;
                     lp.copyFrom(dialog.getWindow().getAttributes());
@@ -278,11 +280,11 @@ public class ContentListAdapter extends ArrayAdapter<String> {
 
                     final VideoView videoView = (VideoView) dialog.findViewById(R.id.content_tile_video_videoView);
                     videoView.setVideoPath(values.get(position).split(";")[1]);
-                    videoView.setZOrderOnTop(true);
+                    videoView.setZOrderMediaOverlay(true);
                     videoView.requestFocus();
-                    //MediaController mediaController = new MediaController(context);
-                    //mediaController.setAnchorView(videoView);
-                    //videoView.setMediaController(mediaController);
+                    MediaController mediaController = new MediaController(dialog.getContext());
+                    mediaController.setAnchorView(videoView);
+                    videoView.setMediaController(mediaController);
                     //mediaController.show();
 
                     videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener()  {
@@ -294,7 +296,10 @@ public class ContentListAdapter extends ArrayAdapter<String> {
                         }
                     });
 
-                    videoView.start();
+                    videoView.start();*/
+                    PrefUtils.setCurrentVideoPath(context, values.get(position).split(";")[1]);
+                    Intent intent = new Intent(context, VideoDialog.class);
+                    context.startActivity(intent);
                 }
             });
 
