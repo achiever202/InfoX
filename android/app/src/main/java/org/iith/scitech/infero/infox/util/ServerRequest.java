@@ -1,4 +1,4 @@
-package adarsh.awesomeapps.androidtracker;
+package org.iith.scitech.infero.infox.util;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -46,7 +46,7 @@ public class ServerRequest extends AsyncTask<String, Void, String>
 	{
 		/* create a httpClient and a new post request. */
 		DefaultHttpClient httpClient = new DefaultHttpClient();
-		HttpPost httpPostRequest = new HttpPost("http://172.16.0.43/AndroidTracker/"+arguments[0]);
+		HttpPost httpPostRequest = new HttpPost(PrefUtils.getServerIP(context)+arguments[0]);
 		
 		/* extracting the number of arguments in the post requests. */
 		int numberOfArguments = Integer.parseInt(arguments[1]);

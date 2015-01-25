@@ -28,6 +28,17 @@
         </activity>
 
         <activity
+            android:name=".ui.VideoDialog"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Holo.Dialog.NoActionBar"
+            android:hardwareAccelerated="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
             android:name=".ui.BrowseActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme"
@@ -41,6 +52,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>-->
         </activity>
+
+
 
     </application>
 
