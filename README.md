@@ -11,5 +11,5 @@ This was developed as an entry to the Open Software Challenge at Inter-IIT Tech 
 
 
 
-#![Screenshot](android/screenshots/swipeToDismiss.png)
-#![Screenshot](android/screenshots/leftMenu.png)
+
+
