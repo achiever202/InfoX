@@ -50,8 +50,8 @@
       <file leaf-file-name="BrowseActivity.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/ui/BrowseActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6" vertical-offset="3945" max-vertical-offset="6405">
-              <caret line="284" column="39" selection-start-line="284" selection-start-column="39" selection-end-line="284" selection-end-column="88" />
+            <state vertical-scroll-proportion="0.17142858" vertical-offset="3180" max-vertical-offset="6405">
+              <caret line="218" column="187" selection-start-line="218" selection-start-column="187" selection-end-line="218" selection-end-column="187" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#3222#3462#0" expanded="true" />
@@ -60,9 +60,9 @@
                 <element signature="e#3721#3722#0" expanded="true" />
                 <element signature="e#4094#4095#0" expanded="true" />
                 <element signature="e#4169#4170#0" expanded="true" />
-                <element signature="e#12272#12306#0" expanded="true" />
-                <element signature="e#12376#12410#0" expanded="true" />
-                <element signature="e#12480#12514#0" expanded="true" />
+                <element signature="e#12654#12688#0" expanded="true" />
+                <element signature="e#12758#12792#0" expanded="true" />
+                <element signature="e#12862#12896#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -1278,8 +1278,8 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_welcome.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/util/HttpServerRequest.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/ui/ContentListAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/ui/BrowseActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/content_tile_weather.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/ui/BrowseActivity.java" />
       </list>
     </option>
   </component>
@@ -1749,7 +1749,7 @@
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32984003" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32943678" sideWeight="0.4997242" order="15" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3995749" sideWeight="0.4997242" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3995749" sideWeight="0.4997242" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32943678" sideWeight="0.5002758" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
@@ -2287,8 +2287,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/ui/BrowseActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6" vertical-offset="3945" max-vertical-offset="6405">
-          <caret line="284" column="39" selection-start-line="284" selection-start-column="39" selection-end-line="284" selection-end-column="88" />
+        <state vertical-scroll-proportion="0.17142858" vertical-offset="3180" max-vertical-offset="6405">
+          <caret line="218" column="187" selection-start-line="218" selection-start-column="187" selection-end-line="218" selection-end-column="187" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#3222#3462#0" expanded="true" />
@@ -2297,9 +2297,9 @@
             <element signature="e#3721#3722#0" expanded="true" />
             <element signature="e#4094#4095#0" expanded="true" />
             <element signature="e#4169#4170#0" expanded="true" />
-            <element signature="e#12272#12306#0" expanded="true" />
-            <element signature="e#12376#12410#0" expanded="true" />
-            <element signature="e#12480#12514#0" expanded="true" />
+            <element signature="e#12654#12688#0" expanded="true" />
+            <element signature="e#12758#12792#0" expanded="true" />
+            <element signature="e#12862#12896#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -216,7 +216,7 @@ public class BrowseActivity extends ActionBarActivity implements NavigationFragm
             JSONObject jsonObject = null;
             try
             {
-                jsonObject = new JSONObject("{\"status\":200,\"data\":[{\"tileType\":\"tile_education\",\"category\":\"EDU\",\"content\":\"Ye duniya, ye duniya peetal di. Ye duniya peetal di. Baby doll mai sone di.\",\"downloadRequired\":0},{\"tileType\":\"tile_weather\",\"category\":\"PS\",\"content\":\"24;05:00 PM;23rd Jan\",\"downloadRequired\":0}]}");
+                jsonObject = new JSONObject("{\"status\":\"200\",\"data\":[{\"tileType\":\"tile_education\",\"category\":\"EDU\",\"content\":\"Boolean getData(String m, String key)\n{\n\treturn m.equals(n);\n}\",\"downloadRequired\":0},{\"tileType\":\"tile_weather\",\"category\":\"PS\",\"content\":\"24;05:00 PM;23rd Jan\",\"downloadRequired\":0},{\"tileType\":\"tile_music\",\"category\":\"\",\"content\":\"http://media.djmazadownload.com/music/320/indian_movies/Khamoshiyan%20(2015)/03%20-%20Khamoshiyan%20-%20Baatein%20Ye%20Kabhi%20Na%20(Male)%20%5BDJMaza.Info%5D.mp3\",\"downloadRequired\":0},{\"tileType\":\"tile_video\",\"category\":\"\",\"content\":\"http://www.ebookfrenzy.com/android_book/movie.mp4\",\"downloadRequired\":0}]}");
             }
             catch (Exception e) {
                 e.printStackTrace();
