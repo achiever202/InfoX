@@ -1,55 +1,17 @@
-/*
- * Copyright 2014 Google Inc. All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.iith.scitech.infero.infox.ui;
 
-import android.app.ListFragment;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.app.Fragment;
+import android.support.v4.app.FragmentManager;
 
 import org.iith.scitech.infero.infox.R;
 
 /**
- * ListFragment for displaying BLE devices.
+ * Created by shashank on 25/1/15.
  */
-public class SettingsFragment extends ListFragment {
-    public static String ARG_HAS_HEADER = "hasHeader";
-
-    public static SettingsFragment newInstance(boolean hasHeader) {
-        SettingsFragment fragment = new SettingsFragment();
-        Bundle args = new Bundle();
-        args.putBoolean(ARG_HAS_HEADER, hasHeader);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
+public class SettingsFragment extends Fragment implements NavigationFragment.NavigationDrawerCallbacks
+{
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
-        return rootView;
-    }
+    public void onNavigationDrawerItemSelected(int position) {
 
-    @Override
-    public void onListItemClick(ListView parent, View view, int position, long id) {
-            Toast.makeText(getActivity(), "No URL found.", Toast.LENGTH_SHORT).show();
     }
-
 }

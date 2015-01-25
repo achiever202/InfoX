@@ -32,7 +32,7 @@ import org.iith.scitech.infero.infox.util.PrefUtils;
  * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
  */
-public class BrowseFragment extends Fragment {
+public class NavigationFragment extends Fragment {
 
     /**
      * Remember the position of the selected item.
@@ -65,7 +65,7 @@ public class BrowseFragment extends Fragment {
 
 
 
-    public BrowseFragment() {
+    public NavigationFragment() {
     }
 
 
@@ -191,8 +191,7 @@ public class BrowseFragment extends Fragment {
                     // The user manually opened the drawer; store this flag to prevent auto-showing
                     // the navigation drawer automatically in the future.
                     mUserLearnedDrawer = true;
-                    SharedPreferences sp = PreferenceManager
-                            .getDefaultSharedPreferences(getActivity());
+                    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
                     sp.edit().putBoolean(PREF_USER_LEARNED_DRAWER, true).apply();
                 }
 
@@ -219,6 +218,8 @@ public class BrowseFragment extends Fragment {
 
     private void selectItem(int position) {
         mCurrentSelectedPosition = position;
+        if(position==0)
+            mCurrentSelectedPosition = position+1;
         if (mDrawerListView != null) {
             mDrawerListView.setItemChecked(position, true);
         }

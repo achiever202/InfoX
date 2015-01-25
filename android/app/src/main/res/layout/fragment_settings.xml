@@ -1,25 +1,28 @@
-<PreferenceScreen
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
-    android:layout_width="match_parent">
+    android:layout_width="match_parent"
+    android:background="@color/gray_background"
+    android:layout_marginTop="8dp"
+    android:layout_marginRight="16dp"
+    android:layout_marginBottom="8dp"
+    android:layout_marginLeft="16dp">
 
-    <PreferenceCategory
-        android:title="Preferences"
-        android:key="pref_key_storage_settings">
-        <CheckBoxPreference
-            android:key="pref_key_sync"
-            android:summary="Download content automatically on internet connection"
-            android:title="Auto Sync"
-            android:defaultValue="false" />
+    <android.support.v7.widget.CardView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
 
-        <ListPreference
-            android:dependency="pref_contentType"
-            android:key="pref_contentType"
-            android:title="Content Preferences"
-            android:dialogTitle="Content Preferences"
-            android:entries="@array/pref_contentTypes_entries"
-            android:entryValues="@array/pref_contentTypes_values"
-            android:defaultValue="0" />
-    </PreferenceCategory>
+    <CheckBox
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Auto Sync"
+        android:textSize="@dimen/text_size_large"
+        android:textColor="@color/theme_primary_light"
+        android:paddingTop="18dp"
+        android:paddingBottom="18dp"
+        android:layout_marginLeft="9dp"
+        android:id="@+id/pref_autoSync"
+        android:background="#fff"/>
+    </android.support.v7.widget.CardView>
 
-</PreferenceScreen>
+</LinearLayout>
