@@ -35,7 +35,7 @@ public class ContentListDatabase extends SQLiteOpenHelper {
             ");";
 
     private static final String CREATE_TABLE_CONTENTS = "CREATE TABLE IF NOT EXISTS contents ("
-            + "content_id INTEGER PRIMARY KEY autoincrement,"
+            + "content_id INTEGER PRIMARY KEY,"
             + "file_name TEXT NOT NULL,"
             + "file_path TEXT NOT NULL,"
             + "time_added TEXT NOT NULL,"
@@ -95,10 +95,10 @@ public class ContentListDatabase extends SQLiteOpenHelper {
         db.execSQL("insert into content_types (content_type_id, name) values ('tile_music', 'Audio Content')");
         db.execSQL("insert into content_types (content_type_id, name) values ('tile_video', 'Video Content')");
 
-        db.execSQL("insert into contents (file_name, file_path, time_added, time_expiry, lang_id, category_id, content_type_id) values ('ABC', 'In 1879, Maxwell published a paper on the viscous stresses arising in rarefied gases. In an appendix to the paper, Maxwell proposed his now-famous velocity slip boundary condition.', '2014-01-28 22:41:43', '2016-01-28 22:41:43', 'EN', 'EDU', 'tile_education')");
-        db.execSQL("insert into contents (file_name, file_path, time_added, time_expiry, lang_id, category_id, content_type_id) values ('ABC', '24;05:00 PM;23rd Jan', '2014-01-28 22:41:43', '2016-01-28 22:41:43', 'EN', 'PS', 'tile_weather')");
-        db.execSQL("insert into contents (file_name, file_path, time_added, time_expiry, lang_id, category_id, content_type_id) values ('Khamosiyaan-Arijit Singh', 'http://media.djmazadownload.com/music/320/indian_movies/Khamoshiyan%20(2015)/03%20-%20Khamoshiyan%20-%20Baatein%20Ye%20Kabhi%20Na%20(Male)%20%5BDJMaza.Info%5D.mp3', '2014-01-28 22:41:43', '2016-01-28 22:41:43', 'EN', 'PS', 'tile_music')");
-        db.execSQL("insert into contents (file_name, file_path, time_added, time_expiry, lang_id, category_id, content_type_id) values ('Android Book Movie', 'http://www.ebookfrenzy.com/android_book/movie.mp4', '2014-01-28 22:41:43', '2016-01-28 22:41:43', 'EN', 'PS', 'tile_video')");
+        //db.execSQL("insert into contents (content_id, file_name, file_path, time_added, time_expiry, lang_id, category_id, content_type_id) values (0,'ABC', 'In 1879, Maxwell published a paper on the viscous stresses arising in rarefied gases. In an appendix to the paper, Maxwell proposed his now-famous velocity slip boundary condition.', '2014-01-28 22:41:43', '2016-01-28 22:41:43', 'EN', 'EDU', 'tile_education')");
+        //db.execSQL("insert into contents (content_id, file_name, file_path, time_added, time_expiry, lang_id, category_id, content_type_id) values (0,'ABC', '24;05:00 PM;23rd Jan', '2014-01-28 22:41:43', '2016-01-28 22:41:43', 'EN', 'PS', 'tile_weather')");
+        //db.execSQL("insert into contents (content_id, file_name, file_path, time_added, time_expiry, lang_id, category_id, content_type_id) values (0,'Khamosiyaan-Arijit Singh', 'http://media.djmazadownload.com/music/320/indian_movies/Khamoshiyan%20(2015)/03%20-%20Khamoshiyan%20-%20Baatein%20Ye%20Kabhi%20Na%20(Male)%20%5BDJMaza.Info%5D.mp3', '2014-01-28 22:41:43', '2016-01-28 22:41:43', 'EN', 'PS', 'tile_music')");
+        //db.execSQL("insert into contents (content_id, file_name, file_path, time_added, time_expiry, lang_id, category_id, content_type_id) values (0,'Android Book Movie', 'http://www.ebookfrenzy.com/android_book/movie.mp4', '2014-01-28 22:41:43', '2016-01-28 22:41:43', 'EN', 'PS', 'tile_video')");
 
     }
 }

@@ -70,9 +70,10 @@ public class ContentListProvider {
         return res.getInt(res.getColumnIndex("content_id"));
     }
 
-    public Boolean insertContents(String file_name, String file_path, String time_added, String time_expiry, String lang_id, String category_id, String content_type_id)
+    public Boolean insertContents(String content_id, String file_name, String file_path, String time_added, String time_expiry, String lang_id, String category_id, String content_type_id)
     {
         ContentValues contentValues = new ContentValues();
+        contentValues.put("content_id", content_id);
         contentValues.put("file_name", file_name);
         contentValues.put("file_path", file_path);
         contentValues.put("time_added", time_added);

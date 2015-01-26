@@ -184,7 +184,7 @@ public class BrowseActivity extends ActionBarActivity implements NavigationFragm
                 JSONObject indObject = null;
                 try {
                     indObject = (JSONObject) jsonArray.get(i);
-                    clp.insertContents(indObject.getString("file_name"), indObject.getString("content"), jsonObject.getString("time_added"), jsonObject.getString("time_expiry"), indObject.getString("langId"), indObject.getString("category"), indObject.getString("tileType"));
+                    clp.insertContents(indObject.getString("content_id"), indObject.getString("file_name"), indObject.getString("content"), indObject.getString("time_added"), indObject.getString("time_expiry"), indObject.getString("langId"), indObject.getString("category"), indObject.getString("tileType"));
                     if(indObject.getInt("downloadRequired")==1)
                     {
                         clp.insertDownloads(clp.getContentIdByContent(indObject.getString("content"), indObject.getString("time_added"), indObject.getString("time_expiry")), "NO", 0);

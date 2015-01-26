@@ -1,7 +1,5 @@
 {
 	"status": "200",
-	"time_added": "2014-01-28 22:41:43",
-	"time_expiry": "2016-01-28 22:41:43",
     "data":
 			[
 				{
@@ -10,7 +8,9 @@
 					"content": "ABC XYZ",
 					"downloadRequired": 0,
 					"langId": "EN",
-					"file_name": ""
+					"file_name": "edu.txt",
+					"time_added": "2014-01-28 22:41:43",
+					"time_expiry": "2016-01-28 22:41:43"
 				},
 				{
 					"tileType":"tile_weather",
@@ -18,23 +18,29 @@
 					"content": "24;05:00 PM;23rd Jan",
 					"downloadRequired": 0,
 					"langId": "EN",
-					"file_name": ""
+					"file_name": "wth.txt",
+					"time_added": "2014-01-28 22:41:43",
+					"time_expiry": "2016-01-28 22:41:43"
 				},
 				{
 					"tileType":"tile_music",
 					"category": "",
 					"content": "http://media.djmazadownload.com/music/320/indian_movies/Khamoshiyan%20(2015)/03%20-%20Khamoshiyan%20-%20Baatein%20Ye%20Kabhi%20Na%20(Male)%20%5BDJMaza.Info%5D.mp3",
-					"downloadRequired": 0,
+					"downloadRequired": 1,
 					"langId": "EN",
-					"file_name": "Khamosiyaan-Arijit Singh"
+					"file_name": "Khamosiyaan_ArijitSingh.mp3",
+					"time_added": "2014-01-28 22:41:43",
+					"time_expiry": "2016-01-28 22:41:43"
 				},
 				{
 					"tileType":"tile_video",
 					"category": "",
 					"content": "http://www.ebookfrenzy.com/android_book/movie.mp4",
-					"downloadRequired": 0,
+					"downloadRequired": 1,
 					"langId": "EN",
-					"file_name": "Android Book Movie"
+					"file_name": "Android_Book_Movie.mp4"
+					"time_added": "2014-01-28 22:41:43",
+					"time_expiry": "2016-01-28 22:41:43"
 				}
 			]
 }
