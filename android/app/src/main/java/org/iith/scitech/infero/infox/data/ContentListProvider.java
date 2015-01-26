@@ -96,6 +96,13 @@ public class ContentListProvider {
         return true;
     }
 
+    public Cursor getDownloads(String downloaded)
+    {
+        Cursor res =  database.rawQuery( "select * from downloads where downloaded="+downloaded, null );
+        res.moveToFirst();
+        return res;
+    }
+
     public ArrayList getDownloadsByStatus(String downloaded)
     {
         ArrayList array_list = new ArrayList();

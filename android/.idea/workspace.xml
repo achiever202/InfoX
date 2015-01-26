@@ -47,11 +47,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="BrowseActivity.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="BrowseActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/ui/BrowseActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.82857144" vertical-offset="3615" max-vertical-offset="6630">
-              <caret line="270" column="18" selection-start-line="270" selection-start-column="18" selection-end-line="270" selection-end-column="18" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="4140" max-vertical-offset="6630">
+              <caret line="295" column="21" selection-start-line="295" selection-start-column="21" selection-end-line="295" selection-end-column="21" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#3317#3557#0" expanded="true" />
@@ -68,16 +68,40 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NavigationFragment.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/ui/NavigationFragment.java">
+      <file leaf-file-name="DownloadService.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/service/DownloadService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="2415" max-vertical-offset="4350">
-              <caret line="221" column="50" selection-start-line="221" selection-start-column="50" selection-end-line="221" selection-end-column="50" />
+            <state vertical-scroll-proportion="0.5297398" vertical-offset="105" max-vertical-offset="1245">
+              <caret line="26" column="13" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
               <folding>
-                <element signature="e#8009#8146#0" expanded="true" />
-                <element signature="e#8135#8136#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#570#571#0" expanded="true" />
+                <element signature="e#597#598#0" expanded="true" />
               </folding>
             </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AndroidManifest.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1095">
+              <caret line="7" column="72" selection-start-line="7" selection-start-column="72" selection-end-line="7" selection-end-column="72" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="content_dialog_video.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_dialog_video.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-7.5" vertical-offset="0" max-vertical-offset="540">
+              <caret line="13" column="43" selection-start-line="13" selection-start-column="43" selection-end-line="13" selection-end-column="43" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer">
+            <state />
           </provider>
         </entry>
       </file>
@@ -125,8 +149,8 @@
       <file leaf-file-name="ContentListProvider.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/data/ContentListProvider.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="647" max-vertical-offset="1845">
-              <caret line="68" column="26" selection-start-line="68" selection-start-column="26" selection-end-line="68" selection-end-column="26" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="1247" max-vertical-offset="1950">
+              <caret line="100" column="95" selection-start-line="100" selection-start-column="95" selection-end-line="100" selection-end-column="95" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#597#598#0" expanded="true" />
@@ -1182,7 +1206,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/res/values-v21/styles.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
@@ -1211,7 +1234,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/util/ParserUtils.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/content_tile_music.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/ui/WelcomeActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/content_dialog_video.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_signup.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/ui/SignupActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_settings.xml" />
@@ -1222,17 +1244,19 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_browse.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/ui/NavigationFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_settings.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/ui/VideoDialog.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/util/ServerRequest.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/util/PrefUtils.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_welcome.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/util/HttpServerRequest.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/content_tile_weather.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/data/ContentListProvider.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/ui/ContentListAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/data/ContentListDatabase.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/ui/BrowseActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/content_dialog_video.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/data/ContentListProvider.java" />
+        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/service/DownloadService.java" />
       </list>
     </option>
   </component>
@@ -1419,6 +1443,28 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="ui" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="android" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="infox" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="service" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1702,7 +1748,7 @@
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32984003" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32943678" sideWeight="0.4997242" order="15" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3995749" sideWeight="0.4997242" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3995749" sideWeight="0.4997242" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32943678" sideWeight="0.5002758" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
@@ -1747,13 +1793,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/Config.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.024834437" vertical-offset="1830" max-vertical-offset="3480">
-          <caret line="143" column="12" selection-start-line="143" selection-start-column="12" selection-end-line="143" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/edit_text.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.1986755" vertical-offset="0" max-vertical-offset="604">
@@ -2076,20 +2115,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="90" max-vertical-offset="990">
-          <caret line="33" column="46" selection-start-line="33" selection-start-column="46" selection-end-line="33" selection-end-column="46" />
-          <folding>
-            <element signature="e#342#360#0" expanded="true" />
-            <element signature="e#494#512#0" expanded="true" />
-            <element signature="e#829#847#0" expanded="true" />
-            <element signature="e#1160#1178#0" expanded="true" />
-            <element signature="e#1613#1631#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/ui/VideoDialog.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.7201987" vertical-offset="210" max-vertical-offset="1125">
@@ -2100,17 +2125,6 @@
             <element signature="e#2064#2065#0" expanded="true" />
           </folding>
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_dialog_video.xml">
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="450">
-          <caret line="3" column="38" selection-start-line="3" selection-start-column="38" selection-end-line="3" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_main.xml">
@@ -2172,29 +2186,18 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="823" max-vertical-offset="1995">
           <caret line="74" column="45" selection-start-line="74" selection-start-column="45" selection-end-line="74" selection-end-column="45" />
           <folding>
-            <element signature="e#697#724#0" expanded="true" />
-            <element signature="e#755#778#0" expanded="true" />
-            <element signature="e#1791#1815#0" expanded="true" />
-            <element signature="e#1863#1895#0" expanded="true" />
-            <element signature="e#2680#2704#0" expanded="true" />
-            <element signature="e#2752#2784#0" expanded="true" />
-            <element signature="e#3619#3645#0" expanded="true" />
-            <element signature="e#3693#3725#0" expanded="true" />
-            <element signature="e#4309#4334#0" expanded="true" />
-            <element signature="e#4382#4414#0" expanded="true" />
+            <element signature="e#697#724#0" expanded="false" />
+            <element signature="e#755#778#0" expanded="false" />
+            <element signature="e#1791#1815#0" expanded="false" />
+            <element signature="e#1863#1895#0" expanded="false" />
+            <element signature="e#3619#3645#0" expanded="false" />
+            <element signature="e#3693#3725#0" expanded="false" />
+            <element signature="e#3693#3725#0" expanded="false" />
           </folding>
         </state>
       </provider>
       <provider selected="true" editor-type-id="android-designer">
         <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/util/PrefUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2591" max-vertical-offset="5490">
-          <caret line="206" column="62" selection-start-line="206" selection-start-column="62" selection-end-line="206" selection-end-column="62" />
-          <folding />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/ui/NavigationFragment.java">
@@ -2208,18 +2211,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/data/ContentListProvider.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/util/PrefUtils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="647" max-vertical-offset="1845">
-          <caret line="68" column="26" selection-start-line="68" selection-start-column="26" selection-end-line="68" selection-end-column="26" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="2591" max-vertical-offset="5490">
+          <caret line="206" column="62" selection-start-line="206" selection-start-column="62" selection-end-line="206" selection-end-column="62" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_dialog_video.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.5" vertical-offset="0" max-vertical-offset="540">
+          <caret line="13" column="43" selection-start-line="13" selection-start-column="43" selection-end-line="13" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/data/ContentListDatabase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1020" max-vertical-offset="1605">
+          <caret line="100" column="280" selection-start-line="100" selection-start-column="280" selection-end-line="100" selection-end-column="280" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#597#598#0" expanded="true" />
-            <element signature="e#656#657#0" expanded="true" />
-            <element signature="e#702#703#0" expanded="true" />
-            <element signature="e#759#760#0" expanded="true" />
-            <element signature="e#786#787#0" expanded="true" />
-            <element signature="e#818#819#0" expanded="true" />
+            <element signature="e#2170#2171#0" expanded="true" />
+            <element signature="e#2227#2228#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2240,21 +2257,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/data/ContentListDatabase.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/data/ContentListProvider.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1020" max-vertical-offset="1605">
-          <caret line="100" column="280" selection-start-line="100" selection-start-column="280" selection-end-line="100" selection-end-column="280" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="1247" max-vertical-offset="1950">
+          <caret line="100" column="95" selection-start-line="100" selection-start-column="95" selection-end-line="100" selection-end-column="95" />
           <folding>
-            <element signature="e#2170#2171#0" expanded="true" />
-            <element signature="e#2227#2228#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#597#598#0" expanded="true" />
+            <element signature="e#656#657#0" expanded="true" />
+            <element signature="e#702#703#0" expanded="true" />
+            <element signature="e#759#760#0" expanded="true" />
+            <element signature="e#786#787#0" expanded="true" />
+            <element signature="e#818#819#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1095">
+          <caret line="7" column="72" selection-start-line="7" selection-start-column="72" selection-end-line="7" selection-end-column="72" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/ui/BrowseActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.82857144" vertical-offset="3615" max-vertical-offset="6630">
-          <caret line="270" column="18" selection-start-line="270" selection-start-column="18" selection-end-line="270" selection-end-column="18" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="4140" max-vertical-offset="6630">
+          <caret line="295" column="21" selection-start-line="295" selection-start-column="21" selection-end-line="295" selection-end-column="21" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#3317#3557#0" expanded="true" />
@@ -2266,6 +2296,18 @@
             <element signature="e#12787#12821#0" expanded="true" />
             <element signature="e#12891#12925#0" expanded="true" />
             <element signature="e#12995#13029#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/service/DownloadService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5297398" vertical-offset="105" max-vertical-offset="1245">
+          <caret line="26" column="13" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#570#571#0" expanded="true" />
+            <element signature="e#597#598#0" expanded="true" />
           </folding>
         </state>
       </provider>
