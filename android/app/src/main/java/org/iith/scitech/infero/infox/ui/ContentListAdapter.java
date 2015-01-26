@@ -101,6 +101,7 @@ public class ContentListAdapter extends ArrayAdapter<String> {
         View rowView = convertView;
 
         int theType = getItemViewType(position);
+        //Log.v("HELLO", theType+"");
 
         if (theType==0)
         {

@@ -2,6 +2,7 @@ package org.iith.scitech.infero.infox.ui;
 
 import android.app.Activity;
 import android.content.Context;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -24,6 +25,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import org.iith.scitech.infero.infox.R;
+import org.iith.scitech.infero.infox.data.ContentListProvider;
 import org.iith.scitech.infero.infox.swipetodismiss.SwipeDismissListViewTouchListener;
 import org.iith.scitech.infero.infox.util.HttpServerRequest;
 import org.iith.scitech.infero.infox.util.ServerRequest;
@@ -150,13 +152,12 @@ public class BrowseActivity extends ActionBarActivity implements NavigationFragm
     }
 
 
-    private class GetNetworkDataTask extends AsyncTask<Void, Void, JSONObject> {
+    private class GetNetworkDataTask extends AsyncTask<Void, Void, JSONArray> {
 
         @Override
-        protected JSONObject doInBackground(Void... params) {
+        protected JSONArray doInBackground(Void... params) {
             // Perform data fetching here
             Log.v("NET", "Sending...");
-
 
             JSONObject jsonObject = null;
             try
@@ -167,17 +168,6 @@ public class BrowseActivity extends ActionBarActivity implements NavigationFragm
                 e.printStackTrace();
             }
 
-            return jsonObject;
-
-            /*new String[]
-                    {
-                            TILE_EDUCATION+";EDU;In 1879, Maxwell published a paper on the viscous stresses arising in rarefied gases. At the time, a reviewer commented that it also might be useful if Maxwell could use his theoretical findings to derive a velocity boundary condition for rarefied gas flows at solid surfaces. Consequently, in an appendix to the paper, Maxwell proposed his now-famous velocity slip boundary condition."
-                    };*/
-        }
-
-        @Override
-        protected void onPostExecute(JSONObject jsonObject) {
-            // Do some UI related stuff here
             JSONArray jsonArray = null;
             try {
                 jsonArray = (JSONArray) jsonObject.get("data");
@@ -186,6 +176,30 @@ public class BrowseActivity extends ActionBarActivity implements NavigationFragm
             {
                 e.printStackTrace();
             }
+
+            ContentListProvider clp = new ContentListProvider(BrowseActivity.this);
+            clp.open();
+
+            for(int i=0;i<jsonArray.length();i++) {
+                JSONObject indObject = null;
+                try {
+                    indObject = (JSONObject) jsonArray.get(i);
+                    clp.insertContents(indObject.getString("file_name"), indObject.getString("content"), jsonObject.getString("time_added"), jsonObject.getString("time_expiry"), indObject.getString("langId"), indObject.getString("category"), indObject.getString("tileType"));
+                    if(indObject.getInt("downloadRequired")==1)
+                    {
+                        clp.insertDownloads(clp.getContentIdByContent(indObject.getString("content"), indObject.getString("time_added"), indObject.getString("time_expiry")), "NO", 0);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+                return jsonArray;
+        }
+
+        @Override
+        protected void onPostExecute(JSONArray jsonArray) {
+            // Do some UI related stuff here
 
             for(int i=0;i<jsonArray.length();i++) {
                 JSONObject indObject = null;
@@ -202,56 +216,57 @@ public class BrowseActivity extends ActionBarActivity implements NavigationFragm
             }
 
             mListView.onRefreshComplete();
-            super.onPostExecute(jsonObject);
+            super.onPostExecute(jsonArray);
         }
     }
 
-    private class GetLocalDataTask extends AsyncTask<Void, Void, JSONObject> {
+    private class GetLocalDataTask extends AsyncTask<Void, Void, ArrayList> {
 
         @Override
-        protected JSONObject doInBackground(Void... params) {
+        protected ArrayList doInBackground(Void... params) {
             // Perform data fetching here
-            Log.v("NET", "Sending...");
+            ContentListProvider clp = new ContentListProvider(BrowseActivity.this);
+            clp.open();
+            Cursor res = clp.getAllContents();
+            res.moveToFirst();
+            ArrayList arrayList = new ArrayList();
 
             JSONObject jsonObject = null;
-            try
-            {
-                jsonObject = new JSONObject("{\"status\":\"200\",\"data\":[{\"tileType\":\"tile_education\",\"category\":\"EDU\",\"content\":\"Boolean getData(String m, String key)\n{\n\treturn m.equals(n);\n}\",\"downloadRequired\":0},{\"tileType\":\"tile_weather\",\"category\":\"PS\",\"content\":\"24;05:00 PM;23rd Jan\",\"downloadRequired\":0},{\"tileType\":\"tile_music\",\"category\":\"\",\"content\":\"http://media.djmazadownload.com/music/320/indian_movies/Khamoshiyan%20(2015)/03%20-%20Khamoshiyan%20-%20Baatein%20Ye%20Kabhi%20Na%20(Male)%20%5BDJMaza.Info%5D.mp3\",\"downloadRequired\":0},{\"tileType\":\"tile_video\",\"category\":\"\",\"content\":\"http://www.ebookfrenzy.com/android_book/movie.mp4\",\"downloadRequired\":0}]}");
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
 
-            return jsonObject;
-
-            /*new String[]
-                    {
-                            TILE_EDUCATION+";EDU;In 1879, Maxwell published a paper on the viscous stresses arising in rarefied gases. At the time, a reviewer commented that it also might be useful if Maxwell could use his theoretical findings to derive a velocity boundary condition for rarefied gas flows at solid surfaces. Consequently, in an appendix to the paper, Maxwell proposed his now-famous velocity slip boundary condition."
-                    };*/
+            while(res.isAfterLast() == false){
+                jsonObject = new JSONObject();
+                try {
+                    jsonObject.put("tileType", res.getString(res.getColumnIndex("content_type_id")));
+                    jsonObject.put("category", res.getString(res.getColumnIndex("category_id")));
+                    jsonObject.put("content", res.getString(res.getColumnIndex("file_path")));
+                    jsonObject.put("downloadRequired", 0);
+                    jsonObject.put("langId", res.getString(res.getColumnIndex("lang_id")));
+                    jsonObject.put("file_name", res.getString(res.getColumnIndex("file_name")));
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+                arrayList.add(jsonObject.toString());
+                //Log.v("HELLO", jsonObject.toString());
+                res.moveToNext();
+            }
+            return arrayList;
         }
 
         @Override
-        protected void onPostExecute(JSONObject jsonObject) {
+        protected void onPostExecute(ArrayList arrayList) {
             // Do some UI related stuff here
-            JSONArray jsonArray = null;
-            try {
-                jsonArray = (JSONArray) jsonObject.get("data");
-            }
-            catch (Exception e)
-            {
-                e.printStackTrace();
-            }
-
-            for(int i=0;i<jsonArray.length();i++) {
+            for(int i=0;i<arrayList.size();i++) {
                 JSONObject indObject = null;
                 try
                 {
-                    indObject = (JSONObject) jsonArray.get(i);
+                    indObject = new JSONObject(arrayList.get(i).toString());
                 }
                 catch (Exception e)
                 {
                     e.printStackTrace();
                 }
+                //Log.v("HELLO", indObject.toString());
                 addTile(BrowseActivity.this, indObject);
                 //Toast.makeText(BrowseActivity.this, indObject.toString(), Toast.LENGTH_SHORT).show();
             }
@@ -262,7 +277,7 @@ public class BrowseActivity extends ActionBarActivity implements NavigationFragm
             }
 
             mListView.onRefreshComplete();
-            super.onPostExecute(jsonObject);
+            super.onPostExecute(arrayList);
         }
     }
 

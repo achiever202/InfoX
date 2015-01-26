@@ -1,160 +1,117 @@
 package org.iith.scitech.infero.infox.data;
 
-import android.content.ContentProvider;
-import android.content.ContentResolver;
-import android.content.ContentUris;
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.ContentValues;
-import android.content.UriMatcher;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteQueryBuilder;
-import android.net.Uri;
-import android.text.TextUtils;
 
-public class ContentListProvider extends ContentProvider {
+import org.w3c.dom.Comment;
 
-    private ContentListDatabase mDB;
+public class ContentListProvider {
 
-    private static final String AUTHORITY = "org.iith.scitech.infero.infox.data.ContentListProvider";
-    public static final int CONTENTS = 100;
-    public static final int CONTENT_ID = 110;
+    // Database fields
+    private SQLiteDatabase database;
+    private ContentListDatabase dbHelper;
+    //private String[] allColumns = { MySQLiteHelper.COLUMN_ID,MySQLiteHelper.COLUMN_COMMENT };
 
-    private static final String CONTENTS_BASE_PATH = "contents";
-    public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY
-            + "/" + CONTENTS_BASE_PATH);
-
-    public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
-            + "/mt-CONTENT";
-    public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
-            + "/mt-CONTENT";
-
-    private static final UriMatcher sURIMatcher = new UriMatcher(
-            UriMatcher.NO_MATCH);
-    static {
-        sURIMatcher.addURI(AUTHORITY, CONTENTS_BASE_PATH, CONTENTS);
-        sURIMatcher.addURI(AUTHORITY, CONTENTS_BASE_PATH + "/#", CONTENT_ID);
+    public ContentListProvider(Context context) {
+        dbHelper = new ContentListDatabase(context);
     }
 
-    @Override
-    public boolean onCreate() {
-        mDB = new ContentListDatabase(getContext());
+    public void open() throws SQLException {
+        database = dbHelper.getWritableDatabase();
+    }
+
+    public void close() {
+        dbHelper.close();
+    }
+
+    public Cursor getContentsByRawQuery(String rawQuery)
+    {
+        Cursor res =  database.rawQuery( rawQuery, null );
+        return res;
+    }
+
+    public Cursor getAllContents()
+    {
+        Cursor res =  database.rawQuery( "select * from contents", null );
+        return res;
+    }
+
+    public ArrayList getContentsListById(int content_id)
+    {
+        ArrayList array_list = new ArrayList();
+        Cursor res =  database.rawQuery( "select * from contents where content_id="+content_id+"", null );
+        res.moveToFirst();
+
+        while(res.isAfterLast() == false){
+            array_list.add(res.getString(res.getColumnIndex("file_path")));
+            res.moveToNext();
+        }
+
+        return array_list;
+    }
+
+    public Cursor getContentsById(int content_id)
+    {
+        Cursor res =  database.rawQuery( "select * from contents where content_id="+content_id+"", null );
+        res.moveToFirst();
+        return res;
+    }
+
+    public int getContentIdByContent(String content, String time_added, String time_expiry)
+    {
+        Cursor res =  database.rawQuery( "select * from contents where file_path="+content+" and time_added="+time_added+" and time_expiry="+time_expiry, null );
+        res.moveToFirst();
+        return res.getInt(res.getColumnIndex("content_id"));
+    }
+
+    public Boolean insertContents(String file_name, String file_path, String time_added, String time_expiry, String lang_id, String category_id, String content_type_id)
+    {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("file_name", file_name);
+        contentValues.put("file_path", file_path);
+        contentValues.put("time_added", time_added);
+        contentValues.put("time_expiry", time_expiry);
+        contentValues.put("lang_id", lang_id);
+        contentValues.put("category_id", category_id);
+        contentValues.put("content_type_id", content_type_id);
+
+        database.insert("contents", null, contentValues);
         return true;
     }
 
-    @Override
-    public Cursor query(Uri uri, String[] projection, String selection,
-            String[] selectionArgs, String sortOrder) {
-        SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
-        queryBuilder.setTables(ContentListDatabase.TABLE_CONTENTS);
+    public Boolean insertDownloads(int content_id, String downloaded, int deleted)
+    {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("content_id", content_id);
+        contentValues.put("downloaded", downloaded);
+        contentValues.put("deleted", deleted);
 
-        int uriType = sURIMatcher.match(uri);
-        switch (uriType) {
-        case CONTENT_ID:
-            queryBuilder.appendWhere(ContentListDatabase.ID + "="
-                    + uri.getLastPathSegment());
-            break;
-        case CONTENTS:
-            // no filter
-            break;
-        default:
-            throw new IllegalArgumentException("Unknown URI");
-        }
-
-        Cursor cursor = queryBuilder.query(mDB.getReadableDatabase(),
-                projection, selection, selectionArgs, null, null, sortOrder);
-        cursor.setNotificationUri(getContext().getContentResolver(), uri);
-        return cursor;
+        database.insert("downloads", null, contentValues);
+        return true;
     }
 
-    @Override
-    public int delete(Uri uri, String selection, String[] selectionArgs) {
-        int uriType = sURIMatcher.match(uri);
-        SQLiteDatabase sqlDB = mDB.getWritableDatabase();
-        int rowsAffected = 0;
-        switch (uriType) {
-        case CONTENTS:
-            rowsAffected = sqlDB.delete(ContentListDatabase.TABLE_CONTENTS,
-                    selection, selectionArgs);
-            break;
-        case CONTENT_ID:
-            String id = uri.getLastPathSegment();
-            if (TextUtils.isEmpty(selection)) {
-                rowsAffected = sqlDB.delete(ContentListDatabase.TABLE_CONTENTS,
-                        ContentListDatabase.ID + "=" + id, null);
-            } else {
-                rowsAffected = sqlDB.delete(ContentListDatabase.TABLE_CONTENTS,
-                        selection + " and " + ContentListDatabase.ID + "=" + id,
-                        selectionArgs);
-            }
-            break;
-        default:
-            throw new IllegalArgumentException("Unknown or Invalid URI " + uri);
+    public ArrayList getDownloadsByStatus(String downloaded)
+    {
+        ArrayList array_list = new ArrayList();
+        Cursor res =  database.rawQuery( "select * from downloads where downloaded="+downloaded+"", null );
+        res.moveToFirst();
+
+        while(res.isAfterLast() == false){
+            int content_id = res.getInt(res.getColumnIndex("content_id"));
+            Cursor res2 =  database.rawQuery( "select * from contents where content_id="+content_id+"", null );
+            res2.moveToFirst();
+            array_list.add(res2.getString(res2.getColumnIndex("file_path")));
+            res.moveToNext();
         }
-        getContext().getContentResolver().notifyChange(uri, null);
-        return rowsAffected;
+
+        return array_list;
     }
 
-    @Override
-    public String getType(Uri uri) {
-        int uriType = sURIMatcher.match(uri);
-        switch (uriType) {
-        case CONTENTS:
-            return CONTENT_TYPE;
-        case CONTENT_ID:
-            return CONTENT_ITEM_TYPE;
-        default:
-            return null;
-        }
-    }
-
-    @Override
-    public Uri insert(Uri uri, ContentValues values) {
-        int uriType = sURIMatcher.match(uri);
-        if (uriType != CONTENTS) {
-            throw new IllegalArgumentException("Invalid URI for insert");
-        }
-        SQLiteDatabase sqlDB = mDB.getWritableDatabase();
-        long newID = sqlDB
-                .insert(ContentListDatabase.TABLE_CONTENTS, null, values);
-        if (newID > 0) {
-            Uri newUri = ContentUris.withAppendedId(uri, newID);
-            getContext().getContentResolver().notifyChange(uri, null);
-            return newUri;
-        } else {
-            throw new SQLException("Failed to insert row into " + uri);
-        }
-    }
-
-    @Override
-    public int update(Uri uri, ContentValues values, String selection,
-            String[] selectionArgs) {
-        int uriType = sURIMatcher.match(uri);
-        SQLiteDatabase sqlDB = mDB.getWritableDatabase();
-
-        int rowsAffected;
-
-        switch (uriType) {
-        case CONTENT_ID:
-            String id = uri.getLastPathSegment();
-            StringBuilder modSelection = new StringBuilder(ContentListDatabase.ID
-                    + "=" + id);
-
-            if (!TextUtils.isEmpty(selection)) {
-                modSelection.append(" AND " + selection);
-            }
-
-            rowsAffected = sqlDB.update(ContentListDatabase.TABLE_CONTENTS,
-                    values, modSelection.toString(), null);
-            break;
-        case CONTENTS:
-            rowsAffected = sqlDB.update(ContentListDatabase.TABLE_CONTENTS,
-                    values, selection, selectionArgs);
-            break;
-        default:
-            throw new IllegalArgumentException("Unknown URI");
-        }
-        getContext().getContentResolver().notifyChange(uri, null);
-        return rowsAffected;
-    }
 }
+
