@@ -9,4 +9,9 @@ define("PARTLY_SUNNY", "PS");
 define("SUNNY", "SU");
 
 define("OK", 200);
+
+$TILES=array(
+	EDU => TILE_EDUCATION,
+	PS => TILE_WEATHER
+);
 ?>
