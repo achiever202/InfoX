@@ -16,7 +16,7 @@ if($result) {
 			"tileType"=>$TILES[$row["category_id"]],
 			"content"=>$row["content"],
 			"content_id"=>$row["content_id"],
-			"lang_id"=>$row["lang_id"],
+			"langId"=>$row["lang_id"],
 			"file_name"=>$row["file_name"],
 			"time_added"=>$row["time_added"],
 			"time_expiry"=>$row["time_expiry"],
