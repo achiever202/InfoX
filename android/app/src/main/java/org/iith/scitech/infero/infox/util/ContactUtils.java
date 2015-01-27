@@ -1,10 +1,11 @@
+package org.iith.scitech.infero.infox.util;
+
 import java.util.Vector;
-
-import com.google.android.gms.internal.cu;
-
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.provider.ContactsContract;
+
+import org.json.JSONObject;
 
 /*
  * This class provides the contact details.
@@ -25,7 +26,7 @@ public class ContactUtils
 	}
 	
 	/* This function returns the entire contact list from the device. */
-	Cursor getAllContacts()
+	public Cursor getAllContacts()
 	{
 		/* if the cursor is initialized before, closing the cursor. */
 		if(cursor!=null && !cursor.isClosed())
@@ -37,7 +38,7 @@ public class ContactUtils
 	}
 	
 	/* This function returns the contact numbers as an array of strings. */
-	String[] getAllContactNumbers()
+	public String[] getAllContactNumbers()
 	{
 		/* getting the entire contact list. */
 		getAllContacts();
@@ -55,8 +56,37 @@ public class ContactUtils
 			cursor.close();
 		return contacts;
 	}
+
+    public String[] getAllContactNumbersAndName()
+    {
+		/* getting the entire contact list. */
+        getAllContacts();
+
+		/* iterating over the list and getting the contact numbers. */
+        String[] contacts = new String[cursor.getCount()];
+        int index = 0;
+        JSONObject jsonObject = new JSONObject();
+        while(cursor.moveToNext())
+        {
+            try {
+                jsonObject.put("name", cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)));
+                jsonObject.put("number", cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+            contacts[index] = jsonObject.toString();
+            index++;
+        }
+
+        if(cursor!=null && !cursor.isClosed())
+            cursor.close();
+        return contacts;
+    }
+
+
 	
-	String getContactName(String contactNumber)
+	public String getContactName(String contactNumber)
 	{
 		String contactName = "";
 		
@@ -79,7 +109,7 @@ public class ContactUtils
 	}
 	
 	/* This function builds a formatted 10 digit contact number from the contact string provided. */
-	String getFormattedContact(String contact)
+	public static String getFormattedContact(String contact)
 	{
 		/* if the number is less than 10 digits, not valid. */
 		if(contact.length()<10)

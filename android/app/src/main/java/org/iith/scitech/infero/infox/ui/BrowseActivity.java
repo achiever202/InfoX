@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -28,24 +29,21 @@ import org.iith.scitech.infero.infox.R;
 import org.iith.scitech.infero.infox.data.ContentListProvider;
 import org.iith.scitech.infero.infox.swipetodismiss.SwipeDismissListViewTouchListener;
 import org.iith.scitech.infero.infox.util.HttpServerRequest;
-import org.iith.scitech.infero.infox.util.ServerRequest;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.json.JSONStringer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 /**
- * Created by shashank on 17/1/15.
+ * Shashank Jaiswal on 17/1/15.
  */
-public class BrowseActivity extends ActionBarActivity implements NavigationFragment.NavigationDrawerCallbacks
+public class BrowseActivity extends ActionBarActivity implements BrowseFragment.NavigationDrawerCallbacks
 {
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
-    private NavigationFragment mNavigationFragment;
+    private BrowseFragment mNavigationFragment;
 
     public static final String TILE_EDUCATION = "tile_education";
 
@@ -77,7 +75,7 @@ public class BrowseActivity extends ActionBarActivity implements NavigationFragm
         setContentView(R.layout.activity_browse);
 
 
-        mNavigationFragment = (NavigationFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+        mNavigationFragment = (BrowseFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
 
         // Set up the drawer.
@@ -281,42 +279,6 @@ public class BrowseActivity extends ActionBarActivity implements NavigationFragm
         }
     }
 
-    /*private class GetLocalDataTask extends AsyncTask<Void, Void, JSONObject> {
-
-        @Override
-        protected JSONObject doInBackground(Void... params) {
-            // Perform data fetching here
-            try
-            {
-                Thread.sleep(4000);
-            }
-            catch (InterruptedException e) {
-            }
-            return new String[]
-                    {
-                        TILE_WEATHER + ";24;05:00 PM;PS",
-                        TILE_EDUCATION + ";EDU;In 1879, Maxwell published a paper on the viscous stresses arising in rarefied gases. At the time, a reviewer commented that it also might be useful if Maxwell could use his theoretical findings to derive a velocity boundary condition for rarefied gas flows at solid surfaces. Consequently, in an appendix to the paper, Maxwell proposed his now-famous velocity slip boundary condition.",
-                        TILE_MUSIC + ";http://media.djmazadownload.com/music/320/indian_movies/Khamoshiyan%20(2015)/03%20-%20Khamoshiyan%20-%20Baatein%20Ye%20Kabhi%20Na%20(Male)%20%5BDJMaza.Info%5D.mp3",
-                        TILE_VIDEO + ";http://www.ebookfrenzy.com/android_book/movie.mp4"
-                    };
-        }
-
-        @Override
-        protected void onPostExecute(JSONObject result) {
-            // Do some UI related stuff here
-            for(int i=0;i<result.length();i++) {
-                addTile(BrowseActivity.this, result.get());
-            }
-
-            if(isRefreshing) {
-                removeProgressBar();
-                isRefreshing = false;
-            }
-
-            mListView.onRefreshComplete();
-            super.onPostExecute(result);
-        }
-    }*/
 
     private void addTile(Context context, JSONObject result)
     {
@@ -325,14 +287,50 @@ public class BrowseActivity extends ActionBarActivity implements NavigationFragm
     }
 
 
+
+
+
     @Override
     public void onNavigationDrawerItemSelected(int position) {
+        if(position==2)
+        {
+            GroupsFragment newFragment = new GroupsFragment();
+            Bundle args = new Bundle();
+            args.putInt(GroupsFragment.ARG_POSITION, position);
+            newFragment.setArguments(args);
+
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.container, newFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+            return;
+        }
+        else
+        if(position==3)
+        {
+            SettingsFragment newFragment = new SettingsFragment();
+            Bundle args = new Bundle();
+            args.putInt(SettingsFragment.ARG_POSITION, position);
+            newFragment.setArguments(args);
+
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.container, newFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+
+            return;
+        }
+
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.container, PlaceholderFragment.newInstance(position))
                 .commit();
     }
+
+
+
+
 
     public void onSectionAttached(int number) {
         switch (number) {
@@ -348,6 +346,9 @@ public class BrowseActivity extends ActionBarActivity implements NavigationFragm
         }
     }
 
+
+
+
     public void restoreActionBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
@@ -356,18 +357,23 @@ public class BrowseActivity extends ActionBarActivity implements NavigationFragm
     }
 
 
+
+
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!mNavigationFragment.isDrawerOpen()) {
-            // Only show items in the action bar relevant to this screen
-            // if the drawer is not showing. Otherwise, let the drawer
-            // decide what to show in the action bar.
             getMenuInflater().inflate(R.menu.main, menu);
             restoreActionBar();
             return true;
         }
         return super.onCreateOptionsMenu(menu);
     }
+
+
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -383,6 +389,15 @@ public class BrowseActivity extends ActionBarActivity implements NavigationFragm
 
         return super.onOptionsItemSelected(item);
     }
+
+
+
+
+
+
+
+
+
 
     /**
      * A placeholder fragment containing a simple view.
@@ -415,14 +430,18 @@ public class BrowseActivity extends ActionBarActivity implements NavigationFragm
         public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState)
         {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            if(sectionNumber==1)
+            /*if(sectionNumber==1)
                 rootView = inflater.inflate(R.layout.fragment_main, container, false);
             else
-            if(sectionNumber==2)
-                rootView = inflater.inflate(R.layout.fragment_main, container, false);
+            if(sectionNumber==2) {
+                rootView = inflater.inflate(R.layout.fragment_groups, container, false);
+                groupList = (ListView) rootView.findViewById(R.id.groups_list);
+                groupList.setAdapter(groupListAdapter);
+                new GetContactsTask().execute();
+            }
             else
             if(sectionNumber==3)
-                rootView = inflater.inflate(R.layout.fragment_settings, container, false);
+                rootView = inflater.inflate(R.layout.fragment_settings, container, false);*/
             return rootView;
         }
 

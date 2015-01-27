@@ -32,7 +32,7 @@ import org.iith.scitech.infero.infox.util.PrefUtils;
  * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
  */
-public class NavigationFragment extends Fragment {
+public class BrowseFragment extends Fragment {
 
     /**
      * Remember the position of the selected item.
@@ -63,9 +63,12 @@ public class NavigationFragment extends Fragment {
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
 
+    private static final String ARG_SECTION_NUMBER = "section_number";
 
 
-    public NavigationFragment() {
+
+
+    public BrowseFragment() {
     }
 
 

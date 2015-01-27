@@ -65,6 +65,8 @@ public class PrefUtils  {
 
     public static final String PREF_CURRENT_VIDEO_PATH = "pref_current_video_path";
 
+    public static final String PREF_CURRENT_DATA_TRANSFER_NUMBER = "pref_current_data_transfer_number";
+
     public static final String PREF_SERVER_IP = "pref_server_ip";
 
     /** Boolean indicating whether ToS has been accepted */
@@ -204,7 +206,7 @@ public class PrefUtils  {
 
     public static String getServerIP(final Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        return sp.getString(PREF_SERVER_IP, "http://172.16.13.63:80/infox/");
+        return sp.getString(PREF_SERVER_IP, "http://172.16.15.91:80/infox/");
     }
 
     public static void setServerIP(final Context context, String name) {
@@ -220,6 +222,16 @@ public class PrefUtils  {
     public static String getCurrentVideoPath(final Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         return sp.getString(PREF_CURRENT_VIDEO_PATH, "");
+    }
+
+    public static void setCurrentDataTransferNumber(final Context context, String name) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        sp.edit().putString(PREF_CURRENT_DATA_TRANSFER_NUMBER, name).commit();
+    }
+
+    public static String getCurrentDataTransferNumber(final Context context) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.getString(PREF_CURRENT_DATA_TRANSFER_NUMBER, "");
     }
 
     public static boolean getLoginStatus(final Context context) {
