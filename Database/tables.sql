@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS contents (
 -- Users
 CREATE TABLE IF NOT EXISTS users (
 	user_id INT(10) PRIMARY KEY AUTO_INCREMENT,
-	username VARCHAR(255) NOT NULL UNIQUE,
+	name VARCHAR(255) NOT NULL UNIQUE,
 	phone CHAR(10) NOT NULL UNIQUE,
 	password CHAR(64) NOT NULL	-- 64 bytes assuming sha256 hash
 );

@@ -1,17 +1,19 @@
 <?php
 	
 	/* connecting to the databse. */
-	include("connect_database.php");
+	require_once("connect_database.php");
+   require_once("common/functions.php");
+   require_once("common/constants.php");
 
 	/* checking for successful connection. */
    	if(!$connection)
    		die("Connection failed: " . mysqli_connect_error());
 
    	/* for post requests. */
-   	if($_POST)
+   	if(isset($_POST['phone']) && isset($_POST['password']))
    	{
-   		$phone = mysqli_real_escape_string($connection, $_POST['Phone']);
-   		$password = mysqli_real_escape_string($connection, $_POST['Password']);
+   		$phone = mysqli_real_escape_string($connection, $_POST['phone']);
+   		$password = mysqli_real_escape_string($connection, $_POST['password']);
 
    		/* getting the record from the databse. */
       	$sql_query = "SELECT * FROM `users` WHERE `phone`='$phone' LIMIT 1";
@@ -29,11 +31,13 @@
       	$row = $result->fetch_assoc();
 
       	/* checking for correct password. */
-      	if(strcmp($password, $row['password'])==0)
+      	if(strcmp(encode_password($password), $row['password'])==0)
       		echo "Success!";
       	else
       		die("Error logging in: Wrong password.");
-   	}
+   	} else {
+         echo INVALID_REQUEST;
+      }
 
    	mysqli_close($connection);
 

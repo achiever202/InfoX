@@ -9,9 +9,13 @@ define("PARTLY_SUNNY", "PS");
 define("SUNNY", "SU");
 
 define("OK", 200);
+define("INVALID_REQUEST", "Invalid Request");
+
 
 $TILES=array(
 	EDU => TILE_EDUCATION,
 	PS => TILE_WEATHER
 );
+
+
 ?>
