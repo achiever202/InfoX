@@ -19,4 +19,4 @@ INSERT INTO contents
 	(content, file_name, file_path, time_expiry, lang_id, category_id, content_type_id)
 VALUES
 	("Baby doll mai sone di", NULL, NULL, NULL, "EN", "EDU", "TXT"),
-	("24;26-01-2015", NULL, NULL, NULL, "EN", "PS", "TXT");
+	("24;7:00 AM;26-01-2015", NULL, NULL, NULL, "EN", "PS", "TXT");
