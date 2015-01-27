@@ -20,3 +20,9 @@ INSERT INTO contents
 VALUES
 	("Baby doll mai sone di", NULL, NULL, NULL, "EN", "EDU", "TXT"),
 	("24;7:00 AM;26-01-2015", NULL, NULL, NULL, "EN", "PS", "TXT");
+
+INSERT INTO users
+	(user_id, name, phone, password)
+VALUES
+	("1", "Adarsh", "8790663987", "123"),
+	("2", "Agma", "8790653987", "123");
