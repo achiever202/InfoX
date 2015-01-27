@@ -26,3 +26,8 @@ INSERT INTO users
 VALUES
 	("1", "Adarsh", "8790663987", "123"),
 	("2", "Agma", "8790653987", "123");
+
+INSERT INTO preferences
+	(user_id, category_id)
+VALUES
+	("1", "EDU");
