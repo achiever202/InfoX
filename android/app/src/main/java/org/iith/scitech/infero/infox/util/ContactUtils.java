@@ -134,4 +134,13 @@ public class ContactUtils
 		
 		return new StringBuilder(formattedContact).reverse().toString();
 	}
+
+	public static String getAlphabetContact(String contact)
+	{
+		String alphabetContact = "";
+		for(ll i=0; i<contact.length(); i++)
+			alphabetContact.concat(String.valueOf('a'+contact[i]-'0'));
+
+		return alphabetContact;
+	}
 }
