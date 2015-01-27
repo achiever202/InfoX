@@ -8,29 +8,29 @@
       die("Connection failed: " . mysqli_connect_error());
    
    /* for post requests. */
-   if($_POST)
+   if(isset($_POST['data']))
    {
       /* getting the list of contacts. */
       $contact_json_string = $_POST['data'];
 
       $json = json_decode($contact_json_string, true);
 
-      $registered_contacts = "";
+      $registered_contacts = array();
       foreach ($json as $item)
       {
          foreach($item->data->number as $contact)
          {
-            $sql_query = "SELECT * FROM `users` WHERE `phone` = '$contact' LIMIT 1";
+            $sql_query = "SELECT * FROM `users` WHERE `phone` = '$contact'";
             $result = mysqli_query($connection, $sql_query);
          
             /* error in connection. */
             if(!$result)
                die("Error building contact list: " . mysqli_error($connection));
             if(mysqli_num_rows($result)==1)
-               $registered_contacts = $registered_contacts . $contact . "$";
+               array_push($registered_contacts, $contact);
          }
       }
-      echo $registered_contacts;
+      echo json_encode($registered_contacts);
    }
    mysqli_close($connection);
 ?>
