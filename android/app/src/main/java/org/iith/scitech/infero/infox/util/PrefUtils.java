@@ -69,6 +69,8 @@ public class PrefUtils  {
 
     public static final String PREF_SERVER_IP = "pref_server_ip";
 
+    public static final String PREF_SWIPE_TO_DISMISS = "pref_swipe_to_dismiss";
+
     /** Boolean indicating whether ToS has been accepted */
     public static final String PREF_DECLINED_WIFI_SETUP = "pref_declined_wifi_setup";
 
@@ -212,6 +214,16 @@ public class PrefUtils  {
     public static void setServerIP(final Context context, String name) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         sp.edit().putString(PREF_SERVER_IP, name).commit();
+    }
+
+    public static Boolean canSwipeToDelete(final Context context) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.getBoolean(PREF_SWIPE_TO_DISMISS, false);
+    }
+
+    public static void setSwipeToDelete(final Context context, Boolean val) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        sp.edit().putBoolean(PREF_SWIPE_TO_DISMISS, val).commit();
     }
 
     public static void setCurrentVideoPath(final Context context, String name) {

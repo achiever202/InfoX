@@ -8,6 +8,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import org.w3c.dom.Comment;
 
@@ -61,6 +62,20 @@ public class ContentListProvider {
         Cursor res =  database.rawQuery( "select * from contents where content_id="+content_id+"", null );
         res.moveToFirst();
         return res;
+    }
+
+    public Cursor getContentById(int content_id)
+    {
+        Cursor res =  database.rawQuery( "select * from contents where content_id="+content_id+"", null );
+        return res;
+    }
+
+    public Boolean deleteContentById(int content_id)
+    {
+        //Log.v("DEB", content_id+"");
+        return database.delete("contents", "content_id="+content_id, null) > 0;
+        //Cursor res =  database.rawQuery( "delete * from contents where content_id="+content_id+"", null );
+        //return res;
     }
 
     public int getContentIdByContent(String content, String time_added, String time_expiry)

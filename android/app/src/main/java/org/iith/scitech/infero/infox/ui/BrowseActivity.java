@@ -29,6 +29,7 @@ import org.iith.scitech.infero.infox.R;
 import org.iith.scitech.infero.infox.data.ContentListProvider;
 import org.iith.scitech.infero.infox.swipetodismiss.SwipeDismissListViewTouchListener;
 import org.iith.scitech.infero.infox.util.HttpServerRequest;
+import org.iith.scitech.infero.infox.util.PrefUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -120,6 +121,22 @@ public class BrowseActivity extends ActionBarActivity implements BrowseFragment.
                             @Override
                             public void onDismiss(ListView listView, int[] reverseSortedPositions) {
                                 for (int position : reverseSortedPositions) {
+                                    if(PrefUtils.canSwipeToDelete(BrowseActivity.this))
+                                    {
+                                        JSONObject jsonObject = null;
+                                        int content_id = -1;
+                                        try {
+                                            jsonObject = new JSONObject(adapter.getItem(position-1));
+                                            content_id = Integer.parseInt(jsonObject.getString("content_id"));
+                                        }
+                                        catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                        //Log.v("DEB", jsonObject.toString());
+                                        ContentListProvider clp = new ContentListProvider(BrowseActivity.this);
+                                        clp.open();
+                                        clp.deleteContentById(content_id);
+                                    }
                                     adapter.remove(adapter.getItem(position-1));
                                 }
                                 adapter.notifyDataSetChanged();
@@ -182,11 +199,14 @@ public class BrowseActivity extends ActionBarActivity implements BrowseFragment.
                 JSONObject indObject = null;
                 try {
                     indObject = (JSONObject) jsonArray.get(i);
-                    clp.insertContents(indObject.getString("content_id"), indObject.getString("file_name"), indObject.getString("content"), indObject.getString("time_added"), indObject.getString("time_expiry"), indObject.getString("langId"), indObject.getString("category"), indObject.getString("tileType"));
-                    if(indObject.getInt("downloadRequired")==1)
-                    {
-                        clp.insertDownloads(clp.getContentIdByContent(indObject.getString("content"), indObject.getString("time_added"), indObject.getString("time_expiry")), "NO", 0);
-                    }
+                    Cursor cr = clp.getContentById(indObject.getInt("content_id"));
+                    if(cr!=null)
+                        if(!cr.moveToFirst()) {
+                            clp.insertContents(indObject.getString("content_id"), indObject.getString("file_name"), indObject.getString("content"), indObject.getString("time_added"), indObject.getString("time_expiry"), indObject.getString("langId"), indObject.getString("category"), indObject.getString("tileType"));
+                            if (indObject.getInt("downloadRequired") == 1) {
+                                clp.insertDownloads(clp.getContentIdByContent(indObject.getString("content"), indObject.getString("time_added"), indObject.getString("time_expiry")), "NO", 0);
+                            }
+                        }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -210,7 +230,7 @@ public class BrowseActivity extends ActionBarActivity implements BrowseFragment.
                     e.printStackTrace();
                 }
                 addTile(BrowseActivity.this, indObject);
-                Toast.makeText(BrowseActivity.this, indObject.toString(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(BrowseActivity.this, indObject.toString(), Toast.LENGTH_SHORT).show();
             }
 
             mListView.onRefreshComplete();
@@ -240,6 +260,7 @@ public class BrowseActivity extends ActionBarActivity implements BrowseFragment.
                     jsonObject.put("downloadRequired", 0);
                     jsonObject.put("langId", res.getString(res.getColumnIndex("lang_id")));
                     jsonObject.put("file_name", res.getString(res.getColumnIndex("file_name")));
+                    jsonObject.put("content_id", res.getString(res.getColumnIndex("content_id")));
                 }
                 catch (Exception e) {
                     e.printStackTrace();
