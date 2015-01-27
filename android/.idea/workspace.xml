@@ -123,11 +123,11 @@
       <file leaf-file-name="ContentListAdapter.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/ui/ContentListAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.47397768" vertical-offset="4305" max-vertical-offset="4980">
-              <caret line="367" column="0" selection-start-line="367" selection-start-column="0" selection-end-line="367" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.5576208" vertical-offset="255" max-vertical-offset="5010">
+              <caret line="75" column="64" selection-start-line="75" selection-start-column="64" selection-end-line="75" selection-end-column="64" />
               <folding>
-                <element signature="e#14847#15709#0" expanded="true" />
-                <element signature="e#15698#15699#0" expanded="true" />
+                <element signature="e#14937#15799#0" expanded="true" />
+                <element signature="e#15788#15789#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -2288,11 +2288,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/ui/ContentListAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.47397768" vertical-offset="4305" max-vertical-offset="4980">
-          <caret line="367" column="0" selection-start-line="367" selection-start-column="0" selection-end-line="367" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.5576208" vertical-offset="255" max-vertical-offset="5010">
+          <caret line="75" column="64" selection-start-line="75" selection-start-column="64" selection-end-line="75" selection-end-column="64" />
           <folding>
-            <element signature="e#14847#15709#0" expanded="true" />
-            <element signature="e#15698#15699#0" expanded="true" />
+            <element signature="e#14937#15799#0" expanded="true" />
+            <element signature="e#15788#15789#0" expanded="true" />
           </folding>
         </state>
       </provider>

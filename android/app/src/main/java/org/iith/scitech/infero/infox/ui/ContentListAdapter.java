@@ -73,7 +73,7 @@ public class ContentListAdapter extends ArrayAdapter<String> {
     public int getItemViewType(int position) {
         int retVal = -1;
         JSONObject jsonObject = null;
-        String tileType = getData(values.get(position), "tileType");
+        String tileType = JsonUtils.getData(values.get(position), "tileType");
         switch (tileType)
         {
             case BrowseActivity.TILE_EDUCATION:
@@ -113,9 +113,9 @@ public class ContentListAdapter extends ArrayAdapter<String> {
             TextView educationTypeT = (TextView) rowView.findViewById(R.id.content_tile_education_type);
             TextView educationText = (TextView) rowView.findViewById(R.id.content_tile_education_text);
 
-            educationText.setText(getData(s,"content"));
+            educationText.setText(JsonUtils.getData(s,"content"));
 
-            switch (getData(s,"category"))
+            switch (JsonUtils.getData(s,"category"))
             {
                 case "EDU":
                     educationTypeI.setImageResource(R.drawable.ic_education);
@@ -133,11 +133,11 @@ public class ContentListAdapter extends ArrayAdapter<String> {
             TextView weatherTime = (TextView) rowView.findViewById(R.id.content_tile_weather_time);
             TextView weatherDay = (TextView) rowView.findViewById(R.id.content_tile_weather_day);
 
-            weatherTemp.setText(getData(s,"content").split(";")[0]+" ºC");
-            weatherTime.setText(getData(s,"content").split(";")[1]);
-            weatherDay.setText(getData(s,"content").split(";")[2]);
+            weatherTemp.setText(JsonUtils.getData(s,"content").split(";")[0]+" ºC");
+            weatherTime.setText(JsonUtils.getData(s,"content").split(";")[1]);
+            weatherDay.setText(JsonUtils.getData(s,"content").split(";")[2]);
 
-            switch (getData(s,"category"))
+            switch (JsonUtils.getData(s,"category"))
             {
                 case "PS":
                     weatherTypeI.setImageResource(R.drawable.ic_weather_02);
@@ -154,7 +154,7 @@ public class ContentListAdapter extends ArrayAdapter<String> {
             try
             {
                 //mediaPlayer.setDataSource("/sdcard/Music/maine.mp3");//Write your location here
-                Uri uri = Uri.parse(getData(s,"content"));
+                Uri uri = Uri.parse(JsonUtils.getData(s,"content"));
                 mediaPlayer.setDataSource(context, uri);
             }
             catch(Exception e){e.printStackTrace();}
@@ -305,7 +305,7 @@ public class ContentListAdapter extends ArrayAdapter<String> {
                     });
 
                     videoView.start();*/
-                    PrefUtils.setCurrentVideoPath(context, getData(values.get(position),"content"));
+                    PrefUtils.setCurrentVideoPath(context, JsonUtils.getData(values.get(position),"content"));
                     Intent intent = new Intent(context, VideoDialog.class);
                     context.startActivity(intent);
                 }
@@ -372,7 +372,7 @@ public class ContentListAdapter extends ArrayAdapter<String> {
         });
     }
 
-    public String getData(String data, String key)
+/*    public String getData(String data, String key)
     {
         JSONObject jsonObject = null;
         String ret = "";
@@ -386,4 +386,6 @@ public class ContentListAdapter extends ArrayAdapter<String> {
         }
         return ret;
     }
+*/
+
 }
