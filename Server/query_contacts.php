@@ -18,7 +18,7 @@
       $registered_contacts = "";
       foreach ($json as $item)
       {
-         foreach($item->data as $contact)
+         foreach($item->data->number as $contact)
          {
             $sql_query = "SELECT * FROM `users` WHERE `phone` = '$contact' LIMIT 1";
             $result = mysqli_query($connection, $sql_query);
