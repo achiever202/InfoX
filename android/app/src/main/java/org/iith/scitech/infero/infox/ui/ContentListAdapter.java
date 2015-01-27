@@ -28,6 +28,8 @@ import android.widget.Toast;
 import android.widget.VideoView;
 
 import org.iith.scitech.infero.infox.R;
+import org.iith.scitech.infero.infox.data.ContentListProvider;
+import org.iith.scitech.infero.infox.util.JsonUtils;
 import org.iith.scitech.infero.infox.util.PrefUtils;
 import org.iith.scitech.infero.infox.widget.EducationWidget;
 import org.iith.scitech.infero.infox.widget.MusicWidget;
@@ -358,6 +360,12 @@ public class ContentListAdapter extends ArrayAdapter<String> {
                 //changeStatusPopUp.getContentView().getParent().getParent().getParent().getParent().getParent()
                 //Log.d("Delete Post Id: ", Integer.toString(v.getRootView().getRootView().getId()));
                 Toast.makeText(context, "Delete Post: " + tilePos, Toast.LENGTH_SHORT).show();
+
+                int content_id = Integer.parseInt(JsonUtils.getData(values.get(tilePos), "content_id"));
+                ContentListProvider clp = new ContentListProvider(context);
+                clp.open();
+                clp.deleteContentById(content_id);
+
                 values.remove(tilePos);
                 notifyDataSetChanged();
             }
