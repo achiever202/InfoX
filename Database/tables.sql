@@ -23,10 +23,11 @@ CREATE TABLE IF NOT EXISTS content_types (
 -- Contents
 CREATE TABLE IF NOT EXISTS contents (
 	content_id INT(10) PRIMARY KEY AUTO_INCREMENT,
-	file_name VARCHAR(255) NOT NULL,
-	file_path VARCHAR(1024) NOT NULL,
+	content TEXT,
+	file_name VARCHAR(255),
+	file_path VARCHAR(1024),
 	time_added TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	time_expiry TIMESTAMP,
+	time_expiry TIMESTAMP NULL,
 	lang_id CHAR(2),
 	category_id CHAR(3),
 	content_type_id CHAR(3),

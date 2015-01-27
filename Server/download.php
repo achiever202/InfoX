@@ -1,25 +1,35 @@
 <?php
 require_once("common/constants.php");
+require_once("connect_database.php");
 
-//dummy data
-$edu=array(
-	"tileType" => TILE_EDUCATION,
-	"category" => EDU,
-	"content" => "Ye duniya, ye duniya peetal di. Ye duniya peetal di. Baby doll mai sone di.",
-	"downloadRequired" => 0
+//TODO: Modify this to get apt content
+$query="SELECT * FROM contents ORDER BY rand();";
+
+$result=mysqli_query($connection, $query);
+
+if($result) {
+	$data=array();
+
+	while(($row=mysqli_fetch_assoc($result))) {
+		$new=array(
+			"category"=>$row["category_id"],
+			"tileType"=>$TILES[$row["category_id"]],
+			"content"=>$row["content"],
+			"content_id"=>$row["content_id"],
+			"lang_id"=>$row["lang_id"],
+			"file_name"=>$row["file_name"],
+			"time_added"=>$row["time_added"],
+			"time_expiry"=>$row["time_expiry"],
+			"downloadRequired"=>$row["content"]==NULL?1:0
+		);
+		array_push($data, $new);
+	}
+
+	$contents=array(
+		"status"=>OK,
+		"data"=>$data
 	);
 
-$weat=array(
-	"tileType" => TILE_WEATHER,
-	"category" => PARTLY_SUNNY,
-	"content" => "24;Aaj",
-	"downloadRequired" => 0
-	);
-
-$reply=array(
-	"status" => OK,
-	"data" => array($edu, $weat)
-	);
-
-echo json_encode($reply);
+	echo json_encode($contents);
+}
 ?>
