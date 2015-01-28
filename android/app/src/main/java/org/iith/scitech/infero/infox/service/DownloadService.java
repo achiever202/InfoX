@@ -71,6 +71,11 @@ public class DownloadService extends Service {
                             Cursor res2 = clp.getContentsById(content_id);
                             res2.moveToFirst();
                             Boolean isDownloaded = download(res2.getString(res2.getColumnIndex("file_path")), res2.getString(res2.getColumnIndex("file_name")));
+                            if(isDownloaded && Environment.getExternalStoragePublicDirectory("InfoX/"+res2.getString(res2.getColumnIndex("file_name"))).exists())
+                            {
+                                clp.updateContentFilePath(Integer.toString(content_id), Environment.getExternalStoragePublicDirectory("InfoX/"+res2.getString(res2.getColumnIndex("file_name"))).getAbsolutePath());
+                                clp.updateDownloads(Integer.toString(content_id), "YES");
+                            }
                             //array_list.add(res2.getString(res2.getColumnIndex("file_path")));
                             res.moveToNext();
                         }

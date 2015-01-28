@@ -64,6 +64,16 @@ public class ContentListProvider {
         return res;
     }
 
+    public void updateContentFilePath(String content_id, String file_path)
+    {
+        database.execSQL("UPDATE contents SET file_path = "+file_path+" WHERE content_id = "+ content_id);
+    }
+
+    public void updateDownloads(String content_id, String downloaded)
+    {
+        database.execSQL("UPDATE downloads SET downloaded = "+downloaded+" WHERE content_id = "+ content_id);
+    }
+
     public Cursor getContentById(int content_id)
     {
         Cursor res =  database.rawQuery( "select * from contents where content_id="+content_id+"", null );
