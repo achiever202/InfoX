@@ -202,6 +202,11 @@ public class PrefUtils  {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         return sp.getString(PREF_PHONE_NUMBER, "7382547459");
     }
+    
+    public static String setPhoneNumber(final Context context, String number) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        sp.edit().putString(PREF_PHONE_NUMBER, number).commit();
+    }
 
     public static String getName(final Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
