@@ -7,7 +7,9 @@ INSERT INTO categories
 	(category_id, name)
 VALUES
 	("EDU", "Education"),
-	("PS", "Partly Sunny");
+	("PS", "Partly Sunny"),
+	("VID", "Video"),
+	("AUD", "Audio");
 
 INSERT INTO content_types
 	(content_type_id, name)

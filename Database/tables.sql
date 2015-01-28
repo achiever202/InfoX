@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS preferences (
 	user_id INT(10) NOT NULL,
 	category_id CHAR(3) NOT NULL,
 	FOREIGN KEY (user_id) REFERENCES users(user_id) ON UPDATE CASCADE ON DELETE CASCADE,
-	FOREIGN KEY (category_id) REFERENCES categories(category_id) ON UPDATE CASCADE ON DELETE RESTRICT
+	FOREIGN KEY (category_id) REFERENCES categories(category_id) ON UPDATE CASCADE ON DELETE RESTRICT,
 );
 
 -- Peers
