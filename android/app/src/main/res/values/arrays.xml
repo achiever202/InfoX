@@ -8,10 +8,10 @@
     </array>
 
     <array name="pref_contentTypes_values">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
+        <item>EDU</item>
+        <item>PS</item>
+        <item>AUD</item>
+        <item>VID</item>
     </array>
 
 </resources>

@@ -17,6 +17,7 @@ import org.iith.scitech.infero.infox.util.PrefUtils;
 
 public class SignupActivity extends ActionBarActivity {
 
+    String name, phone, password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +27,6 @@ public class SignupActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
 
-                String name, phone, password;
                 EditText editText = (EditText) findViewById(R.id.loginPhone);
                 phone = editText.getText().toString();
 
@@ -41,81 +41,54 @@ public class SignupActivity extends ActionBarActivity {
                     Toast.makeText(getApplicationContext(), "Please fill in the details to Sign up.", Toast.LENGTH_LONG).show();
                     return;
                 }
-
-                String reply = new HttpServerRequest(getApplicationContext).getReply("InfoX/register.php", "name", name, "phone", phone, "password", password);
-                Toast.makeText(getApplicationContext(), reply, Toast.LENGTH_LONG).show();
-
-                if(reply.equals("Success!"))
-                {
-                    PrefUtils.setLoginStatus(getApplicationContext(), true);
-                    PrefUtils.setPhoneNumber(getApplicationContext(), phone);
-                    PrefUtils.setName(getApplicationContext(), name);
-                    Intent intent = new Intent(SignupActivity.this, WelcomeActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
+                new SignUpTask().execute();
             }
         });
 
         findViewById(R.id.button_login).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                String phone, password;
-                EditText editText = (EditText) findViewById(R.id.loginPhone);
-                phone = editText.getText().toString();
-
-                editText = (EditText) findViewById(R.id.loginPass);
-                password = editText.getText().toString();
-
-                if(phone.isEmpty() || password.isEmpty())
-                {
-                    Toast.makeText(getApplicationContext(), "Please fill in the details to Log In.", Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                String reply = new HttpServerRequest(SignupActivity.this).getReply("InfoX/login.php", "phone", phone, "password", password);
-                Toast.makeText(getApplicationContext(), reply, Toast.LENGTH_LONG).show();
-
-                if(reply.equals("Success!"))
-                {
-                    PrefUtils.setLoginStatus(getApplicationContext(), true);
-                    PrefUtils.setPhoneNumber(getApplicationContext(), phone);
                     Intent intent = new Intent(SignupActivity.this, WelcomeActivity.class);
                     startActivity(intent);
                     finish();
-                }
             }
         });
     }
 
-    private class ValidateData extends AsyncTask<Void, Void, Boolean> {
+    private class SignUpTask extends AsyncTask<Void, Void, String> {
         ProgressDialog mProgressDialog = new ProgressDialog(SignupActivity.this);
 
         @Override
         protected void onPreExecute() {
+            mProgressDialog.setTitle("Signing Up");
             mProgressDialog.setIndeterminate(true);
             mProgressDialog.show();
             super.onPreExecute();
         }
 
         @Override
-        protected Boolean doInBackground(Void... params) {
+        protected String doInBackground(Void... params) {
             // Perform validation here
-            try
-            {
-                Thread.sleep(4000);
-            }
-            catch (InterruptedException e) {
-            }
-            return true;
+            String reply = new HttpServerRequest(SignupActivity.this).getReply("register.php", "name", name, "phone", phone, "password", password);
+            return reply;
         }
 
         @Override
-        protected void onPostExecute(Boolean val) {
+        protected void onPostExecute(String reply)
+        {
             // Do some UI related stuff here
+            Toast.makeText(getApplicationContext(), reply, Toast.LENGTH_LONG).show();
+            if(reply.equals("Success!"))
+            {
+                PrefUtils.setLoginStatus(getApplicationContext(), true);
+                PrefUtils.setPhoneNumber(getApplicationContext(), phone);
+                PrefUtils.setName(getApplicationContext(), name);
+                Intent intent = new Intent(SignupActivity.this, BrowseActivity.class);
+                startActivity(intent);
+                finish();
+            }
             mProgressDialog.dismiss();
-            super.onPostExecute(val);
+            super.onPostExecute(reply);
         }
     }
 

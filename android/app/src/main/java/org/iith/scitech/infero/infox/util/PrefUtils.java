@@ -203,7 +203,7 @@ public class PrefUtils  {
         return sp.getString(PREF_PHONE_NUMBER, "9494827652");
     }
     
-    public static String setPhoneNumber(final Context context, String number) {
+    public static void setPhoneNumber(final Context context, String number) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         sp.edit().putString(PREF_PHONE_NUMBER, number).commit();
     }
@@ -220,7 +220,7 @@ public class PrefUtils  {
 
     public static String getServerIP(final Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        return sp.getString(PREF_SERVER_IP, "http://172.16.15.91:80/infox/");
+        return sp.getString(PREF_SERVER_IP, "http://172.16.15.152:80/infox/");
     }
 
     public static void setServerIP(final Context context, String name) {

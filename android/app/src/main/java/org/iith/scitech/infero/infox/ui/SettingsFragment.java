@@ -1,5 +1,6 @@
 package org.iith.scitech.infero.infox.ui;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import org.iith.scitech.infero.infox.R;
@@ -72,6 +74,18 @@ public class SettingsFragment extends Fragment {
             public void onFocusChange(View v, boolean hasFocus) {
                 if(!hasFocus)
                     PrefUtils.setServerIP(getActivity(), serverAddress.getText().toString());
+            }
+        });
+
+        final TextView prefTextView = (TextView) getActivity().findViewById(R.id.pref_contentPreferences);
+        prefTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Dialog dialog = new Dialog(getActivity());
+                dialog.setTitle("Preferences");
+                dialog.setContentView(R.layout.dialog_preferences);
+                ListView lw = (ListView) dialog.findViewById(R.id.pref_contentPreferences_listView);
+                
             }
         });
 
