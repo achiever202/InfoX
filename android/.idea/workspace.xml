@@ -47,12 +47,25 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="BrowseActivity.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="BrowseActivity.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/ui/BrowseActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="3045" max-vertical-offset="6645">
-              <caret line="246" column="17" selection-start-line="246" selection-start-column="17" selection-end-line="246" selection-end-column="17" />
+            <state vertical-scroll-proportion="0.2857143" vertical-offset="3135" max-vertical-offset="6645">
+              <caret line="262" column="28" selection-start-line="262" selection-start-column="28" selection-end-line="262" selection-end-column="28" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ContentListAdapter.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/ui/ContentListAdapter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1470" max-vertical-offset="5085">
+              <caret line="161" column="122" selection-start-line="161" selection-start-column="122" selection-end-line="161" selection-end-column="122" />
+              <folding>
+                <element signature="e#13676#14066#0" expanded="true" />
+                <element signature="e#14055#14056#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -97,11 +110,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DownloadService.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="DownloadService.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/service/DownloadService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6" vertical-offset="360" max-vertical-offset="2475">
-              <caret line="75" column="132" selection-start-line="75" selection-start-column="132" selection-end-line="75" selection-end-column="132" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="1395" max-vertical-offset="2475">
+              <caret line="134" column="0" selection-start-line="134" selection-start-column="0" selection-end-line="134" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -1203,7 +1216,6 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_groups.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/group_tile.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/util/JsonUtils.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/ui/ContentListAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/util/AsyncServerRequest.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/ui/AllJoyn/HostActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/ui/AllJoyn/Globals.java" />
@@ -1223,6 +1235,7 @@
         <option value="$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/ui/BrowseActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/service/DownloadService.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/data/ContentListProvider.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/ui/ContentListAdapter.java" />
       </list>
     </option>
   </component>
@@ -2036,14 +2049,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/ui/ContentListAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="5010">
-          <caret line="75" column="64" selection-start-line="75" selection-start-column="64" selection-end-line="75" selection-end-column="64" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/ui/AllJoyn/AllJoynService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="8818" max-vertical-offset="18645">
@@ -2218,14 +2223,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/ui/BrowseActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="3045" max-vertical-offset="6645">
-          <caret line="246" column="17" selection-start-line="246" selection-start-column="17" selection-end-line="246" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/data/ContentListProvider.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="632" max-vertical-offset="2100">
@@ -2236,8 +2233,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/service/DownloadService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6" vertical-offset="360" max-vertical-offset="2475">
-          <caret line="75" column="132" selection-start-line="75" selection-start-column="132" selection-end-line="75" selection-end-column="132" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="1395" max-vertical-offset="2475">
+          <caret line="134" column="0" selection-start-line="134" selection-start-column="0" selection-end-line="134" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/ui/ContentListAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1470" max-vertical-offset="5085">
+          <caret line="161" column="122" selection-start-line="161" selection-start-column="122" selection-end-line="161" selection-end-column="122" />
+          <folding>
+            <element signature="e#13676#14066#0" expanded="true" />
+            <element signature="e#14055#14056#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/org/iith/scitech/infero/infox/ui/BrowseActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2857143" vertical-offset="3135" max-vertical-offset="6645">
+          <caret line="262" column="28" selection-start-line="262" selection-start-column="28" selection-end-line="262" selection-end-column="28" />
           <folding />
         </state>
       </provider>

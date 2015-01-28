@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.URLUtil;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -154,8 +155,14 @@ public class ContentListAdapter extends ArrayAdapter<String> {
             try
             {
                 //mediaPlayer.setDataSource("/sdcard/Music/maine.mp3");//Write your location here
-                Uri uri = Uri.parse(JsonUtils.getData(s,"content"));
-                mediaPlayer.setDataSource(context, uri);
+                if(URLUtil.isValidUrl(JsonUtils.getData(s,"content")))
+                {
+                    Uri uri = Uri.parse(JsonUtils.getData(s,"content"));
+                    mediaPlayer.setDataSource(context, uri);
+                    Toast.makeText(context, "Content not available offline: Streaming online", Toast.LENGTH_SHORT).show();
+                }
+                else
+                    mediaPlayer.setDataSource(JsonUtils.getData(s,"content"));
             }
             catch(Exception e){e.printStackTrace();}
 
@@ -231,7 +238,6 @@ public class ContentListAdapter extends ArrayAdapter<String> {
             rowView.findViewById(R.id.content_tile_music_playBtn).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     if (isPreparedAudio && !isStartedAudio) {
                         if (isFinishedAudio) {
                             new Thread() {
