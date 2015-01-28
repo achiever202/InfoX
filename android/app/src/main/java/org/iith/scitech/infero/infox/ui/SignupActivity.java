@@ -53,9 +53,30 @@ public class SignupActivity extends ActionBarActivity {
         findViewById(R.id.button_login).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SignupActivity.this, WelcomeActivity.class);
-                startActivity(intent);
-                finish();
+
+                String phone, password;
+                EditText editText = (EditText) findViewById(R.id.loginPhone);
+                phone = editText.getText().toString();
+
+                editText = (EditText) findViewById(R.id.loginPass);
+                password = editText.getText().toString();
+
+                if(phone.isEmpty() || password.isEmpty())
+                {
+                    Toast.makeText(getApplicationContext(), "Please fill in the details to Log In.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                String reply = new HttpServerRequest(getApplicationContext).getReply("login.php", "phone", phone, "password", password);
+                Toast.makeText(getApplicationContext(), reply, Toast.LENGTH_LONG).show();
+
+                if(reply.equals("Success!"))
+                {
+                    PrefUtils.setLoginStatus(getApplicationContext(), true);
+                    Intent intent = new Intent(SignupActivity.this, WelcomeActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
     }
