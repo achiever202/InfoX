@@ -73,6 +73,7 @@ public class SignupActivity extends ActionBarActivity {
                 if(reply.equals("Success!"))
                 {
                     PrefUtils.setLoginStatus(getApplicationContext(), true);
+                    PrefUtils.setPhoneNumber(getApplicationContext(), phone);
                     Intent intent = new Intent(SignupActivity.this, WelcomeActivity.class);
                     startActivity(intent);
                     finish();
