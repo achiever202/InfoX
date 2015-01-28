@@ -57,9 +57,11 @@ public class VideoWidget
         videoView.setMediaController(mediaController);
         videoView.setOnPreparedListener(prepareListener());
 
-        attachButton();
+        //attachButton();
 
     }
+
+    /*
 
     private void attachButton()
     {
@@ -85,4 +87,5 @@ public class VideoWidget
             }
         });
     }
+    */
 }
