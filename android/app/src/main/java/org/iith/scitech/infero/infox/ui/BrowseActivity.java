@@ -28,6 +28,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import org.iith.scitech.infero.infox.R;
 import org.iith.scitech.infero.infox.data.ContentListProvider;
 import org.iith.scitech.infero.infox.swipetodismiss.SwipeDismissListViewTouchListener;
+import org.iith.scitech.infero.infox.util.ContactUtils;
 import org.iith.scitech.infero.infox.util.HttpServerRequest;
 import org.iith.scitech.infero.infox.util.PrefUtils;
 import org.json.JSONArray;
@@ -179,13 +180,15 @@ public class BrowseActivity extends ActionBarActivity implements BrowseFragment.
             JSONObject jsonObject = null;
             try
             {
-                jsonObject = new JSONObject(new HttpServerRequest(BrowseActivity.this).getReply(new String[]{"download.php"}));
+                JSONObject jOb = new JSONObject();
+                jOb.put("phNo", ContactUtils.getFormattedContact(PrefUtils.getPhoneNumber(BrowseActivity.this)));
+                jsonObject = new JSONObject(new HttpServerRequest(BrowseActivity.this).getReply("download.php", "data", jOb.toString()));
             }
             catch (Exception e) {
                 e.printStackTrace();
             }
 
-            if(jsonObject.toString().equals(""))
+            if(!jsonObject.has("data"))
                 return new JSONArray();
 
             JSONArray jsonArray = null;
