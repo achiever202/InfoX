@@ -185,6 +185,9 @@ public class BrowseActivity extends ActionBarActivity implements BrowseFragment.
                 e.printStackTrace();
             }
 
+            if(jsonObject.toString().equals(""))
+                return new JSONArray();
+
             JSONArray jsonArray = null;
             try {
                 jsonArray = (JSONArray) jsonObject.get("data");
@@ -220,7 +223,6 @@ public class BrowseActivity extends ActionBarActivity implements BrowseFragment.
         @Override
         protected void onPostExecute(JSONArray jsonArray) {
             // Do some UI related stuff here
-
             for(int i=0;i<jsonArray.length();i++) {
                 JSONObject indObject = null;
                 try

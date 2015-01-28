@@ -1,6 +1,8 @@
 package org.iith.scitech.infero.infox.util;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 
 import org.apache.http.HttpEntity;
@@ -35,44 +37,42 @@ public class HttpServerRequest {
     public String getReply(String... arguments)
     {
         Log.v("NET", PrefUtils.getServerIP(context)+arguments[0]);
-        /* create a httpClient and a new post request. */
-        DefaultHttpClient httpClient = new DefaultHttpClient();
-        HttpPost httpPostRequest = new HttpPost(PrefUtils.getServerIP(context)+arguments[0]);
+        ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
-        if((arguments.length & 1)==0)
-            return "";
+        if(networkInfo!=null && networkInfo.isConnected()) {
+            /* create a httpClient and a new post request. */
+            DefaultHttpClient httpClient = new DefaultHttpClient();
+            HttpPost httpPostRequest = new HttpPost(PrefUtils.getServerIP(context) + arguments[0]);
 
-        Log.v("NET", "Sending...2");
+            if ((arguments.length & 1) == 0)
+                return "";
 
-		/* creating the name-value pairs for the post request. */
-        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-        for(int i=1; i<arguments.length; i=i+2)
-            nameValuePairs.add(new BasicNameValuePair(arguments[i], arguments[i+1]));
+            Log.v("NET", "Sending...2");
 
-        try
-        {
-			/* sending the post request. */
-            httpPostRequest.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-            Log.v("NET","executiing");
-            HttpResponse httpResponse = httpClient.execute(httpPostRequest);
-            Log.v("NET" ,"executed");
+            /* creating the name-value pairs for the post request. */
+            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+            for (int i = 1; i < arguments.length; i = i + 2)
+                nameValuePairs.add(new BasicNameValuePair(arguments[i], arguments[i + 1]));
 
-            HttpEntity httpEntity = httpResponse.getEntity();
-            reply = EntityUtils.toString(httpEntity);
-            Log.v("NET", "Got reply: "+reply);
+            try {
+                /* sending the post request. */
+                httpPostRequest.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                Log.v("NET", "executing");
+                HttpResponse httpResponse = httpClient.execute(httpPostRequest);
+                Log.v("NET", "executed");
 
-        }
-        catch (UnsupportedEncodingException e)
-        {
-            e.printStackTrace();
-        }
-        catch (ClientProtocolException e)
-        {
-            e.printStackTrace();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
+                HttpEntity httpEntity = httpResponse.getEntity();
+                reply = EntityUtils.toString(httpEntity);
+                Log.v("NET", "Got reply: " + reply);
+
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            } catch (ClientProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return reply;
     }

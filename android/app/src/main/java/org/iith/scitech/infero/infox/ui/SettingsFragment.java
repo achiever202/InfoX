@@ -53,6 +53,18 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        CheckBox autoSync = (CheckBox) getActivity().findViewById(R.id.pref_autoSync);
+        autoSync.setChecked(PrefUtils.canAutoSync(getActivity()));
+        autoSync.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)
+                    PrefUtils.setAutoSync(getActivity(), true);
+                else
+                    PrefUtils.setAutoSync(getActivity(), false);
+            }
+        });
+
         final EditText serverAddress = (EditText) getActivity().findViewById(R.id.pref_serverAddress);
         serverAddress.setText(PrefUtils.getServerIP(getActivity()));
         serverAddress.setOnFocusChangeListener(new View.OnFocusChangeListener() {

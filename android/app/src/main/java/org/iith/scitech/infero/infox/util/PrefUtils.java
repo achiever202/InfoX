@@ -2,6 +2,7 @@ package org.iith.scitech.infero.infox.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 
 import org.iith.scitech.infero.infox.Config;
@@ -72,6 +73,10 @@ public class PrefUtils  {
     public static final String PREF_SERVER_IP = "pref_server_ip";
 
     public static final String PREF_SWIPE_TO_DISMISS = "pref_swipe_to_dismiss";
+
+    public static final String PREF_AUTO_SYNC = "pref_auto_sync";
+
+    public static final String PREF_DOWNLOAD_DIRECTORY = "pref_download_directory";
 
     /** Boolean indicating whether ToS has been accepted */
     public static final String PREF_DECLINED_WIFI_SETUP = "pref_declined_wifi_setup";
@@ -228,6 +233,16 @@ public class PrefUtils  {
         sp.edit().putBoolean(PREF_SWIPE_TO_DISMISS, val).commit();
     }
 
+    public static Boolean canAutoSync(final Context context) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.getBoolean(PREF_AUTO_SYNC, false);
+    }
+
+    public static void setAutoSync(final Context context, Boolean val) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        sp.edit().putBoolean(PREF_AUTO_SYNC, val).commit();
+    }
+
     public static void setCurrentVideoPath(final Context context, String name) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         sp.edit().putString(PREF_CURRENT_VIDEO_PATH, name).commit();
@@ -241,6 +256,20 @@ public class PrefUtils  {
     public static void setCurrentDataTransferNumber(final Context context, String name) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         sp.edit().putString(PREF_CURRENT_DATA_TRANSFER_NUMBER, name).commit();
+    }
+
+    public static String getDownloadDirectory(final Context context) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+
+        if(!Environment.getExternalStoragePublicDirectory("InfoX").exists())
+            Environment.getExternalStoragePublicDirectory("InfoX").mkdir();
+
+        return sp.getString(PREF_DOWNLOAD_DIRECTORY, Environment.getExternalStoragePublicDirectory("InfoX").getAbsolutePath());
+    }
+
+    public static void setDownloadDirectory(final Context context, String name) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        sp.edit().putString(PREF_DOWNLOAD_DIRECTORY, name).commit();
     }
 
     public static String getCurrentDataTransferNumber(final Context context) {
