@@ -11,7 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp">
+        android:layout_marginBottom="8dp"
+        android:background="#fff">
         <CheckBox
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -29,7 +30,8 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp">
+        android:layout_marginBottom="8dp"
+        android:background="#fff">
         <CheckBox
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -48,7 +50,8 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp">
+        android:layout_marginBottom="8dp"
+        android:background="#fff">
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -71,7 +74,8 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp">
+        android:layout_marginBottom="8dp"
+        android:background="#fff">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
