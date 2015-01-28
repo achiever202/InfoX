@@ -19,7 +19,17 @@ package org.iith.scitech.infero.infox.ui.AllJoyn;
 import android.app.Application;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.database.Cursor;
 import android.util.Log;
+import android.widget.Toast;
+
+import org.iith.scitech.infero.infox.data.ContentListDatabase;
+import org.iith.scitech.infero.infox.data.ContentListProvider;
+import org.iith.scitech.infero.infox.ui.GlobalListView;
+import org.iith.scitech.infero.infox.util.EncodeDecodeUtils;
+import org.iith.scitech.infero.infox.util.JsonUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.text.DateFormat;
@@ -484,8 +494,129 @@ public class ChatApplication extends Application implements Observable, Serializ
      * unique ID of the sending bus attachment.  This is not very user friendly,
      * but is convenient and guaranteed to be unique.
      */
+    public List<String> mList = new ArrayList<String>();
     public synchronized void newRemoteUserMessage(String nickname, String message) {
-        addInboundItem(nickname, message);
+        String type = JsonUtils.getData(message, "type");
+        if(type.equals("queryWithContentId"))
+        {
+            Log.v("queryWithContentId:: ", "queryWithContentId");
+            JSONArray jsonArray = null;
+            ContentListProvider clp = new ContentListProvider(ChatApplication.this);
+            clp.open();
+            ArrayList dataToBeSend = new ArrayList();
+            try {
+                jsonArray = new JSONArray(JsonUtils.getData(message, "data"));
+                ArrayList arrayList = clp.getAllContentIdsOfContents();
+                ArrayList jsonArrayList = new ArrayList();
+                for(int i=0;i<jsonArray.length();i++)
+                {
+                    jsonArrayList.add(jsonArray.get(i).toString());
+                }
+
+                for(int i=0;i<arrayList.size();i++)
+                {
+                    if(!jsonArrayList.contains(arrayList.get(i).toString()))
+                    {
+                        dataToBeSend.add(arrayList.get(i).toString());
+                    }
+                }
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
+            JSONArray sendJsonArray = new JSONArray();
+            JSONObject indObject = new JSONObject();
+            for(int i=0;i<dataToBeSend.size();i++)
+            {
+                Log.v("receive: ", dataToBeSend.get(i).toString());
+                Cursor res = clp.getContentById(Integer.parseInt(dataToBeSend.get(i).toString()));
+
+                //res.moveToFirst();
+                Log.v("receive", "receive()");
+
+                while(res.isAfterLast() == false){
+                    Log.v("receive", "receive()");
+                    //content_id, file_name, file_path, time_added, time_expiry, lang_id, category_id, content_type_id
+                    try {
+                        indObject.put("content_id", res.getString(res.getColumnIndex("content_id")));
+                        indObject.put("file_name", res.getString(res.getColumnIndex("file_name")));
+                        if(res.getString(res.getColumnIndex("content_type_id")).equals("tile_video") || res.getString(res.getColumnIndex("content_type_id")).equals("tile_music"))
+                            indObject.put("file_path", EncodeDecodeUtils.Encode(ChatApplication.this, res.getString(res.getColumnIndex("file_path"))));
+                        else
+                            indObject.put("file_path", res.getString(res.getColumnIndex("file_path")));
+                        indObject.put("time_added", res.getString(res.getColumnIndex("time_added")));
+                        indObject.put("time_expiry", res.getString(res.getColumnIndex("time_expiry")));
+                        indObject.put("lang_id", res.getString(res.getColumnIndex("lang_id")));
+                        indObject.put("category_id", res.getString(res.getColumnIndex("category_id")));
+                        indObject.put("content_type_id", res.getString(res.getColumnIndex("content_type_id")));
+
+                    }
+                    catch(Exception e) {
+                        e.printStackTrace();
+                    }
+                    sendJsonArray.put(indObject);
+                    indObject = new JSONObject();
+                    res.moveToNext();
+                }
+            }
+
+            JSONObject jsonObject = new JSONObject();
+            try
+            {
+                jsonObject.put("type", "receiveData");
+                jsonObject.put("data", sendJsonArray);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+
+            Log.v("receive", jsonObject.toString());
+
+            newLocalUserMessage(jsonObject.toString());
+
+
+        }
+        else
+        if(type.equals("receiveData"))
+        {
+            if(mList.size()==0)
+            {
+                mList.clear();
+            }
+            Log.v("receiveData:: ", "receiveData");
+            try {
+                JSONArray receiveJSON = new JSONArray(JsonUtils.getData(message, "data"));
+                ContentListProvider clp = new ContentListProvider(ChatApplication.this);
+                clp.open();
+                for(int i=0;i<receiveJSON.length();i++) {
+                    JSONObject receiveObject = new JSONObject(receiveJSON.get(i).toString());
+
+                    if(!receiveObject.has("content_type_id"))
+                        continue;
+                    if(receiveObject.getString("content_type_id").equals("tile_video") || receiveObject.getString("content_type_id").equals("tile_music"))
+                    {
+                        EncodeDecodeUtils.Decode(ChatApplication.this, receiveObject.getString("file_path"), receiveObject.getString("file_name"));
+                    }
+                    clp.insertContents(receiveObject.getString("content_id"), receiveObject.getString("file_name"), receiveObject.getString("file_path"), receiveObject.getString("time_added"), receiveObject.getString("time_expiry"), receiveObject.getString("lang_id"), receiveObject.getString("category_id"), receiveObject.getString("content_type_id"));
+                    receiveObject.remove("file_path");
+                    receiveObject.put("content", receiveObject.get("file_name"));
+                    mList.add(receiveObject.toString());
+                }
+
+                //Toast.makeText(getBaseContext(), "Content recieved", Toast.LENGTH_SHORT).show();
+
+                //GlobalListView.mList = mList;
+                //GlobalListView.adapter.notifyDataSetChanged();
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        //addInboundItem(nickname, message);
     }
 
     final int OUTBOUND_MAX = 5;
@@ -549,6 +680,7 @@ public class ChatApplication extends Application implements Observable, Serializ
      * and syncrhonize itself to the new history.
      */
     private void addInboundItem(String nickname, String message) {
+
         addHistoryItem(nickname, message);
     }
 

@@ -10,6 +10,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.w3c.dom.Comment;
 
 public class ContentListProvider {
@@ -41,6 +42,34 @@ public class ContentListProvider {
     {
         Cursor res =  database.rawQuery( "select * from contents", null );
         return res;
+    }
+
+    public ArrayList getAllContentIdsOfContents()
+    {
+        ArrayList array_list = new ArrayList();
+        Cursor res =  database.rawQuery( "select * from contents", null );
+        res.moveToFirst();
+
+        while(res.isAfterLast() == false){
+            array_list.add(res.getString(res.getColumnIndex("content_id")));
+            res.moveToNext();
+        }
+
+        return array_list;
+    }
+
+    public JSONArray getAllContentIdsOfContentsAsJSON()
+    {
+        JSONArray jsonArray = new JSONArray();
+        Cursor res =  database.rawQuery( "select * from contents", null );
+        res.moveToFirst();
+
+        while(res.isAfterLast() == false){
+            jsonArray.put(res.getString(res.getColumnIndex("content_id")));
+            res.moveToNext();
+        }
+
+        return jsonArray;
     }
 
     public ArrayList getContentsListById(int content_id)

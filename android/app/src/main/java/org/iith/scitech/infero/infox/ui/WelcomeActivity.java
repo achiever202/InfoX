@@ -1,6 +1,7 @@
 package org.iith.scitech.infero.infox.ui;
 
 import android.content.Intent;
+import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,8 @@ import android.widget.Toast;
 import org.iith.scitech.infero.infox.R;
 import org.iith.scitech.infero.infox.util.PrefUtils;
 
+import java.security.Permission;
+
 
 public class WelcomeActivity extends ActionBarActivity {
 
@@ -20,6 +23,10 @@ public class WelcomeActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+
+        Log.v("DEBUG: ", Environment.getExternalStorageDirectory().toString());
+        Log.v("DEBUG: ", Environment.getExternalStoragePublicDirectory("InfoX/").getAbsolutePath());
+        Log.v("DEBUG: ", PrefUtils.getDownloadDirectory(WelcomeActivity.this));
 
         findViewById(R.id.button_login).setOnClickListener(new View.OnClickListener() {
             @Override

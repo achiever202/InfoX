@@ -1241,10 +1241,11 @@ public class AllJoynService extends Service implements Observer, Serializable {
         /*
          * Drop signals on the hosted session unless we are joined-to-self.
          */
+        /*
         if (mJoinedToSelf == false && ctx.sessionId == mHostSessionId) {
             Log.i(TAG, "Chat(): dropped signal received on hosted session " + ctx.sessionId + " when not joined-to-self");
             return;
-        }
+        }*/
 
         /*
          * To keep the application simple, we didn't force users to choose a

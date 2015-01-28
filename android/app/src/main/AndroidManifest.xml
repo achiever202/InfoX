@@ -17,7 +17,8 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
-        android:name=".ui.AllJoyn.ChatApplication">
+        android:name=".ui.AllJoyn.ChatApplication"
+        android:largeHeap="true">
 
         <activity
             android:name=".ui.WelcomeActivity"

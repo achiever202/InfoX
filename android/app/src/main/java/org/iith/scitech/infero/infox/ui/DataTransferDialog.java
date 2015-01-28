@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -31,12 +32,16 @@ import org.iith.scitech.infero.infox.ui.AllJoyn.Globals;
 import org.iith.scitech.infero.infox.util.ContactUtils;
 import org.iith.scitech.infero.infox.util.JsonUtils;
 import org.iith.scitech.infero.infox.util.PrefUtils;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
 /**
  * Created by shashank on 25/1/15.
  */
@@ -61,6 +66,8 @@ public class DataTransferDialog extends Activity
         registerForContextMenu(mListView);
 
         values = new ArrayList<String>();
+
+        addLogView();
 
         adapter = new ContentListAdapter(DataTransferDialog.this, values);
         mListView.setAdapter(adapter);
@@ -96,17 +103,46 @@ public class DataTransferDialog extends Activity
 
         mListView.setDividerHeight(0);
 
-        addLogView();
+        GlobalListView glb = new GlobalListView(values, adapter);
+
 
 
         Button receive = (Button) findViewById(R.id.dataTransfer_receive);
         receive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+                ContentListProvider clp = new ContentListProvider(DataTransferDialog.this);
+                clp.open();
+                JSONArray jsonArray = clp.getAllContentIdsOfContentsAsJSON();
+                JSONObject jsonObject = new JSONObject();
+                try
+                {
+                    jsonObject.put("type", "queryWithContentId");
+                    jsonObject.put("data", jsonArray);
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+                Globals.mChatApplication.newLocalUserMessage(jsonObject.toString());
+                Log.v("DEBUG::", jsonArray.toString());
+
             }
         });
 
+    }
+
+    private class EncodeAndSendData implements Runnable
+    {
+        String path = null;
+        public EncodeAndSendData(String path)
+        {
+            this.path = path;
+        }
+        @Override
+        public void run()
+        {
+
+        }
     }
 
     public void addLogView()

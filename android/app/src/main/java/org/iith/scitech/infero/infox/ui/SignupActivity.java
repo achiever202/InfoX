@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import org.iith.scitech.infero.infox.R;
+import org.iith.scitech.infero.infox.util.HttpServerRequest;
 import org.iith.scitech.infero.infox.util.PrefUtils;
 
 
@@ -67,7 +68,7 @@ public class SignupActivity extends ActionBarActivity {
                     return;
                 }
 
-                String reply = new HttpServerRequest(getApplicationContext).getReply("InfoX/login.php", "phone", phone, "password", password);
+                String reply = new HttpServerRequest(SignupActivity.this).getReply("InfoX/login.php", "phone", phone, "password", password);
                 Toast.makeText(getApplicationContext(), reply, Toast.LENGTH_LONG).show();
 
                 if(reply.equals("Success!"))

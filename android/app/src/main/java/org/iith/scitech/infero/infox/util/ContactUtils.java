@@ -1,5 +1,9 @@
 package org.iith.scitech.infero.infox.util;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Vector;
 import android.content.ContentResolver;
 import android.database.Cursor;
@@ -83,6 +87,8 @@ public class ContactUtils
 
         if(cursor!=null && !cursor.isClosed())
             cursor.close();
+
+        //Arrays.sort(contacts);
         return contacts;
     }
 
