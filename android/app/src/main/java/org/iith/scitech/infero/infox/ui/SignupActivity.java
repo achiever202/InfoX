@@ -67,7 +67,7 @@ public class SignupActivity extends ActionBarActivity {
                     return;
                 }
 
-                String reply = new HttpServerRequest(getApplicationContext).getReply("login.php", "phone", phone, "password", password);
+                String reply = new HttpServerRequest(getApplicationContext).getReply("InfoX/login.php", "phone", phone, "password", password);
                 Toast.makeText(getApplicationContext(), reply, Toast.LENGTH_LONG).show();
 
                 if(reply.equals("Success!"))
