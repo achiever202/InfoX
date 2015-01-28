@@ -20,6 +20,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.iith.scitech.infero.infox.R;
+import org.iith.scitech.infero.infox.ui.AllJoyn.AllJoynService;
+import org.iith.scitech.infero.infox.ui.AllJoyn.ChatApplication;
+import org.iith.scitech.infero.infox.ui.AllJoyn.Globals;
 import org.iith.scitech.infero.infox.util.ContactUtils;
 import org.iith.scitech.infero.infox.util.PrefUtils;
 import org.json.JSONObject;
@@ -33,11 +36,13 @@ import java.util.List;
 public class GroupListAdapter extends ArrayAdapter<String> {
     private final Context context;
     private final List<String> values;
+    private final ChatApplication mChatApplication;
 
-    public GroupListAdapter(Context context, List<String> values) {
+    public GroupListAdapter(Context context, List<String> values, ChatApplication mChatApplication) {
         super(context, R.layout.group_tile, values);
         this.context = context;
         this.values = values;
+        this.mChatApplication = mChatApplication;
     }
 
     @Override
@@ -91,8 +96,34 @@ public class GroupListAdapter extends ArrayAdapter<String> {
     public void showDialogBox(final Context context, final int tiltPos)
     {
         PrefUtils.setCurrentDataTransferNumber(context, getData(values.get(tiltPos),"number"));
-        Intent intent = new Intent(context, DataTransferDialog.class);
-        context.startActivity(intent);
+        PrefUtils.setCurrentDataTransferName(context, getData(values.get(tiltPos),"name"));
+        String alphabeticalIdentity = ContactUtils.getAlphabetContact(ContactUtils.getFormattedContact(getData(values.get(tiltPos), "number")));
+        Boolean isFound = false;
+
+        List<String> foundChannels = Globals.mChatApplication.getFoundChannels();
+        for(int i=0;i< foundChannels.size();i++)
+        {
+            if(foundChannels.get(i).equals(AllJoynService.NAME_PREFIX+"."+alphabeticalIdentity)) {
+                isFound = true;
+                Log.v("DEB", foundChannels.get(i).toString());
+                Globals.mChatApplication.useSetChannelName(alphabeticalIdentity);
+                Globals.mChatApplication.useJoinChannel();
+
+                Intent intent = new Intent(context, DataTransferDialog.class);
+                Log.v("Found Channels(): ", foundChannels.get(i));
+                //intent.putExtra("mChatApplicat", mChatApplication);
+                context.startActivity(intent);
+                break;
+            }
+        }
+
+        if(!isFound)
+        {
+            Toast.makeText(context, "User not Online", Toast.LENGTH_SHORT).show();
+        }
+
+
+
     }
 
     public String getData(String data, String key)

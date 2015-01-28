@@ -1,69 +1,43 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:clipToPadding="false"
-    android:id="@+id/contentScrollTile"
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:iosched="http://schemas.android.com/apk/res-auto"
-    android:background="@color/gray_background"
-    >
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.WelcomeActivity">
 
-
-    <android.support.v7.widget.CardView
-        android:layout_height="wrap_content"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:paddingBottom="8dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:paddingTop="8dp">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#e5e5e5">
 
-        <LinearLayout
-            android:layout_height="48dp"
-            android:background="@color/theme_primary"
-            android:layout_gravity="bottom"
+        <ListView
             android:layout_width="match_parent"
-            android:minWidth="220dp">
+            android:layout_height="match_parent"
+            android:id="@+id/dataTransfer_ListView">
+        </ListView>
 
-            <Button
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:text="Send"
-                android:textColor="#fff"
-                android:textSize="@dimen/text_size_medium"
-                android:fontFamily="@string/font_fontFamily_medium"
-                android:textAllCaps="true"
-                android:id="@+id/dataTransfer_send"
-                android:background="@color/theme_primary"/>
+    </FrameLayout>
 
-            <TextView
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:text="7382547459"
-                android:id="@+id/dataTransfer_phNo"
-                android:layout_weight="1"
-                android:textColor="#9fff"
-                android:gravity="center_horizontal"/>
+    <!-- Button bar -->
+    <LinearLayout
+        android:layout_height="48dp"
+        android:background="@color/theme_primary"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent">
 
-            <Button
-                android:id="@+id/dataTransfer_receive"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:text="Receive"
-                android:textSize="@dimen/text_size_medium"
-                android:fontFamily="@string/font_fontFamily_medium"
-                android:textAllCaps="true"
-                android:textColor="#fff"
-                android:background="@color/theme_primary"
-                />
-        </LinearLayout>
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="RECEIVE"
+            android:textColor="#fff"
+            android:textSize="@dimen/text_size_medium"
+            android:fontFamily="@string/font_fontFamily_medium"
+            android:textAllCaps="true"
+            android:id="@+id/dataTransfer_receive"
+            android:background="@color/theme_primary"/>
 
-    </android.support.v7.widget.CardView>
-
-
-
-
+    </LinearLayout>
 </LinearLayout>

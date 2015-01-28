@@ -22,14 +22,14 @@ import android.os.AsyncTask;
 /*
  *  This class is used to send HTTP POST requests to the server.
  */
-public class ServerRequest extends AsyncTask<String, Void, String>
+public class AsyncServerRequest extends AsyncTask<String, Void, String>
 {
 	/* reply stores the reply from the server. */
 	String reply;
 	Context context;
 	
 	/* constructor for the object. */
-	public ServerRequest(Context ctx)
+	public AsyncServerRequest(Context ctx)
 	{
 		/* context of the caller. */
 		context = ctx;

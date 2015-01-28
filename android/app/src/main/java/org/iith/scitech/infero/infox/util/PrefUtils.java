@@ -67,6 +67,8 @@ public class PrefUtils  {
 
     public static final String PREF_CURRENT_DATA_TRANSFER_NUMBER = "pref_current_data_transfer_number";
 
+    public static final String PREF_CURRENT_DATA_TRANSFER_NAME = "pref_current_data_transfer_name";
+
     public static final String PREF_SERVER_IP = "pref_server_ip";
 
     public static final String PREF_SWIPE_TO_DISMISS = "pref_swipe_to_dismiss";
@@ -244,6 +246,16 @@ public class PrefUtils  {
     public static String getCurrentDataTransferNumber(final Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         return sp.getString(PREF_CURRENT_DATA_TRANSFER_NUMBER, "");
+    }
+
+    public static void setCurrentDataTransferName(final Context context, String name) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        sp.edit().putString(PREF_CURRENT_DATA_TRANSFER_NAME, name).commit();
+    }
+
+    public static String getCurrentDataTransferName(final Context context) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.getString(PREF_CURRENT_DATA_TRANSFER_NAME, "");
     }
 
     public static boolean getLoginStatus(final Context context) {

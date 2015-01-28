@@ -4,6 +4,7 @@ import java.util.Vector;
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.provider.ContactsContract;
+import android.util.Log;
 
 import org.json.JSONObject;
 
@@ -17,7 +18,8 @@ public class ContactUtils
 	
 	/* cursor object to query the contacts table. */
 	private Cursor cursor;
-	
+
+    private static char[] alphabets = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'};
 	/* constructor for the objects. */
 	public ContactUtils(ContentResolver contentResolver) 
 	{
@@ -138,9 +140,10 @@ public class ContactUtils
 	public static String getAlphabetContact(String contact)
 	{
 		String alphabetContact = "";
-		for(ll i=0; i<contact.length(); i++)
-			alphabetContact.concat(String.valueOf('a'+contact[i]-'0'));
+		for(int i=0; i<contact.length(); i++)
+			alphabetContact += String.valueOf(alphabets[Integer.parseInt(String.valueOf(contact.charAt(i)))]);
 
+        //Log.v("DEB", contact+" , "+alphabetContact);
 		return alphabetContact;
 	}
 }

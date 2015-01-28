@@ -2,6 +2,13 @@
 <items version="2" >
 
     <item
+        jar="/home/shashank/Android/shashank/InfoX/android/app/libs/alljoyn.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="5c894cb108322466f3bc41002a8c784924cfe0bf">
+        <dex dex="/home/shashank/Android/shashank/InfoX/android/app/build/intermediates/pre-dexed/debug/alljoyn-997430032a46a989c0e1b7acf339b9c73f3fd6de.jar" />
+    </item>
+    <item
         jar="/home/shashank/Android/shashank/InfoX/android/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
         jumboMode="false"
         revision="21.1.2"

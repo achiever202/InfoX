@@ -76,6 +76,8 @@ public class BrowseActivity extends ActionBarActivity implements BrowseFragment.
         setContentView(R.layout.activity_browse);
 
 
+
+
         mNavigationFragment = (BrowseFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
 
