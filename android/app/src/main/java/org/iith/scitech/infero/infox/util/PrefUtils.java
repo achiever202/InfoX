@@ -76,6 +76,8 @@ public class PrefUtils  {
 
     public static final String PREF_AUTO_SYNC = "pref_auto_sync";
 
+    public static final String PREF_CONTENT_PREFERENCE = "pref_content_preferences";
+
     public static final String PREF_DOWNLOAD_DIRECTORY = "pref_download_directory";
 
     /** Boolean indicating whether ToS has been accepted */
@@ -216,6 +218,16 @@ public class PrefUtils  {
     public static void setName(final Context context, String name) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         sp.edit().putString(PREF_NAME, name).commit();
+    }
+
+    public static String getContentPreferences(final Context context) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.getString(PREF_CONTENT_PREFERENCE, "[]");
+    }
+
+    public static void setContentPreferences(final Context context, String name) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        sp.edit().putString(PREF_CONTENT_PREFERENCE, name).commit();
     }
 
     public static String getServerIP(final Context context) {
