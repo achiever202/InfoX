@@ -26,28 +26,34 @@ public class SignupActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
 
-                EditText mPhoneNo = (EditText) findViewById(R.id.loginPhone);
-                EditText mPass = (EditText) findViewById(R.id.loginPass);
-                EditText mName = (EditText) findViewById(R.id.loginName);
+                String name, phone, password;
+                EditText editText = (EditText) findViewById(R.id.loginPhone);
+                phone = editText.getText().toString();
 
-                //Log.v("Hello", mPhoneNo.getText().toString());
-                //Log.v("Hello", mPass.getText().toString());
-                new ValidateData().execute();
+                editText = (EditText) findViewById(R.id.loginPass);
+                password = editText.getText().toString();
 
-                /*
+                editText = (EditText) findViewById(R.id.loginName);
+                name = editText.getText().toString();
 
-
-                if(PrefUtils.getPhoneNumber(SignupActivity.this).equals(mPhoneNo.getText().toString()) &&
-                   PrefUtils.getLoginPassword(SignupActivity.this).equals(mPass.getText().toString()))
+                if(phone.isEmpty() || password.isEmpty() || name.isEmpty())
                 {
-                    Intent intent = new Intent(SignupActivity.this, BrowseActivity.class);
+                    Toast.makeText(getApplicationContext(), "Please fill in the details to Sign up.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                String reply = new HttpServerRequest(getApplicationContext).getReply("InfoX/register.php", "name", name, "phone", phone, "password", password);
+                Toast.makeText(getApplicationContext(), reply, Toast.LENGTH_LONG).show();
+
+                if(reply.equals("Success!"))
+                {
+                    PrefUtils.setLoginStatus(getApplicationContext(), true);
+                    PrefUtils.setPhoneNumber(getApplicationContext(), phone);
+                    PrefUtils.setName(getApplicationContext(), name);
+                    Intent intent = new Intent(SignupActivity.this, WelcomeActivity.class);
                     startActivity(intent);
                     finish();
                 }
-                else
-                {
-                    Toast.makeText(SignupActivity.this, "Authentication Error", Toast.LENGTH_SHORT).show();
-                }*/
             }
         });
 
@@ -74,6 +80,7 @@ public class SignupActivity extends ActionBarActivity {
                 if(reply.equals("Success!"))
                 {
                     PrefUtils.setLoginStatus(getApplicationContext(), true);
+                    PrefUtils.setPhoneNumber(getApplicationContext(), phone);
                     Intent intent = new Intent(SignupActivity.this, WelcomeActivity.class);
                     startActivity(intent);
                     finish();
