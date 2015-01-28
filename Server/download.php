@@ -1,7 +1,7 @@
 <?php
 require_once("common/constants.php");
 require_once("connect_database.php");
-/*
+
 if(!isset($_POST['data']))
 	die(INVALID_REQUEST);
 
@@ -16,8 +16,8 @@ if(!$result)
 	die(INVALID_REQUEST);
 
 $user_id=mysqli_fetch_assoc($result)["user_id"];
-*/
-$user_id=1;
+
+
 //TODO: Modify this to get apt content
 $query="SELECT * FROM contents AS c
 	INNER JOIN preferences AS p ON (c.category_id=p.category_id AND p.user_id='$user_id')
