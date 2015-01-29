@@ -66,6 +66,8 @@ public class PrefUtils  {
 
     public static final String PREF_CURRENT_VIDEO_PATH = "pref_current_video_path";
 
+    public static final String PREF_CURRENT_MUSIC_PATH = "pref_current_music_path";
+
     public static final String PREF_CURRENT_DATA_TRANSFER_NUMBER = "pref_current_data_transfer_number";
 
     public static final String PREF_CURRENT_DATA_TRANSFER_NAME = "pref_current_data_transfer_name";
@@ -202,7 +204,7 @@ public class PrefUtils  {
 
     public static String getPhoneNumber(final Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        return sp.getString(PREF_PHONE_NUMBER, "9494827652");
+        return sp.getString(PREF_PHONE_NUMBER, "7382547459");
     }
     
     public static void setPhoneNumber(final Context context, String number) {
@@ -270,6 +272,16 @@ public class PrefUtils  {
         return sp.getString(PREF_CURRENT_VIDEO_PATH, "");
     }
 
+    public static void setCurrentMusicPath(final Context context, String name) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        sp.edit().putString(PREF_CURRENT_MUSIC_PATH, name).commit();
+    }
+
+    public static String getCurrentMusicPath(final Context context) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.getString(PREF_CURRENT_MUSIC_PATH, "");
+    }
+
     public static void setCurrentDataTransferNumber(final Context context, String name) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         sp.edit().putString(PREF_CURRENT_DATA_TRANSFER_NUMBER, name).commit();
@@ -306,7 +318,7 @@ public class PrefUtils  {
 
     public static boolean getLoginStatus(final Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        return sp.getBoolean(PREF_LOGIN_STATUS, false);
+        return sp.getBoolean(PREF_LOGIN_STATUS, true);
     }
 
     public static void setLoginStatus(final Context context, final Boolean value) {
