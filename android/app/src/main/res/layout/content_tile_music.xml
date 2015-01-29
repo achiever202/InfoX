@@ -55,7 +55,7 @@
                     android:paddingTop="12dp"
                     android:paddingLeft="10dp"/>
 
-                <Button
+             <!--   <Button
                     style="?android:attr/buttonStyleSmall"
                     android:layout_width="35dp"
                     android:layout_height="40dp"
@@ -69,7 +69,7 @@
                     android:shadowDy="0"
                     android:padding="0dp"
                     android:layout_gravity="top"
-                    android:layout_marginTop="0dp" />
+                    android:layout_marginTop="0dp" />-->
 
                 <Button
                     style="?android:attr/buttonStyleSmall"
@@ -107,12 +107,22 @@
 
             </LinearLayout>
 
-            <SeekBar
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:gravity="center_vertical"
-                android:id="@+id/content_tile_music_seekBar"/>
+                android:text="File Name"
+                android:textStyle="italic"
+                android:id="@+id/content_tile_music_fileName"
+                android:layout_gravity="center_horizontal"
+                android:textColor="#5000"/>
+
+            <!--    <SeekBar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center_vertical"
+                    android:id="@+id/content_tile_music_seekBar"/>
+            -->
 
         </LinearLayout>
 
