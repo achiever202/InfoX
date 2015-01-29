@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipToPadding="false"
+    android:id="@+id/contentScrollTile"
+    android:orientation="horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:iosched="http://schemas.android.com/apk/res-auto"
+    android:background="#8000"
+    android:padding="20dp">
+
+    <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:gravity="left"
+            android:id="@+id/content_dialog_music_seekBar"
+        android:layout_toLeftOf="@+id/content_dialog_music_playPauseButton"
+        android:layout_toStartOf="@+id/content_dialog_music_playPauseButton" />
+
+        <Button
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/ic_video_play_light"
+            android:layout_gravity="right"
+            android:gravity="right"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/content_dialog_music_playPauseButton" />
+
+</RelativeLayout>
