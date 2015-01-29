@@ -49,7 +49,7 @@ public class MusicWidget
 
     private void initializeTileViews()
     {
-        seekBar = (SeekBar) tileView.findViewById(R.id.content_tile_music_seekBar);
+        //seekBar = (SeekBar) tileView.findViewById(R.id.content_tile_music_seekBar);
     }
 
 
