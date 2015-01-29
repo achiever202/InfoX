@@ -49,7 +49,7 @@ public class VideoDialog extends Activity
         mediaController = new MediaController(VideoDialog.this);
         mediaController.setAnchorView(videoView);
         videoView.setMediaController(mediaController);
-        mediaController.setPadding(0, 0, 0, 20);
+        mediaController.setPadding(0, 0, 40, 20);
 
         videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener()  {
             @Override
