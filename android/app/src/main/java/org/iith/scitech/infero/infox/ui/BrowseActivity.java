@@ -177,6 +177,13 @@ public class BrowseActivity extends ActionBarActivity implements BrowseFragment.
 
         @Override
         protected JSONArray doInBackground(Void... params) {
+            {
+                ContentListProvider clp = new ContentListProvider(BrowseActivity.this);
+                clp.open();
+                clp.deleteExpiredContent();
+                clp.close();
+
+            }
             // Perform data fetching here
             Log.v("NET", "Sending...");
 
@@ -220,6 +227,11 @@ public class BrowseActivity extends ActionBarActivity implements BrowseFragment.
 
             ContentListProvider clp = new ContentListProvider(BrowseActivity.this);
             clp.open();
+            if(jsonArray!=null)
+            {
+                if(jsonArray.length()>0)
+                    clp.deleteExpiredContent();
+            }
 
             for(int i=0;i<jsonArray.length();i++) {
                 JSONObject indObject = null;

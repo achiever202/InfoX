@@ -1,6 +1,9 @@
 package org.iith.scitech.infero.infox.data;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import android.content.ContentValues;
@@ -107,6 +110,12 @@ public class ContentListProvider {
     {
         Cursor res =  database.rawQuery( "select * from contents where content_id="+content_id+"", null );
         return res;
+    }
+
+    public void deleteExpiredContent()
+    {
+        String currentDate = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+        database.delete("contents", "time_expiry<="+currentDate, null);
     }
 
     public Boolean deleteContentById(int content_id)

@@ -592,6 +592,7 @@ public class ChatApplication extends Application implements Observable, Serializ
                 JSONArray receiveJSON = new JSONArray(JsonUtils.getData(message, "data"));
                 ContentListProvider clp = new ContentListProvider(ChatApplication.this);
                 clp.open();
+                clearHistory();
                 for(int i=0;i<receiveJSON.length();i++) {
                     JSONObject receiveObject = new JSONObject(receiveJSON.get(i).toString());
 

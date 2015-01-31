@@ -47,6 +47,7 @@ import org.iith.scitech.infero.infox.widget.VideoWidget;
 import org.iith.scitech.infero.infox.widget.WeatherWidget;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -148,6 +149,10 @@ public class ContentListAdapter extends ArrayAdapter<String> {
                     weatherTypeI.setImageResource(R.drawable.ic_weather_02);
                     weatherTypeT.setText("Partly Sunny");
                     break;
+                case "CR":
+                    weatherTypeI.setImageResource(R.drawable.ic_weather_18);
+                    weatherTypeT.setText("Clouds with Rain");
+                    break;
             }
         }
         else if (theType==2)
@@ -171,14 +176,16 @@ public class ContentListAdapter extends ArrayAdapter<String> {
         {
             rowView = layoutInflater.inflate(R.layout.content_tile_video, parent, false);
             if(!URLUtil.isValidUrl(JsonUtils.getData(values.get(position),"content"))) {
-                Bitmap thumbAsBitmap = ThumbnailUtils.createVideoThumbnail(PrefUtils.getDownloadDirectory(context)+"/"+JsonUtils.getData(values.get(position),"content"), MediaStore.Images.Thumbnails.FULL_SCREEN_KIND);
-                Bitmap bmOverlay = Bitmap.createBitmap(thumbAsBitmap.getWidth(), thumbAsBitmap.getHeight(), thumbAsBitmap.getConfig());
-                Bitmap icon = BitmapFactory.decodeResource(context.getResources(),R.drawable.ic_video_overlay);
-                Canvas canvas = new Canvas(bmOverlay);
-                canvas.drawBitmap(thumbAsBitmap, new Matrix(), null);
-                canvas.drawBitmap(icon, new Matrix(), null);
-                BitmapDrawable thumbAsDrawable = new BitmapDrawable(bmOverlay);
-                rowView.findViewById(R.id.content_tile_video_videoView).setBackground(thumbAsDrawable);
+                if(new File(PrefUtils.getDownloadDirectory(context)+"/"+JsonUtils.getData(values.get(position),"content")).exists()) {
+                    Bitmap thumbAsBitmap = ThumbnailUtils.createVideoThumbnail(PrefUtils.getDownloadDirectory(context) + "/" + JsonUtils.getData(values.get(position), "content"), MediaStore.Images.Thumbnails.FULL_SCREEN_KIND);
+                    Bitmap bmOverlay = Bitmap.createBitmap(thumbAsBitmap.getWidth(), thumbAsBitmap.getHeight(), thumbAsBitmap.getConfig());
+                    Bitmap icon = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_video_overlay);
+                    Canvas canvas = new Canvas(bmOverlay);
+                    canvas.drawBitmap(thumbAsBitmap, new Matrix(), null);
+                    canvas.drawBitmap(icon, new Matrix(), null);
+                    BitmapDrawable thumbAsDrawable = new BitmapDrawable(bmOverlay);
+                    rowView.findViewById(R.id.content_tile_video_videoView).setBackground(thumbAsDrawable);
+                }
             }
             rowView.findViewById(R.id.content_tile_video_videoView).setOnClickListener(new View.OnClickListener() {
                 @Override
