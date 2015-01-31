@@ -79,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:autoLink="web"
                 android:layout_marginTop="4dp"
-                android:text="In 1879, Maxwell published a paper on the viscous stresses arising in rarefied gases. At the time, a reviewer commented that it also might be useful if Maxwell could use his theoretical findings to derive a velocity boundary condition for rarefied gas flows at solid surfaces. Consequently, in an appendix to the paper, Maxwell proposed his now-famous velocity slip boundary condition."
+                android:text="In 1879, Maxwell published a paper on the viscous stresses arising in rarefied gases titled : On Stresses in Rarified Gases Arising from Inequalities of Temperature. In an appendix to the paper, Maxwell proposed his now-famous velocity slip boundary condition.\n\t-Phil. Trans. R. Soc. Lond. 1879 170 , 231-256, published 1 January 1879"
                 android:textColor="@color/body_text_2"
                 android:textSize="@dimen/text_size_medium"
                 android:id="@+id/content_tile_education_text"

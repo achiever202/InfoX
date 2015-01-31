@@ -120,7 +120,11 @@ public class ContentListAdapter extends ArrayAdapter<String> {
             {
                 case "EDU":
                     educationTypeI.setImageResource(R.drawable.ic_education);
-                    educationTypeT.setText("EDUCATION");
+                    educationTypeT.setText("EDUCATION (Text)");
+                    break;
+                case "EDU_HTML":
+                    educationTypeI.setImageResource(R.drawable.ic_education);
+                    educationTypeT.setText("EDUCATION (Html)");
                     break;
             }
         }

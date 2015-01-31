@@ -96,9 +96,10 @@ public class ContentListDatabase extends SQLiteOpenHelper {
         db.execSQL("insert into content_types (content_type_id, name) values ('tile_video', 'Video Content')");
 
         db.execSQL("insert into contents (content_id, file_name, file_path, time_added, time_expiry, lang_id, category_id, content_type_id) values (1,'ABC', 'In 1879, Maxwell published a paper on the viscous stresses arising in rarefied gases. In an appendix to the paper, Maxwell proposed his now-famous velocity slip boundary condition.', '2014-01-28 22:41:43', '2016-01-28 22:41:43', 'EN', 'EDU', 'tile_education')");
-        db.execSQL("insert into contents (content_id, file_name, file_path, time_added, time_expiry, lang_id, category_id, content_type_id) values (2,'ABC', '24;05:00 PM;23rd Jan', '2014-01-28 22:41:43', '2016-01-28 22:41:43', 'EN', 'PS', 'tile_weather')");
-        db.execSQL("insert into contents (content_id, file_name, file_path, time_added, time_expiry, lang_id, category_id, content_type_id) values (3,'tereLiye.mp3', 'tereLiye.mp3', '2014-01-28 22:41:43', '2016-01-28 22:41:43', 'EN', 'PS', 'tile_music')");
-        db.execSQL("insert into contents (content_id, file_name, file_path, time_added, time_expiry, lang_id, category_id, content_type_id) values (4,'movie.mp4', 'movie.mp4', '2014-01-28 22:41:43', '2016-01-28 22:41:43', 'EN', 'PS', 'tile_video')");
+        db.execSQL("insert into contents (content_id, file_name, file_path, time_added, time_expiry, lang_id, category_id, content_type_id) values (2,'ABC', 'In 1879, Maxwell published a paper on the viscous stresses arising in rarefied gases titled : On Stresses in Rarified Gases Arising from Inequalities of Temperature. In an appendix to the paper, Maxwell proposed his now-famous velocity slip boundary condition.\n\t-Phil. Trans. R. Soc. Lond. 1879 170 , 231-256, published 1 January 1879\nhttp://rstl.royalsocietypublishing.org/', '2014-01-28 22:41:43', '2016-01-28 22:41:43', 'EN', 'EDU_HTML', 'tile_education')");
+        db.execSQL("insert into contents (content_id, file_name, file_path, time_added, time_expiry, lang_id, category_id, content_type_id) values (3,'ABC', '24;05:00 PM;23rd Jan', '2014-01-28 22:41:43', '2016-01-28 22:41:43', 'EN', 'PS', 'tile_weather')");
+        db.execSQL("insert into contents (content_id, file_name, file_path, time_added, time_expiry, lang_id, category_id, content_type_id) values (4,'tereLiye.mp3', 'tereLiye.mp3', '2014-01-28 22:41:43', '2016-01-28 22:41:43', 'EN', 'PS', 'tile_music')");
+        db.execSQL("insert into contents (content_id, file_name, file_path, time_added, time_expiry, lang_id, category_id, content_type_id) values (5,'movie.mp4', 'movie.mp4', '2014-01-28 22:41:43', '2016-01-28 22:41:43', 'EN', 'PS', 'tile_video')");
 
     }
 }

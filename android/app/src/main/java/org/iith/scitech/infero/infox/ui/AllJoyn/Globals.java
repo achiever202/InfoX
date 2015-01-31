@@ -7,6 +7,7 @@ import java.util.List;
  */
 public class Globals {
     public static ChatApplication mChatApplication;
+    public static String dataTransferType = "";
 
     public Globals(ChatApplication mChatApplication) {
         this.mChatApplication = mChatApplication;

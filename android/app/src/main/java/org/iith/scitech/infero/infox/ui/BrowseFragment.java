@@ -280,8 +280,13 @@ public class BrowseFragment extends Fragment {
             return true;
         }
 
-        if (item.getItemId() == R.id.action_example) {
-            Toast.makeText(getActivity(), "Example action.", Toast.LENGTH_SHORT).show();
+        if (item.getItemId() == R.id.action_refresh) {
+            Toast.makeText(getActivity(), "Refresh Action", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        else
+        if (item.getItemId() == R.id.action_search) {
+            Toast.makeText(getActivity(), "Search Action", Toast.LENGTH_SHORT).show();
             return true;
         }
 

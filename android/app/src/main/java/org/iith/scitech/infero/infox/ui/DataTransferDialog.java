@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -53,6 +55,7 @@ public class DataTransferDialog extends Activity
     List<String> values;
     ContentListAdapter adapter;
     Boolean isRefreshing = false;
+    Boolean canRunThread = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,6 +132,37 @@ public class DataTransferDialog extends Activity
             }
         });
 
+        new updateUITask().execute();
+    }
+
+    private class updateUITask extends AsyncTask<Void, Void, Boolean>
+    {
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            while (canRunThread) {
+                if (Globals.mChatApplication.getHistory().size() != 0) {
+                    return true;
+                }
+                try {
+                    Thread.sleep(2000);
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            if(aBoolean && Globals.dataTransferType.equals("Received")) {
+                values.clear();
+                values.addAll(Globals.mChatApplication.getHistory());
+                adapter.notifyDataSetChanged();
+            }
+
+            super.onPostExecute(aBoolean);
+        }
     }
 
     private class EncodeAndSendData implements Runnable
@@ -178,6 +212,7 @@ public class DataTransferDialog extends Activity
     {
         if ((keyCode == KeyEvent.KEYCODE_BACK))
         {
+            canRunThread = false;
             finish();
         }
         return super.onKeyDown(keyCode, event);

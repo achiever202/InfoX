@@ -9,6 +9,9 @@ import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -60,6 +63,27 @@ public class GroupsFragment extends Fragment implements Observer {
             mHandler.sendMessage(message);
         }
 
+        if (qualifier.equals(ChatApplication.HISTORY_CHANGED_EVENT)) {
+            Message message = mHandler.obtainMessage(HANDLE_HISTORY_CHANGED_EVENT);
+
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if(!Globals.dataTransferType.equals(""))
+                        Toast.makeText(getActivity(), "Data " + Globals.dataTransferType, Toast.LENGTH_SHORT).show();
+                    if(Globals.dataTransferType.equals("Received")) {
+                        GlobalListView.adapter.clear();
+                        GlobalListView.adapter.addAll(mChatApplication.getHistory());
+                        GlobalListView.adapter.notifyDataSetChanged();
+                    }
+                }
+            });
+            //GlobalListView.adapter.clear();
+            //GlobalListView.adapter.addAll(mChatApplication.getHistory());
+            //GlobalListView.adapter.notifyDataSetChanged();
+            mHandler.sendMessage(message);
+        }
+
         if (qualifier.equals(ChatApplication.HOST_CHANNEL_STATE_CHANGED_EVENT)) {
             Message message = mHandler.obtainMessage(HANDLE_CHANNEL_STATE_CHANGED_EVENT);
             mHandler.sendMessage(message);
@@ -74,6 +98,8 @@ public class GroupsFragment extends Fragment implements Observer {
     private static final int HANDLE_APPLICATION_QUIT_EVENT = 0;
     private static final int HANDLE_CHANNEL_STATE_CHANGED_EVENT = 1;
     private static final int HANDLE_ALLJOYN_ERROR_EVENT = 2;
+    private static final int HANDLE_HISTORY_CHANGED_EVENT = 3;
+
 
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -192,6 +218,7 @@ public class GroupsFragment extends Fragment implements Observer {
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        setHasOptionsMenu(false);
 
         mChatApplication = (ChatApplication) getActivity().getApplication();
         mChatApplication.checkin();
@@ -363,6 +390,7 @@ public class GroupsFragment extends Fragment implements Observer {
             super.onPostExecute(arrayList);
         }
     }
+
 
 
 }

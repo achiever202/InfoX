@@ -530,14 +530,14 @@ public class ChatApplication extends Application implements Observable, Serializ
             JSONObject indObject = new JSONObject();
             for(int i=0;i<dataToBeSend.size();i++)
             {
-                Log.v("receive: ", dataToBeSend.get(i).toString());
-                Cursor res = clp.getContentById(Integer.parseInt(dataToBeSend.get(i).toString()));
+                Log.v("send: ", dataToBeSend.get(i).toString());
+                Cursor res = clp.getContentsById(Integer.parseInt(dataToBeSend.get(i).toString()));
 
                 //res.moveToFirst();
-                Log.v("receive", "receive()");
+                Log.v("send", "send()");
 
                 while(res.isAfterLast() == false){
-                    Log.v("receive", "receive()");
+                    Log.v("send", "send()");
                     //content_id, file_name, file_path, time_added, time_expiry, lang_id, category_id, content_type_id
                     try {
                         indObject.put("content_id", res.getString(res.getColumnIndex("content_id")));
@@ -573,7 +573,8 @@ public class ChatApplication extends Application implements Observable, Serializ
                 e.printStackTrace();
             }
 
-            Log.v("receive", jsonObject.toString());
+            Log.v("sendData:: ", jsonObject.toString());
+            Globals.dataTransferType = "Sent";
 
             newLocalUserMessage(jsonObject.toString());
 
@@ -601,14 +602,23 @@ public class ChatApplication extends Application implements Observable, Serializ
                         EncodeDecodeUtils.Decode(ChatApplication.this, receiveObject.getString("file_path"), receiveObject.getString("file_name"));
                     }
                     clp.insertContents(receiveObject.getString("content_id"), receiveObject.getString("file_name"), receiveObject.getString("file_path"), receiveObject.getString("time_added"), receiveObject.getString("time_expiry"), receiveObject.getString("lang_id"), receiveObject.getString("category_id"), receiveObject.getString("content_type_id"));
-                    receiveObject.remove("file_path");
-                    receiveObject.put("content", receiveObject.get("file_name"));
+                    //receiveObject.remove("file_path");
+                    receiveObject.put("content", receiveObject.get("file_path"));
+                    receiveObject.put("tileType", receiveObject.get("content_type_id"));
+                    receiveObject.put("category", receiveObject.get("category_id"));
+                    receiveObject.put("langId", receiveObject.get("lang_id"));
                     mList.add(receiveObject.toString());
+                    Log.v("Receive Object:: "+i+" = ", receiveObject.toString());
+                    addInboundItem(nickname, receiveObject.toString());
                 }
+
+                Globals.dataTransferType = "Received";
 
                 //Toast.makeText(getBaseContext(), "Content recieved", Toast.LENGTH_SHORT).show();
 
                 //GlobalListView.mList = mList;
+                //GlobalListView.adapter.clear();
+                //GlobalListView.adapter.addAll(mList);
                 //GlobalListView.adapter.notifyDataSetChanged();
             }
             catch (Exception e){
@@ -682,6 +692,7 @@ public class ChatApplication extends Application implements Observable, Serializ
     private void addInboundItem(String nickname, String message) {
 
         addHistoryItem(nickname, message);
+        notifyObservers(HISTORY_CHANGED_EVENT);
     }
 
     /**     * Don't keep an infinite amount of history.       */
@@ -708,10 +719,10 @@ public class ChatApplication extends Application implements Observable, Serializ
             mHistory.remove(0);
         }
 
-        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-        Date date = new Date();
-        mHistory.add("[" + dateFormat.format(date) + "] (" + nickname + ") " + message);
-        notifyObservers(HISTORY_CHANGED_EVENT);
+        //DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+        //Date date = new Date();
+        mHistory.add(message);
+        //notifyObservers(HISTORY_CHANGED_EVENT);
     }
 
     /**

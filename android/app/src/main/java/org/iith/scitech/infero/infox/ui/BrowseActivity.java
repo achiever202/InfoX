@@ -172,6 +172,9 @@ public class BrowseActivity extends ActionBarActivity implements BrowseFragment.
 
     private class GetNetworkDataTask extends AsyncTask<Void, Void, JSONArray> {
 
+        Boolean isConnected = true;
+        Boolean isToastShown = false;
+
         @Override
         protected JSONArray doInBackground(Void... params) {
             // Perform data fetching here
@@ -185,11 +188,26 @@ public class BrowseActivity extends ActionBarActivity implements BrowseFragment.
                 jsonObject = new JSONObject(new HttpServerRequest(BrowseActivity.this).getReply("download.php", "data", jOb.toString()));
             }
             catch (Exception e) {
+                isConnected = false;
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(BrowseActivity.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                        isToastShown = true;
+                    }
+                });
                 e.printStackTrace();
             }
 
-            if(!jsonObject.has("data"))
+            if(jsonObject==null) {
+                isConnected = false;
                 return new JSONArray();
+            }
+
+            if(!jsonObject.has("data")) {
+                isConnected = false;
+                return new JSONArray();
+            }
 
             JSONArray jsonArray = null;
             try {
@@ -220,13 +238,16 @@ public class BrowseActivity extends ActionBarActivity implements BrowseFragment.
                 }
             }
 
-                return jsonArray;
+            return jsonArray;
         }
 
         @Override
         protected void onPostExecute(JSONArray jsonArray) {
+            if(!isConnected && !isToastShown)
+                Toast.makeText(BrowseActivity.this, "Connection Error", Toast.LENGTH_SHORT).show();
+
             // Do some UI related stuff here
-            for(int i=0;i<jsonArray.length();i++) {
+            /*for(int i=0;i<jsonArray.length();i++) {
                 JSONObject indObject = null;
                 try
                 {
@@ -237,11 +258,15 @@ public class BrowseActivity extends ActionBarActivity implements BrowseFragment.
                     e.printStackTrace();
                 }
                 addTile(BrowseActivity.this, indObject);
+
                 //Toast.makeText(BrowseActivity.this, indObject.toString(), Toast.LENGTH_SHORT).show();
-            }
+            }*/
 
             mListView.onRefreshComplete();
             super.onPostExecute(jsonArray);
+            addProgressBar();
+            isRefreshing = true;
+            new GetLocalDataTask().execute();
         }
     }
 
@@ -282,6 +307,9 @@ public class BrowseActivity extends ActionBarActivity implements BrowseFragment.
         @Override
         protected void onPostExecute(ArrayList arrayList) {
             // Do some UI related stuff here
+            if(arrayList.size()!=0)
+                values.clear();
+
             for(int i=0;i<arrayList.size();i++) {
                 JSONObject indObject = null;
                 try
@@ -296,6 +324,7 @@ public class BrowseActivity extends ActionBarActivity implements BrowseFragment.
                 addTile(BrowseActivity.this, indObject);
                 //Toast.makeText(BrowseActivity.this, indObject.toString(), Toast.LENGTH_SHORT).show();
             }
+            adapter.notifyDataSetChanged();
 
             if(isRefreshing) {
                 removeProgressBar();
@@ -311,7 +340,6 @@ public class BrowseActivity extends ActionBarActivity implements BrowseFragment.
     private void addTile(Context context, JSONObject result)
     {
         values.add(result.toString());
-        adapter.notifyDataSetChanged();
     }
 
 
@@ -411,9 +439,14 @@ public class BrowseActivity extends ActionBarActivity implements BrowseFragment.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_refresh) {
+            addProgressBar();
+            isRefreshing = true;
+            new GetLocalDataTask().execute();
             return true;
         }
+
+
 
         return super.onOptionsItemSelected(item);
     }
