@@ -17,11 +17,15 @@ if(!$result)
 
 $user_id=mysqli_fetch_assoc($result)["user_id"];
 
+//get user preferences
+$query="SELECT EXISTS(SELECT 1 FROM preferences WHERE user_id='$user_id')";
+$result=mysqli_query($connection, $query);
+$has_preferences=(mysqli_fetch_row($result)[0])?true:false;
 
 //TODO: Modify this to get apt content
-$query="SELECT * FROM contents AS c
-	INNER JOIN preferences AS p ON (c.category_id=p.category_id AND p.user_id='$user_id')
-	WHERE NOT EXISTS (SELECT 1 FROM downloads AS d WHERE d.user_id='$user_id' AND d.content_id=c.content_id)
+$query="SELECT * FROM contents AS c"
+	.($has_preferences?" INNER JOIN preferences AS p ON (c.category_id=p.category_id AND p.user_id='$user_id')":"")
+	." WHERE NOT EXISTS (SELECT 1 FROM downloads AS d WHERE d.user_id='$user_id' AND d.content_id=c.content_id)
 	ORDER BY rand() LIMIT 5;";
 
 $result=mysqli_query($connection, $query);
