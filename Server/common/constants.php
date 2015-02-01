@@ -2,6 +2,7 @@
 
 define("TILE_EDUCATION", "tile_education");
 define("TILE_WEATHER", "tile_weather");
+define("TILE_VIDEO", "tile_video");
 
 define("EDU", "EDU");
 
@@ -14,7 +15,8 @@ define("INVALID_REQUEST", "Invalid Request");
 
 $TILES=array(
 	EDU => TILE_EDUCATION,
-	PS => TILE_WEATHER
+	PS => TILE_WEATHER,
+	ENT => TILE_VIDEO
 );
 
 
