@@ -28,7 +28,7 @@
          if(mysqli_num_rows($result)==1)
             array_push($registered_contacts, $contact);
       }
-      echo json_encode($registered_contacts);
+      echo json_encode(array("data"=>$registered_contacts));
    }
    mysqli_close($connection);
 ?>
