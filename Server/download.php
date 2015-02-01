@@ -7,7 +7,7 @@ if(!isset($_POST['data']))
 
 $json_data=json_decode($_POST['data'], true);
 
-$phone=mysqli_real_escape_string($json_data["phNo"]);
+$phone=mysqli_real_escape_string($connection, $json_data["phNo"]);
 
 $query="SELECT user_id FROM users WHERE phone='$phone'";
 $result=mysqli_query($connection, $query);
@@ -41,6 +41,7 @@ if($result) {
 			"content_id"=>$row["content_id"],
 			"langId"=>$row["lang_id"],
 			"file_name"=>$row["file_name"],
+			"file_path"=>$row["file_path"],
 			"time_added"=>$row["time_added"],
 			"time_expiry"=>$row["time_expiry"],
 			"downloadRequired"=>$row["content"]==NULL?1:0
