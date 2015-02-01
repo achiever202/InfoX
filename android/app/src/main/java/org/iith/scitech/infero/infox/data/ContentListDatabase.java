@@ -19,7 +19,7 @@ public class ContentListDatabase extends SQLiteOpenHelper {
     public static final String ID = "_id";
 
     private static final String CREATE_TABLE_LANGUAGES = "CREATE TABLE IF NOT EXISTS languages (" +
-            "lang_id TEXT PRIMARY KEY," +
+            "lang_id TEXT PRIMARY KEY UNIQUE," +
             "name TEXT" +
             ");";
 
@@ -46,9 +46,9 @@ public class ContentListDatabase extends SQLiteOpenHelper {
             ");";
 
     private static final String CREATE_TABLE_DOWNLOADS = "CREATE TABLE IF NOT EXISTS downloads (" +
-            "content_id INTEGER NOT NULL," +
+            "content_id INTEGER PRIMARY KEY UNIQUE," +
             "downloaded TEXT NOT NULL," +
-            "deleted INTEGER DEFAULT 0"+
+            "deleted INTEGER"+
             ");";
 
 
@@ -80,7 +80,7 @@ public class ContentListDatabase extends SQLiteOpenHelper {
 
     /**
      * Create sample data to use
-     * 
+     *
      * @param db
      *            The open database
      */
@@ -95,11 +95,13 @@ public class ContentListDatabase extends SQLiteOpenHelper {
         db.execSQL("insert into content_types (content_type_id, name) values ('tile_music', 'Audio Content')");
         db.execSQL("insert into content_types (content_type_id, name) values ('tile_video', 'Video Content')");
 
-        db.execSQL("insert into contents (content_id, file_name, file_path, time_added, time_expiry, lang_id, category_id, content_type_id) values (1,'ABC', 'In 1879, Maxwell published a paper on the viscous stresses arising in rarefied gases. In an appendix to the paper, Maxwell proposed his now-famous velocity slip boundary condition.', '20140128224143', '20160128224143', 'EN', 'EDU', 'tile_education')");
-        db.execSQL("insert into contents (content_id, file_name, file_path, time_added, time_expiry, lang_id, category_id, content_type_id) values (2,'ABC', 'In 1879, Maxwell published a paper on the viscous stresses arising in rarefied gases titled : On Stresses in Rarified Gases Arising from Inequalities of Temperature. In an appendix to the paper, Maxwell proposed his now-famous velocity slip boundary condition.\n\t-Phil. Trans. R. Soc. Lond. 1879 170 , 231-256, published 1 January 1879\nhttp://rstl.royalsocietypublishing.org/', '20140128224143', '20160128224143', 'EN', 'EDU_HTML', 'tile_education')");
-        db.execSQL("insert into contents (content_id, file_name, file_path, time_added, time_expiry, lang_id, category_id, content_type_id) values (3,'ABC', '24;05:00 PM;23rd Jan', '20140128224143', '20140129224143', 'EN', 'PS', 'tile_weather')");
+        //db.execSQL("insert into contents (content_id, file_name, file_path, time_added, time_expiry, lang_id, category_id, content_type_id) values (1,'ABC', 'In 1879, Maxwell published a paper on the viscous stresses arising in rarefied gases. In an appendix to the paper, Maxwell proposed his now-famous velocity slip boundary condition.', '20140128224143', '20160128224143', 'EN', 'EDU', 'tile_education')");
+        //db.execSQL("insert into contents (content_id, file_name, file_path, time_added, time_expiry, lang_id, category_id, content_type_id) values (2,'ABC', 'In 1879, Maxwell published a paper on the viscous stresses arising in rarefied gases titled : On Stresses in Rarified Gases Arising from Inequalities of Temperature. In an appendix to the paper, Maxwell proposed his now-famous velocity slip boundary condition.\n\t-Phil. Trans. R. Soc. Lond. 1879 170 , 231-256, published 1 January 1879\nhttp://rstl.royalsocietypublishing.org/', '20140128224143', '20160128224143', 'EN', 'EDU_HTML', 'tile_education')");
+        //db.execSQL("insert into contents (content_id, file_name, file_path, time_added, time_expiry, lang_id, category_id, content_type_id) values (3,'ABC', '24;05:00 PM;23rd Jan', '20140128224143', '20140129224143', 'EN', 'PS', 'tile_weather')");
         db.execSQL("insert into contents (content_id, file_name, file_path, time_added, time_expiry, lang_id, category_id, content_type_id) values (4,'tereLiye.mp3', 'tereLiye.mp3', '20140128224143', '20160128224143', 'EN', 'PS', 'tile_music')");
         db.execSQL("insert into contents (content_id, file_name, file_path, time_added, time_expiry, lang_id, category_id, content_type_id) values (5,'movie.mp4', 'movie.mp4', '20140128224143', '20160128224143', 'EN', 'PS', 'tile_video')");
+
+        db.execSQL("insert into downloads (content_id, downloaded, deleted) values (5, 'YES', 0)");
 
     }
 }

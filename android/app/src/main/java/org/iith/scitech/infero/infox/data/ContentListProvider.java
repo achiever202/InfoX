@@ -98,7 +98,7 @@ public class ContentListProvider {
 
     public void updateContentFilePath(String content_id, String file_path)
     {
-        database.execSQL("UPDATE contents SET file_path = "+file_path+" WHERE content_id = "+ content_id);
+        database.execSQL("UPDATE contents SET file_path = '"+file_path+"' WHERE content_id = "+ content_id);
     }
 
     public void updateDownloads(String content_id, String downloaded)
@@ -128,7 +128,7 @@ public class ContentListProvider {
 
     public int getContentIdByContent(String content, String time_added, String time_expiry)
     {
-        Cursor res =  database.rawQuery( "select * from contents where file_path="+content+" and time_added="+time_added+" and time_expiry="+time_expiry, null );
+        Cursor res =  database.rawQuery( "select * from contents where file_path='"+content+"' and time_added='"+time_added+"' and time_expiry='"+time_expiry+"'", null );
         res.moveToFirst();
         return res.getInt(res.getColumnIndex("content_id"));
     }
@@ -162,7 +162,7 @@ public class ContentListProvider {
 
     public Cursor getDownloads(String downloaded)
     {
-        Cursor res =  database.rawQuery( "select * from downloads where downloaded="+downloaded, null );
+        Cursor res =  database.rawQuery( "select * from downloads where downloaded='"+downloaded+"'", null );
         res.moveToFirst();
         return res;
     }
@@ -170,12 +170,12 @@ public class ContentListProvider {
     public ArrayList getDownloadsByStatus(String downloaded)
     {
         ArrayList array_list = new ArrayList();
-        Cursor res =  database.rawQuery( "select * from downloads where downloaded="+downloaded+"", null );
+        Cursor res =  database.rawQuery( "select * from downloads where downloaded='"+downloaded+"'", null );
         res.moveToFirst();
 
         while(res.isAfterLast() == false){
             int content_id = res.getInt(res.getColumnIndex("content_id"));
-            Cursor res2 =  database.rawQuery( "select * from contents where content_id="+content_id+"", null );
+            Cursor res2 =  database.rawQuery( "select * from contents where content_id="+content_id, null );
             res2.moveToFirst();
             array_list.add(res2.getString(res2.getColumnIndex("file_path")));
             res.moveToNext();

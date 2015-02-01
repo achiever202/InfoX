@@ -175,7 +175,7 @@ public class ContentListAdapter extends ArrayAdapter<String> {
         else if (theType==3)
         {
             rowView = layoutInflater.inflate(R.layout.content_tile_video, parent, false);
-            if(!URLUtil.isValidUrl(JsonUtils.getData(values.get(position),"content"))) {
+            if(!URLUtil.isValidUrl(PrefUtils.getServerIP(context)+"/"+JsonUtils.getData(values.get(position),"content"))) {
                 if(new File(PrefUtils.getDownloadDirectory(context)+"/"+JsonUtils.getData(values.get(position),"content")).exists()) {
                     Bitmap thumbAsBitmap = ThumbnailUtils.createVideoThumbnail(PrefUtils.getDownloadDirectory(context) + "/" + JsonUtils.getData(values.get(position), "content"), MediaStore.Images.Thumbnails.FULL_SCREEN_KIND);
                     Bitmap bmOverlay = Bitmap.createBitmap(thumbAsBitmap.getWidth(), thumbAsBitmap.getHeight(), thumbAsBitmap.getConfig());

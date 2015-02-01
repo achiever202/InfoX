@@ -2,8 +2,10 @@ package org.iith.scitech.infero.infox.service;
 
 import android.app.DownloadManager;
 import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -14,8 +16,10 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import org.iith.scitech.infero.infox.R;
 import org.iith.scitech.infero.infox.data.ContentListProvider;
 import org.iith.scitech.infero.infox.util.HttpServerRequest;
 import org.iith.scitech.infero.infox.util.PrefUtils;
@@ -23,6 +27,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -48,6 +53,9 @@ public class DownloadService extends Service {
         return Service.START_STICKY;
     }
 
+    private long enqueue;
+    private DownloadManager dm;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -57,26 +65,57 @@ public class DownloadService extends Service {
             Cursor res = null;
             public void run()
             {
+                clp.open();
                 while(true)
                 {
                     ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
                     NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-                    if(networkInfo!=null && networkInfo.isConnected()) {
+                    if((networkInfo!=null && networkInfo.isConnected()) || false) {
                         if (PrefUtils.canAutoSync(DownloadService.this)) {
                             new GetNetworkDataTask().run();
                         }
                         res = clp.getDownloads("NO");
                         while (res.isAfterLast() == false) {
-                            int content_id = res.getInt(res.getColumnIndex("content_id"));
-                            Cursor res2 = clp.getContentsById(content_id);
+                            final int content_id = res.getInt(res.getColumnIndex("content_id"));
+                            final Cursor res2 = clp.getContentsById(content_id);
                             res2.moveToFirst();
-                            Boolean isDownloaded = download(res2.getString(res2.getColumnIndex("file_path")), res2.getString(res2.getColumnIndex("file_name")));
-                            if(isDownloaded && Environment.getExternalStoragePublicDirectory("InfoX/"+res2.getString(res2.getColumnIndex("file_name"))).exists())
-                            {
-                                clp.updateContentFilePath(Integer.toString(content_id), Environment.getExternalStoragePublicDirectory("InfoX/"+res2.getString(res2.getColumnIndex("file_name"))).getAbsolutePath());
-                                clp.updateDownloads(Integer.toString(content_id), "YES");
+                            if(res2.getString(res2.getColumnIndex("downloaded")).equals("NO")) {
+                                dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
+                                DownloadManager.Request request = new DownloadManager.Request(Uri.parse(PrefUtils.getServerIP(DownloadService.this)+"/"+res2.getString(res2.getColumnIndex("file_path"))));
+                                enqueue = dm.enqueue(request);
+                                registerReceiver(new BroadcastReceiver() {
+                                    @Override
+                                    public void onReceive(Context context, Intent intent) {
+                                        String action = intent.getAction();
+                                        if (DownloadManager.ACTION_DOWNLOAD_COMPLETE.equals(action)) {
+                                            long downloadId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, 0);
+                                            DownloadManager.Query query = new DownloadManager.Query();
+                                            query.setFilterById(enqueue);
+                                            Cursor c = dm.query(query);
+                                            if (c.moveToFirst()) {
+                                                int columnIndex = c.getColumnIndex(DownloadManager.COLUMN_STATUS);
+                                                if (DownloadManager.STATUS_SUCCESSFUL == c.getInt(columnIndex)) {
+                                                    String uriString = c.getString(c.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI));
+                                                    File f = new File(uriString);
+                                                    f.renameTo(Environment.getExternalStoragePublicDirectory("InfoX/" + res2.getString(res2.getColumnIndex("file_name"))));
+                                                    if (Environment.getExternalStoragePublicDirectory("InfoX/" + res2.getString(res2.getColumnIndex("file_name"))).exists()) {
+                                                        clp.updateContentFilePath(Integer.toString(content_id), Environment.getExternalStoragePublicDirectory("InfoX/" + res2.getString(res2.getColumnIndex("file_name"))).getAbsolutePath());
+                                                        clp.updateDownloads(Integer.toString(content_id), "YES");
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    }, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+                                /*Boolean isDownloaded = download(res2.getString(res2.getColumnIndex("file_path")), res2.getString(res2.getColumnIndex("file_name")));
+                                if(isDownloaded && Environment.getExternalStoragePublicDirectory("InfoX/"+res2.getString(res2.getColumnIndex("file_name"))).exists())
+                                {
+                                    clp.updateContentFilePath(Integer.toString(content_id), Environment.getExternalStoragePublicDirectory("InfoX/"+res2.getString(res2.getColumnIndex("file_name"))).getAbsolutePath());
+                                    clp.updateDownloads(Integer.toString(content_id), "YES");
+                                }
+                                isDownloaded = false;*/
+                                    //array_list.add(res2.getString(res2.getColumnIndex("file_path")));
                             }
-                            //array_list.add(res2.getString(res2.getColumnIndex("file_path")));
                             res.moveToNext();
                         }
                     }

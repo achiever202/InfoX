@@ -40,7 +40,7 @@ public class HttpServerRequest {
         ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
-        if(networkInfo!=null && networkInfo.isConnected()) {
+//        if(networkInfo!=null && networkInfo.isConnected()) {
             /* create a httpClient and a new post request. */
             DefaultHttpClient httpClient = new DefaultHttpClient();
             HttpPost httpPostRequest = new HttpPost(PrefUtils.getServerIP(context) + arguments[0]);
@@ -73,7 +73,7 @@ public class HttpServerRequest {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
+        //}
         return reply;
     }
 }

@@ -27,6 +27,7 @@ public class VideoDialog extends Activity
         setContentView(R.layout.content_dialog_video);
 
         String videoPath = PrefUtils.getCurrentVideoPath(VideoDialog.this);
+        Log.v("VideoPAth: ", videoPath);
         final VideoView videoView = (VideoView) findViewById(R.id.content_tile_video_videoView);
 
         if(URLUtil.isValidUrl(videoPath))
