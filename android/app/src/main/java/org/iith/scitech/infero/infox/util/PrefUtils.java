@@ -204,7 +204,7 @@ public class PrefUtils  {
 
     public static String getPhoneNumber(final Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        return sp.getString(PREF_PHONE_NUMBER, "9652878850");
+        return sp.getString(PREF_PHONE_NUMBER, "7382547459");
     }
     
     public static void setPhoneNumber(final Context context, String number) {
@@ -234,7 +234,7 @@ public class PrefUtils  {
 
     public static String getServerIP(final Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        return sp.getString(PREF_SERVER_IP, "http://172.16.15.152:80/infox/");
+        return sp.getString(PREF_SERVER_IP, "http://192.168.43.206:80/infox/");
     }
 
     public static void setServerIP(final Context context, String name) {
@@ -318,7 +318,7 @@ public class PrefUtils  {
 
     public static boolean getLoginStatus(final Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        return sp.getBoolean(PREF_LOGIN_STATUS, true);
+        return sp.getBoolean(PREF_LOGIN_STATUS, false);
     }
 
     public static void setLoginStatus(final Context context, final Boolean value) {
@@ -401,24 +401,6 @@ public class PrefUtils  {
         sp.edit().putLong(PREF_LAST_SYNC_SUCCEEDED, UIUtils.getCurrentTime(context)).commit();
     }*/
 
-    /**
-     * Returns whether or not we should offer to take the user to the Google I/O extended
-     * website. If actively==true, will return whether we should offer actively (with a card,
-     * for example); if actively==false, will return whether we should do so passively
-     * (with an overflow item in the menu, for instance).
-     */
-    public static boolean shouldOfferIOExtended(final Context context, boolean actively) {
-        boolean isRemote = !PrefUtils.isAttendeeAtVenue(context);
-        boolean hasNotDismissed = !PrefUtils.hasDismissedIOExtendedCard(context);
-        //boolean conferenceGoingOn = !TimeUtils.hasConferenceEnded(context);
-        boolean conferenceGoingOn = false;
-
-        if (actively) {
-            return isRemote && hasNotDismissed && conferenceGoingOn;
-        } else {
-            return isRemote && conferenceGoingOn;
-        }
-    }
 
     public static boolean isAnalyticsEnabled(final Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);

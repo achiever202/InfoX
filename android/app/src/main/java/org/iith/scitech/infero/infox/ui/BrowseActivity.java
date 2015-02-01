@@ -1,7 +1,9 @@
 package org.iith.scitech.infero.infox.ui;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -27,6 +29,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import org.iith.scitech.infero.infox.R;
 import org.iith.scitech.infero.infox.data.ContentListProvider;
+import org.iith.scitech.infero.infox.service.DownloadService;
 import org.iith.scitech.infero.infox.swipetodismiss.SwipeDismissListViewTouchListener;
 import org.iith.scitech.infero.infox.util.ContactUtils;
 import org.iith.scitech.infero.infox.util.HttpServerRequest;
@@ -154,6 +157,12 @@ public class BrowseActivity extends ActionBarActivity implements BrowseFragment.
 
         new GetLocalDataTask().execute();
 
+        if(!isMyServiceRunning(DownloadService.class))
+        {
+            Intent i = new Intent(this, DownloadService.class);
+            startService(i);
+        }
+
     }
 
     public void addProgressBar()
@@ -169,6 +178,16 @@ public class BrowseActivity extends ActionBarActivity implements BrowseFragment.
         mListView.getRefreshableView().removeHeaderView(progressViewGroup);
     }
 
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     private class GetNetworkDataTask extends AsyncTask<Void, Void, JSONArray> {
 
@@ -177,6 +196,13 @@ public class BrowseActivity extends ActionBarActivity implements BrowseFragment.
 
         @Override
         protected JSONArray doInBackground(Void... params) {
+            {
+                ContentListProvider clp = new ContentListProvider(BrowseActivity.this);
+                clp.open();
+                clp.deleteExpiredContent();
+                clp.close();
+
+            }
             // Perform data fetching here
             Log.v("NET", "Sending...");
 
@@ -220,6 +246,11 @@ public class BrowseActivity extends ActionBarActivity implements BrowseFragment.
 
             ContentListProvider clp = new ContentListProvider(BrowseActivity.this);
             clp.open();
+            if(jsonArray!=null)
+            {
+                if(jsonArray.length()>0)
+                    clp.deleteExpiredContent();
+            }
 
             for(int i=0;i<jsonArray.length();i++) {
                 JSONObject indObject = null;

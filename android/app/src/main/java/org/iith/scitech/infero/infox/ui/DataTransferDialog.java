@@ -157,7 +157,11 @@ public class DataTransferDialog extends Activity
         protected void onPostExecute(Boolean aBoolean) {
             if(aBoolean && Globals.dataTransferType.equals("Received")) {
                 values.clear();
-                values.addAll(Globals.mChatApplication.getHistory());
+                List<String> clone = new ArrayList<String>(Globals.mChatApplication.getHistory().size());
+                for (String string : Globals.mChatApplication.getHistory()) {
+                    Log.v("dataToBeDisplayed:: ", string);
+                    values.add(string);
+                }
                 adapter.notifyDataSetChanged();
             }
 

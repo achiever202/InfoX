@@ -346,10 +346,12 @@ public class GroupsFragment extends Fragment implements Observer {
                 JSONArray jsonArray = new JSONArray();
                 for(int i=0; i<contactNumAndName.length;i++) {
                     jsonArray.put(new JSONObject(contactNumAndName[i]));
+                    //Log.v("Contacts:: ", contactNumAndName[i]);
                 }
                 jsonObject.put("status", "200");
                 jsonObject.put("phNo", PrefUtils.getPhoneNumber(getActivity()));
                 jsonObject.put("data", jsonArray);
+                Log.v("Send Contacts", jsonObject.toString());
                 jsonObject = new JSONObject(new HttpServerRequest(getActivity()).getReply(new String[]{"queryContacts.php", "data", jsonObject.toString()}));
             }
             catch (Exception e)
@@ -366,7 +368,8 @@ public class GroupsFragment extends Fragment implements Observer {
                 e.printStackTrace();
             }
 
-            groupListValue = new ArrayList<String>();
+            //groupListValue = new ArrayList<String>();
+            groupListValue.clear();
 
 
             for(int i=0;i<jsonArray.length();i++) {

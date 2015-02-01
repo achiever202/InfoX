@@ -76,7 +76,7 @@ public class ContactUtils
         {
             try {
                 jsonObject.put("name", cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)));
-                jsonObject.put("number", cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
+                jsonObject.put("number", ContactUtils.getFormattedContact(cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))));
             }
             catch (Exception e) {
                 e.printStackTrace();
