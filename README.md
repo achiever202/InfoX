@@ -34,5 +34,7 @@ The entry won the Silver Medal among all the participating IITs.
 
 
 
+##Presentation
+<a href="https://github.com/achiever202/InfoX/blob/master/OpenSoft.pdf?raw=true"/>
 
 
