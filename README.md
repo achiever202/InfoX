@@ -31,6 +31,104 @@ The entry won the Silver Medal among all the participating IITs.
 	<img src="https://github.com/achiever202/InfoX/blob/master/android/screenshots/mainActivitySwipeToDelete.png?raw=true" alt="Main Activity Swipe To Delete"/>
 </p>
 
+#####Pop-Up associated with each content
+</br>
+<p align="center">
+	<img src="https://github.com/achiever202/InfoX/blob/master/android/screenshots/mainActivityPopUpForEachContent.png?raw=true" alt="Main Activity Pop-Up For Each Content"/>
+</p>
+
+#####Text Content Rendering
+</br>
+<p align="center">
+	<img src="https://github.com/achiever202/InfoX/blob/master/android/screenshots/mainActivityTextContentRendering.png?raw=true" alt="Main Activity Text Content Rendering"/>
+</p>
+
+#####HTML Content Rendering
+</br>
+<p align="center">
+	<img src="https://github.com/achiever202/InfoX/blob/master/android/screenshots/mainActivityHtmlContentRendering.png?raw=true" alt="Main Activity HTML Content Rendering"/>
+</p>
+
+#####Weather Content Rendering
+</br>
+<p align="center">
+	<img src="https://github.com/achiever202/InfoX/blob/master/android/screenshots/mainActivityWeatherContentRendering.png?raw=true" alt="Main Activity Weather Content Rendering"/>
+</p>
+
+#####Audio Content Rendering
+</br>
+<p align="center">
+	<img src="https://github.com/achiever202/InfoX/blob/master/android/screenshots/mainActivityAudioContentRendering.png?raw=true" alt="Main Activity Audio Content Rendering"/>
+</p>
+
+#####Video Content Rendering
+</br>
+<p align="center">
+	<img src="https://github.com/achiever202/InfoX/blob/master/android/screenshots/mainActivityVideoContentRendering.png?raw=true" alt="Main Activity Video Content Rendering"/>
+</p>
+
+
+#####Audio Dialog
+</br>
+<p align="center">
+	<img src="https://github.com/achiever202/InfoX/blob/master/android/screenshots/audioRendering.png?raw=true" alt="Main Activity Audio Content Rendering"/>
+</p>
+
+#####Video Dialog
+</br>
+<p align="center">
+	<img src="https://github.com/achiever202/InfoX/blob/master/android/screenshots/videoRendering.png?raw=true" alt="Main Activity Video Content Rendering"/>
+</p>
+
+
+</br>
+</br>
+</br>
+
+
+###Peer to Peer Data Transfer
+####Contacts Fragment
+</br>
+<p align="center">
+  <img src="https://github.com/achiever202/InfoX/blob/master/android/screenshots/peerToPeerDataTransfer.png?raw=true" alt="Peer to Peer Data Transfer"/>
+</p>
+
+####Pull to Refresh Contacts
+</br>
+<p align="center">
+  <img src="https://github.com/achiever202/InfoX/blob/master/android/screenshots/peerToPeerDataTransferRefresh.png?raw=true" alt="Peer to Peer Data Transfer Refresh"/>
+</p>
+
+####Data Transfer Activity
+</br>
+<p align="center">
+  <img src="https://github.com/achiever202/InfoX/blob/master/android/screenshots/peerToPeerDataTransferReceiveDataActivity.png?raw=true" alt="Receive Data Activity"/>
+</p>
+
+####Unavailable Peer
+</br>
+<p align="center">
+  <img src="https://github.com/achiever202/InfoX/blob/master/android/screenshots/peerToPeerDataTransferUnavailablePeer.png?raw=true" alt="Receive Data Activity"/>
+</p>
+
+
+</br>
+</br>
+</br>
+
+
+###Settings
+####Settings Fragment
+</br>
+<p align="center">
+  <img src="https://github.com/achiever202/InfoX/blob/master/android/screenshots/settingsFragment.png?raw=true" alt="Peer to Peer Data Transfer"/>
+</p>
+
+####Content Preferences Dialog
+</br>
+<p align="center">
+  <img src="https://github.com/achiever202/InfoX/blob/master/android/screenshots/settingsFragmentPreferencesDialog.png?raw=true" alt="Content Preferences Dialog"/>
+</p>
 
 
 
