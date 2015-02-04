@@ -5,6 +5,8 @@ The problem statement involves developing an Android Application to distribute c
 
 The application uses both server-client model and peer-to-peer model to deliver content efficiently. Wi-Fi and Alljoyn (open source) framework is used to share content with peers on the same network.
 
+The GUI is interactive and intutive with complete in-app rendering of content.
+
 Users can also set their content preferences (based on type of content, category and languages) which efficiently services content under the constraints given.
 
 The entry won the Silver Medal among all the participating IITs.
